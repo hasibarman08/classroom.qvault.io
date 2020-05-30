@@ -1,0 +1,261 @@
+<template>
+  <div id="dashboard">
+    <div id="container">
+      <div id="sidebar">
+        <div class="logo-item">
+          <img
+            alt="Qvault logo"
+            src="./img/qvault-icon.png"
+          >
+          <span> Qvault Classroom </span>
+        </div>
+
+        <div
+          class="item"
+          @click="$router.push({name: 'Courses'})"
+        >
+          <span>Courses</span>
+        </div>
+
+        <div class="spacer" />
+            
+        <div
+          class="item"
+          @click="modulesTabOpen = !modulesTabOpen"
+        >
+          <span>Modules</span>
+          <FontAwesomeIcon
+            class="arrow"
+            :class="{'is-open': modulesTabOpen}"
+            icon="arrow-right"
+          />
+        </div>
+        <div
+          class="sub-items"
+          :style="{maxHeight: modulesTabHeight + 'px'}"
+        >
+          <div 
+            v-for="(mod, j) of modules"
+            :key="j"
+            class="sub-item"
+          >
+            <span>{{ j + 1 }}) {{ mod.title }}</span>
+          </div>
+        </div>
+
+        <div class="spacer" />
+        
+        <div
+          class="item"
+        >
+          <span>Logout</span>
+        </div>
+      </div>
+
+      <div id="content">
+        <div id="main-content">
+          <div id="nav">
+            <router-link
+              to="/profile"
+            >
+              <div class="nav-item">
+                <FontAwesomeIcon
+                  icon="user-tie"
+                  class="icon"
+                />
+              </div>
+            </router-link>
+
+            <a
+              href="https://qvault.io"
+              target="_blank"
+            >
+              <div class="nav-item">
+                <span>Blog</span>
+              </div>
+            </a>
+          </div>
+          <router-view />
+          <Footer />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Footer from '@/components/Footer.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+export default {
+  components: {
+    Footer,
+    FontAwesomeIcon
+  },
+  data(){
+    return {
+      course: 'Go Mastery',
+      modulesTabOpen: false,
+      modules: [
+        {
+          title: 'Types'
+        },
+        {
+          title: 'Functions'
+        }
+      ]
+    };
+  },
+  computed: {
+    modulesTabHeight(){
+      return this.modulesTabOpen ? this.modulesTabHeightExpanded : 0;
+    },
+    modulesTabHeightExpanded(){
+      return this.modules.length * 30;
+    }
+  }
+};
+</script>
+
+<style scoped lang="scss">
+@import '@/styles/colors.scss';
+
+$bar-height: 60px;
+
+#dashboard {
+  height: 100%;
+}
+
+#container {
+	height: 100%;
+  display: flex;
+}
+
+#sidebar {
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+  flex-basis: 16%;
+  min-width: 200px;
+	overflow: auto;
+  background-color: $black-dark;
+  color: $gray-lightest;
+
+  .logo-item {
+    text-align: center;
+    line-height: $bar-height;
+    height: $bar-height;
+    color: $gray-lightest;
+    text-decoration: none;
+    border: solid $gray-darker;
+    border-width: 0 1px 1px 0;
+    margin-bottom: 20px;
+
+    img {
+      vertical-align: middle;
+      width: 35px;
+    }
+  }
+
+  .spacer {
+    height: 1px;
+    margin: 10px 0 10px 0;
+  }
+
+  .item {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+
+    span {
+      margin-left: 25px;
+      transition: 0.4s;
+    }
+
+    .arrow {
+      margin-left: 25px;
+      transition: all 0.4s ease;
+      color: $white;
+
+      &.is-open {
+        transform: rotateZ(90deg);
+      }
+    }
+
+    &:hover{
+      background-color: $gray-darker;
+      cursor: pointer;
+
+      span {
+        margin-left: 35px;
+      }
+    }
+  }
+
+  .sub-items {
+    overflow: hidden;
+    transition: max-height 0.2s linear 0s;
+
+    .sub-item {
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      border: solid $white;
+      border-width: 0 0 0 1px;
+      margin-left: 30px;
+
+      span {
+        padding-left: 20px;
+      }
+
+      &:hover{
+        cursor: pointer;
+        border-color: $purple-mid;
+      }
+    }
+  }
+} 
+
+#content {
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+	overflow: auto;
+  flex: 1;
+  background-color: $gray-lightest;
+
+  #nav {
+    height: $bar-height;
+    background-color: $black-dark;
+
+    a {
+      color: $white;
+      text-decoration: none;
+    }
+
+    .router-link-exact-active {
+      color: $gold-mid;
+    }
+
+    .nav-item {
+      float: right;
+      display: inline-block;
+      height: 100%;
+      padding-left: 20px;
+      padding-right: 20px;
+      line-height: $bar-height;
+
+      &:hover{
+        background-color: $gray-darker;
+      }
+
+      .icon {
+        font-size: 22px;
+      }
+    }
+  }
+
+}
+</style>
