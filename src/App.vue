@@ -7,10 +7,19 @@
 <script>
 import Dashboard from '@/Dashboard.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowRight, faUserTie } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faArrowRight, 
+  faUserTie,
+  faScroll,
+  faPuzzlePiece,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(faArrowRight);
 library.add(faUserTie);
+library.add(faScroll);
+library.add(faPuzzlePiece);
+library.add(faSignOutAlt);
 
 export default {
   components: {

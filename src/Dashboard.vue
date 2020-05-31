@@ -14,6 +14,10 @@
           class="item"
           @click="$router.push({name: 'Courses'})"
         >
+          <FontAwesomeIcon
+            icon="scroll"
+            class="icon"
+          />
           <span>Courses</span>
         </div>
 
@@ -23,6 +27,10 @@
           class="item"
           @click="modulesTabOpen = !modulesTabOpen"
         >
+          <FontAwesomeIcon
+            icon="puzzle-piece"
+            class="icon"
+          />
           <span>Modules</span>
           <FontAwesomeIcon
             class="arrow"
@@ -48,6 +56,10 @@
         <div
           class="item"
         >
+          <FontAwesomeIcon
+            icon="sign-out-alt"
+            class="icon"
+          />
           <span>Logout</span>
         </div>
       </div>
@@ -169,8 +181,13 @@ $bar-height: 60px;
     font-size: 18px;
 
     span {
-      margin-left: 25px;
+      margin-left: 15px;
       transition: 0.4s;
+    }
+
+    .icon {
+      margin-left: 15px;
+      color: $white;
     }
 
     .arrow {
@@ -188,7 +205,7 @@ $bar-height: 60px;
       cursor: pointer;
 
       span {
-        margin-left: 35px;
+        margin-left: 25px;
       }
     }
   }
