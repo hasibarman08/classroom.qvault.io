@@ -1,6 +1,7 @@
 <template>
-  <div class="hello">
+  <div>
     <VueMarkdown
+      id="viewer"
       :source="source"
       @rendered="update"
     />
@@ -36,7 +37,7 @@ export default {
     this.source = await resp.text();
   },
   methods: {
-    update: function() {
+    update() {
       this.$nextTick(() => {
         Prism.highlightAll();
       });
@@ -44,3 +45,12 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+@import '@/styles/colors.scss';
+
+#viewer{
+  padding: 20px;
+}
+
+</style>

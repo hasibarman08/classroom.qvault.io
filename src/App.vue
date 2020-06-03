@@ -12,7 +12,8 @@ import {
   faUserTie,
   faScroll,
   faPuzzlePiece,
-  faSignOutAlt
+  faSignOutAlt,
+  faPlay
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faArrowRight);
@@ -20,6 +21,7 @@ library.add(faUserTie);
 library.add(faScroll);
 library.add(faPuzzlePiece);
 library.add(faSignOutAlt);
+library.add(faPlay);
 
 export default {
   components: {
