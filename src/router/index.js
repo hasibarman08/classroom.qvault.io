@@ -2,12 +2,24 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Courses from '../views/Courses.vue';
 import Profile from '../views/Profile.vue';
+import Modules from '../views/Modules.vue';
+import Store from '../views/Store.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
+    name: 'Modules',
+    component: Modules
+  },
+  {
+    path: '/store',
+    name: 'Store',
+    component: Store
+  },
+  {
+    path: '/courses',
     name: 'Courses',
     component: Courses
   },

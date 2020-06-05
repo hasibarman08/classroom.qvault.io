@@ -12,6 +12,17 @@
 
         <div
           class="item"
+          @click="$router.push({name: 'Store'})"
+        >
+          <FontAwesomeIcon
+            icon="store"
+            class="icon"
+          />
+          <span>Store</span>
+        </div>
+
+        <div
+          class="item"
           @click="$router.push({name: 'Courses'})"
         >
           <FontAwesomeIcon
@@ -20,8 +31,6 @@
           />
           <span>Courses</span>
         </div>
-
-        <div class="spacer" />
             
         <div
           class="item"
@@ -43,15 +52,13 @@
           :style="{maxHeight: modulesTabHeight + 'px'}"
         >
           <div 
-            v-for="(mod, j) of modules"
-            :key="j"
+            v-for="(mod, i) of modules"
+            :key="i"
             class="sub-item"
           >
-            <span>{{ j + 1 }}) {{ mod.title }}</span>
+            <span>{{ i + 1 }}) {{ mod.title }}</span>
           </div>
         </div>
-
-        <div class="spacer" />
         
         <div
           class="item"
@@ -150,7 +157,7 @@ $bar-height: 60px;
   flex-basis: 16%;
   min-width: 200px;
 	overflow: auto;
-  background-color: $black-dark;
+  background-color: $gray-darkest;
   color: $gray-lightest;
 
   .logo-item {
@@ -169,16 +176,12 @@ $bar-height: 60px;
     }
   }
 
-  .spacer {
-    height: 1px;
-    margin: 10px 0 10px 0;
-  }
-
   .item {
     width: 100%;
     height: 50px;
     line-height: 50px;
     font-size: 18px;
+    margin-bottom: 1em;
 
     span {
       margin-left: 15px;
@@ -245,7 +248,7 @@ $bar-height: 60px;
 
   #nav {
     height: $bar-height;
-    background-color: $black-dark;
+    background-color: $gray-darkest;
 
     a {
       color: $white;

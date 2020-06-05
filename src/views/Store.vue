@@ -1,39 +1,27 @@
 <template>
   <div id="container">
     <h1 id="title">
-      Courses
+      Store
     </h1>
 
     <div id="cards">
       <div
-        v-for="(course, i) of courses"
+        v-for="(product, i) of products"
         :key="i"
         class="card"
       >
         <img
-          :src="course.image"
+          :src="product.image"
         >
         <div class="body">
-          <div
-            v-if="!course.purchased"
-            class="price"
-          >
+          <span class="price">${{ product.price }}</span>
+
+          <div class="title">
             <FontAwesomeIcon
               icon="gem"
             />
-            <span>{{ course.price }}</span>
+            <span>{{ product.title }}</span>
           </div>
-          <div
-            v-if="course.completed"
-            class="completed"
-          >
-            <FontAwesomeIcon
-              icon="check"
-            />
-            <span>Complete</span>
-          </div>
-          <h2>{{ course.title }}</h2>
-          <h4>{{ course.description }}</h4>
         </div>
       </div>
     </div>
@@ -49,14 +37,11 @@ export default {
   },
   data() {
     return {
-      courses: [
+      products: [
         {
-          title: 'Go Mastery',
+          title: '1000 Gems',
           image: 'https://www.edureka.co/blog/wp-content/uploads/2018/09/Golang-Logo-Golang-Tutorial-Edureka.jpg',
-          description: 'Master go web development! Starting with a familiarity of programming concepts is recommended.',
-          price: 1000,
-          purchased: true,
-          completed: true
+          price: 19.99
         }
       ]
     };
@@ -114,35 +99,20 @@ export default {
       background-color: $gray-darkest;
       padding: 10px;
 
-      h2 {
+      .price {
+        color: $green-lighter;
+        margin: 10px;
+        transition: all .3s ease-in-out;
+      }
+
+      .title {
         color: $gold-dark;
         font-size: 2em;
         margin: 0em;
-      }
-
-      h4 {
-        color: $white;
-        font-weight: 400;
-        margin: 1em;
-      }
-
-      .price {
         color: $purple-lighter;
-        margin: 10px;
-        transition: all .3s ease-in-out;
 
         span {
-          margin-left: 10px;
-        }
-      }
-
-      .completed {
-        color: $green-light;
-        margin: 10px;
-        transition: all .3s ease-in-out;
-
-        span {
-          margin-left: 10px;
+          margin-left: 15px;
         }
       }
     }
