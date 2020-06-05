@@ -1,8 +1,21 @@
 <template>
   <div id="container">
-    <h1 id="title">
-      Store
-    </h1>
+    <div id="title-container">
+      <span id="title">
+        Store
+      </span>
+
+      <span id="balance">
+        <FontAwesomeIcon
+          icon="gem"
+        />
+        {{ balance }}
+      </span>
+    </div>
+
+    <span id="sub-title">
+      Gems are used to unlock courses, purchase certifications, and complete workshops
+    </span>
 
     <div id="cards">
       <div
@@ -39,12 +52,17 @@ export default {
     return {
       products: [
         {
-          title: '1000 Gems',
-          image: 'https://www.edureka.co/blog/wp-content/uploads/2018/09/Golang-Logo-Golang-Tutorial-Edureka.jpg',
+          title: 'Get 1000 Gems',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Yohinki_Purple_Gem.jpg',
           price: 19.99
         }
       ]
     };
+  },
+  computed: {
+    balance(){
+      return 10;
+    }
   }
 };
 </script>
@@ -55,12 +73,32 @@ export default {
 #container {
   padding: 20px;
   display: block;
+  text-align: center;
 }
 
-#title {
+#title-container{
+  width: 100%;
+  margin: 20px;
+  position: relative;
+
+  #title {
+    color: $gray-darker;
+    font-size: 3em;
+  }
+
+  #balance {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: $purple-light;
+    font-size: 2em;
+  }
+}
+
+#sub-title {
   text-align: center;
-  color: $gray-darker;
-  font-size: 3em;
+  color: $gray-mid;
+  font-size: 1em;
 }
 
 #cards {
@@ -107,8 +145,8 @@ export default {
 
       .title {
         color: $gold-dark;
-        font-size: 2em;
-        margin: 0em;
+        font-size: 24px;
+        margin: 20px 0 20px 0;
         color: $purple-lighter;
 
         span {

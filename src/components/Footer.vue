@@ -41,21 +41,17 @@
 @import '@/styles/colors.scss';
 
 #footer {
-  color: $black;
+  color: $gray-dark;
+  text-align: center;
 }
 
 ul {
   list-style-type: none;
   padding: 0;
-  text-align: center;
 }
 
 li {
   display: inline-block;
   margin: 0 10px;
-}
-
-p {
-  text-align: center;
 }
 </style>

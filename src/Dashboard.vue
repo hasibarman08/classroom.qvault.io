@@ -72,7 +72,7 @@
       </div>
 
       <div id="content">
-        <div id="main-content">
+        <div>
           <div id="nav">
             <router-link
               to="/profile"
@@ -261,7 +261,6 @@ $bar-height: 60px;
 
     .nav-item {
       float: right;
-      display: inline-block;
       height: 100%;
       padding-left: 20px;
       padding-right: 20px;

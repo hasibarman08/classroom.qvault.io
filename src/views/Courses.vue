@@ -1,8 +1,8 @@
 <template>
   <div id="container">
-    <h1 id="title">
+    <span id="title">
       Courses
-    </h1>
+    </span>
 
     <div id="cards">
       <div
@@ -32,8 +32,12 @@
             />
             <span>Complete</span>
           </div>
-          <h2>{{ course.title }}</h2>
-          <h4>{{ course.description }}</h4>
+          <p class="title">
+            {{ course.title }}
+          </p>
+          <p class="description">
+            {{ course.description }}
+          </p>
         </div>
       </div>
     </div>
@@ -70,6 +74,7 @@ export default {
 #container {
   padding: 20px;
   display: block;
+  text-align: center;
 }
 
 #title {
@@ -114,13 +119,13 @@ export default {
       background-color: $gray-darkest;
       padding: 10px;
 
-      h2 {
+      .title {
         color: $gold-dark;
         font-size: 2em;
         margin: 0em;
       }
 
-      h4 {
+      .description {
         color: $white;
         font-weight: 400;
         margin: 1em;
