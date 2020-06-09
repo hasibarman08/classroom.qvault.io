@@ -21,10 +21,11 @@
           Run
         </button>
         <p
-          v-if="output"
+          v-for="(line, i) of output"
+          :key="i"
           :class="{error: err}"
         >
-          {{ output }}
+          {{ line }}
         </p>
       </div>
     </div>
@@ -58,7 +59,7 @@ export default {
   data() {
     return {
       code: this.placeholder,
-      output: null,
+      output: [],
       err: false
     };
   },
@@ -69,7 +70,7 @@ export default {
         this.output = await runGoWasm(wasm);
         this.err = false;
       } catch(err) {
-        this.output = err;
+        this.output = [ err ];
         this.err = true;
       }
     }
@@ -133,7 +134,7 @@ export default {
     p {
       margin: 0;
       font-size: 1em;
-      padding: 15px;
+      padding: 5px;
       color: $white;
     }
 
