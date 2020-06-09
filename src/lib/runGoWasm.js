@@ -1,7 +1,6 @@
-export default async function runGoWasm(wasmURL) {
+export default async function runGoWasm(rawData) {
   const go = new window.Go();
-  const data   = await fetch(wasmURL);
-  const result = await WebAssembly.instantiateStreaming(data, go.importObject);
+  const result = await WebAssembly.instantiate(rawData, go.importObject);
   let oldLog = console.log;
   let stdOut = '';
   console.log = (line) => {stdOut += `${line}\n`;};

@@ -3,6 +3,7 @@
     <button
       id="run-btn"
       :disabled="code.trim().length === 0"
+      @click="runCode"
     >
       <FontAwesomeIcon
         icon="play"
@@ -30,6 +31,8 @@ import 'prismjs/components/prism-go.min.js';
 
 import 'vue-prism-editor/dist/VuePrismEditor.css';
 
+import runGoWasm from '@/lib/runGoWasm.js';
+import { compileCode } from '@/lib/cloudClient.js';
 import PrismEditor from 'vue-prism-editor';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -50,6 +53,12 @@ export default {
       code: this.placeholder,
       runErrors: 'jkfnskafdkjadkflsdhfkasjfhbajkfjk fsjnd fasjf skljf sdjklf sdfk asdjfaskflbasdjkf asflkjasd fksadjf sadkjf sdjkf asdjkf asdkfl asdjfas djfskl fjkasd fkjasd fjksd fskjf '
     };
+  },
+  methods: {
+    async runCode() {
+      const wasm = await compileCode(this.code);
+      console.log(await runGoWasm(wasm));
+    }
   }
 };
 </script>
