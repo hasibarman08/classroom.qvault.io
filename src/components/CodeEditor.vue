@@ -1,26 +1,33 @@
 <template>
   <div>
-    <button
-      id="run-btn"
-      :disabled="code.trim().length === 0"
-      @click="runCode"
-    >
-      <FontAwesomeIcon
-        icon="play"
-      />
-      Run
-    </button>
-    <p
-      v-if="runErrors"
-      id="run-errors"
-    >
-      {{ runErrors }}
-    </p>
-    <PrismEditor
-      v-model="code"
-      language="go"
-      :line-numbers="true"
-    />
+    <div id="code-editor-root">
+      <div id="editor-container">
+        <PrismEditor
+          id="editor"
+          v-model="code"
+          language="go"
+          :line-numbers="true"
+        />
+      </div>
+      <div id="console-output">
+        <button
+          id="run-btn"
+          :disabled="code.trim().length === 0"
+          @click="runCode"
+        >
+          <FontAwesomeIcon
+            icon="play"
+          />
+          Run
+        </button>
+        <p
+          v-if="output"
+          :class="{error: err}"
+        >
+          {{ output }}
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -51,13 +58,20 @@ export default {
   data() {
     return {
       code: this.placeholder,
-      runErrors: 'jkfnskafdkjadkflsdhfkasjfhbajkfjk fsjnd fasjf skljf sdjklf sdfk asdjfaskflbasdjkf asflkjasd fksadjf sadkjf sdjkf asdjkf asdkfl asdjfas djfskl fjkasd fkjasd fjksd fskjf '
+      output: null,
+      err: false
     };
   },
   methods: {
     async runCode() {
-      const wasm = await compileCode(this.code);
-      console.log(await runGoWasm(wasm));
+      try {
+        const wasm = await compileCode(this.code);
+        this.output = await runGoWasm(wasm);
+        this.err = false;
+      } catch(err) {
+        this.output = err;
+        this.err = true;
+      }
     }
   }
 };
@@ -66,40 +80,67 @@ export default {
 <style lang="scss">
 @import '@/styles/colors.scss';
 
-#run-btn {
-  float: right;
-  margin: 20px;
-  background-color: $purple-mid;
-  border: none;
-  color: white;
-  height: 50px;
-  padding: 0 30px 0 30px;
-  line-height: 50px;
-  font-size: 16px;
-  text-align: center;
-  display: inline-block;
-  cursor: pointer;
+#code-editor-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
-  &:hover {
-    background-color: $purple-light;
+  #editor-container {
+    align-self: flex-start;
+    flex: 3;
+    width: 100%;
+    overflow: auto;
+
+    #editor {
+      .prism-editor__code {
+        background-color: var(--background-color) !important;
+      }
+
+      .prism-editor__line-numbers {
+        background-color: var(--background-color) !important;
+      }
+    }
   }
 
-  &:disabled {
-    background-color: $gray-mid;
+  #console-output{
+    align-self: flex-end;
+    background-color: $gray-dark;
+    flex: 1;
+    width: 100%;
+
+    #run-btn {
+      float: right;
+      margin: 20px;
+      background-color: $purple-mid;
+      border: none;
+      color: white;
+      height: 50px;
+      padding: 0 30px 0 30px;
+      line-height: 50px;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $purple-light;
+      }
+
+      &:disabled {
+        background-color: $gray-mid;
+      }
+    }
+
+    p {
+      margin: 0;
+      font-size: 1em;
+      padding: 15px;
+      color: $white;
+    }
+
+    .error {
+      color: $pink-light;
+    }
   }
-}
-
-#run-errors {
-  color: $pink;
-  margin: 20px;
-}
-
-.prism-editor__code {
-  background-color: var(--background-color) !important;
-}
-
-.prism-editor__line-numbers {
-  background-color: var(--background-color) !important;
 }
 
 </style>

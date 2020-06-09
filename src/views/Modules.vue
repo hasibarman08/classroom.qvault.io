@@ -2,9 +2,13 @@
   <div id="container">
     <MarkdownViewer
       id="mdviewer"
+      class="side"
       url="https://raw.githubusercontent.com/lane-c-wagner/go-tinydate/master/README.md"
     />
-    <CodeEditor id="editor" />
+    <CodeEditor
+      id="editor"
+      class="side"
+    />
   </div>
 </template>
 
@@ -33,20 +37,24 @@ export default {
 #container {
   display: flex;
   padding: 20px;
+  background-color: $gray-mid;
 }
 
-#editor {
+.side {
+  // VH - header bar - 2x container padding
+  height: calc(100vh - 60px - 2*20px);
+  overflow: auto;
   display: inline-block;
   flex: 1;
+  resize: width;
   background-color: $white;
+  display: inline-block;
+  flex: 1;
 }
 
 #mdviewer {
-  display: inline-block;
-  flex: 1;
-  background-color: $white;
-  border: solid $gray-lightest;
-  border-width: 0 1px 0 0;
+  border: solid $gray-lighter;
+  border-width: 0 2px 0 0;
 }
 
 </style>

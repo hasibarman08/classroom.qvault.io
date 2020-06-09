@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="container">
     <VueMarkdown
       id="viewer"
       :source="source"
@@ -49,8 +49,13 @@ export default {
 <style scoped lang="scss">
 @import '@/styles/colors.scss';
 
+#container {
+  height: var(--containerHeight);
+}
+
 #viewer{
   padding: 20px;
+  overflow: auto;
 }
 
 </style>

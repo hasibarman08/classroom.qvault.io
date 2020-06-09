@@ -95,7 +95,6 @@
             </a>
           </div>
           <router-view />
-          <Footer />
         </div>
       </div>
     </div>
@@ -103,12 +102,10 @@
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
   components: {
-    Footer,
     FontAwesomeIcon
   },
   data(){
@@ -241,7 +238,7 @@ $bar-height: 60px;
 #content {
 	display: inline-block;
 	vertical-align: top;
-	height: 100%;
+	height: 100vh;
 	overflow: auto;
   flex: 1;
   background-color: $gray-lightest;
@@ -275,6 +272,5 @@ $bar-height: 60px;
       }
     }
   }
-
 }
 </style>
