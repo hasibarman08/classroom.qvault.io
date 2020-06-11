@@ -1,6 +1,8 @@
-// import decodeJWT from './decodeJWT';
+import decodeJWT from './decodeJWT';
 
 export const domain = 'http://localhost:5000';
+
+const jwtKey = 'cloudJWT';
 
 export async function login(email, password){
   const resp = await fetch(`${domain}/v1/auth`, {
@@ -15,6 +17,20 @@ export async function login(email, password){
     })
   });
   const handled = await handleJSONResponse(resp);
+  localStorage.setItem(jwtKey, handled.token);
+  return handled;
+}
+
+async function refreshToken(){
+  const resp = await fetchWithAuth(`${domain}/v1/auth/refresh`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  localStorage.setItem(jwtKey, handled.token);
   return handled;
 }
 
@@ -37,7 +53,7 @@ export async function createUser(email, password, firstName, lastName){
 }
 
 export async function updateUser(firstName, lastName){
-  const resp = await fetch(`${domain}/v1/users`, {
+  const resp = await fetchWithAuth(`${domain}/v1/users`, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -87,7 +103,7 @@ export async function updateUserPasswordCode(email, newPassword, code){
 }
 
 export async function sendEmailVerification(){
-  const resp = await fetch(`${domain}/v1/users/email/send_verification`, {
+  const resp = await fetchWithAuth(`${domain}/v1/users/email/send_verification`, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -99,7 +115,7 @@ export async function sendEmailVerification(){
 }
 
 export async function verifyEmail(code){
-  const resp = await fetch(`${domain}/v1/users/email/verify`, {
+  const resp = await fetchWithAuth(`${domain}/v1/users/email/verify`, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -114,7 +130,7 @@ export async function verifyEmail(code){
 }
 
 export async function compileCode(code){
-  const resp = await fetch(`${domain}/v1/compile`, {
+  const resp = await fetchWithAuth(`${domain}/v1/compile`, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -129,7 +145,7 @@ export async function compileCode(code){
 }
 
 export async function getProducts(){
-  const resp = await fetch(`${domain}/v1/products`, {
+  const resp = await fetchWithAuth(`${domain}/v1/products`, {
     method: 'GET',
     mode: 'cors',
     headers: {
@@ -141,7 +157,7 @@ export async function getProducts(){
 }
 
 export async function startProductCheckout(productID){
-  const resp = await fetch(`${domain}/v1/products/${productID}/checkout`, {
+  const resp = await fetchWithAuth(`${domain}/v1/products/${productID}/checkout`, {
     method: 'POST',
     mode: 'cors',
     headers: {
@@ -153,7 +169,7 @@ export async function startProductCheckout(productID){
 }
 
 export async function getCourses(){
-  const resp = await fetch(`${domain}/v1/courses`, {
+  const resp = await fetchWithAuth(`${domain}/v1/courses`, {
     method: 'GET',
     mode: 'cors',
     headers: {
@@ -165,7 +181,7 @@ export async function getCourses(){
 }
 
 export async function purchaseCourse(courseUUID){
-  const resp = await fetch(`${domain}/v1/courses${courseUUID}`, {
+  const resp = await fetchWithAuth(`${domain}/v1/courses${courseUUID}`, {
     method: 'GET',
     mode: 'cors',
     headers: {
@@ -174,6 +190,79 @@ export async function purchaseCourse(courseUUID){
   });
   const handled = await handleJSONResponse(resp);
   return handled;
+}
+
+export async function getNextExercise(courseUUID){
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/excersizes/current`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export async function submitCodeExercise(courseUUID, moduleUUID, codeUUID){
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/excersizes/${codeUUID}/code`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export async function submitMultipleChoiceExercise(courseUUID, moduleUUID, codeUUID){
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/excersizes/${codeUUID}/multiple_choice`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export async function submitInformationalExercise(courseUUID, moduleUUID, codeUUID){
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/excersizes/${codeUUID}/informational`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export function isLoggedIn(){
+  try {
+    let token = localStorage.getItem(jwtKey);
+    let decodedToken = decodeJWT(token);
+    return decodedToken.exp < Date();
+  } catch (err){
+    return false;
+  }
+}
+
+async function fetchWithAuth(url, params){
+  if (!isLoggedIn()){
+    // redirect to login screen
+    return;
+  }
+  let token = localStorage.getItem(jwtKey);
+  let decodedToken = decodeJWT(token);
+  if (decodedToken.exp < Date() + 600000){
+    refreshToken();
+  }
+
+  params.headers['Authorization'] = `Bearer ${token}`;
+  return await fetch(url, params);
 }
 
 async function handleWasmResponse(response) {

@@ -1,11 +1,14 @@
 <template>
   <div id="app">
-    <Dashboard />
+    <Dashboard v-if="isLoggedIn" />
+    <Login v-else />
   </div>
 </template>
 
 <script>
+import { isLoggedIn } from '@/lib/cloudClient.js';
 import Dashboard from '@/Dashboard.vue';
+import Login from '@/Login.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faArrowRight, 
@@ -31,7 +34,13 @@ library.add(faStore);
 
 export default {
   components: {
-    Dashboard
+    Dashboard,
+    Login
+  },
+  computed: {
+    isLoggedIn(){
+      return isLoggedIn();
+    }
   }
 };
 </script>
