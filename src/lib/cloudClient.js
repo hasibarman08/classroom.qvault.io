@@ -240,12 +240,17 @@ export async function submitInformationalExercise(courseUUID, moduleUUID, codeUU
   return handled;
 }
 
+export function logout(){
+  localStorage.removeItem(jwtKey);
+}
+
 export function isLoggedIn(){
   try {
     let token = localStorage.getItem(jwtKey);
     let decodedToken = decodeJWT(token);
-    return decodedToken.exp < Date();
+    return decodedToken.exp > Date.now() / 1000;
   } catch (err){
+    console.log(err);
     return false;
   }
 }
@@ -257,7 +262,8 @@ async function fetchWithAuth(url, params){
   }
   let token = localStorage.getItem(jwtKey);
   let decodedToken = decodeJWT(token);
-  if (decodedToken.exp < Date() + 600000){
+  const mintuesDelta = 15;
+  if (new Date(decodedToken.exp) < new Date(new Date().getTime() + mintuesDelta*60000)){
     refreshToken();
   }
 

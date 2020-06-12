@@ -62,6 +62,7 @@
         
         <div
           class="item"
+          @click="logout"
         >
           <FontAwesomeIcon
             icon="sign-out-alt"
@@ -104,6 +105,10 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import { 
+  logout
+} from '@/lib/cloudClient.js';
+
 export default {
   components: {
     FontAwesomeIcon
@@ -128,6 +133,12 @@ export default {
     },
     modulesTabHeightExpanded(){
       return this.modules.length * 30;
+    }
+  },
+  methods: {
+    logout(){
+      logout();
+      location.reload();
     }
   }
 };
@@ -170,6 +181,10 @@ $bar-height: 60px;
     img {
       vertical-align: middle;
       width: 35px;
+    }
+
+    span {
+      margin-left: 10px;
     }
   }
 

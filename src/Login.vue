@@ -89,7 +89,7 @@
       <form
         v-if="state === 'forgot-password-code'"
         class="panel-content"
-        @submit="submitCode"
+        @submit="submitRecoveryCode"
       >
         <span class="title">Enter Recovery Code</span>
         <input
@@ -106,7 +106,27 @@
         >
           Submit
         </button>
+        <span><a @click="resendVerification">Resend Code</a></span>
         <span><a @click="state = 'login'">Back</a></span>
+      </form>
+
+      <form
+        v-if="state === 'email-verification-code'"
+        class="panel-content"
+        @submit="submitVerificationCode"
+      >
+        <span class="title">Check Your Email</span>
+        <input
+          v-model="validationCode"
+          placeholder="6 digit code"
+        >
+        <button
+          button
+        >
+          Submit
+        </button>
+        <span><a @click="resendVerification">Resend Code</a></span>
+        <span><a @click="state = 'register'">Back</a></span>
       </form>
     </div>
 
@@ -125,7 +145,13 @@
 </template>
 
 <script>
-import { login, createUser, updateUserPasswordCode } from '@/lib/cloudClient.js';
+import { 
+  login, 
+  createUser, 
+  updateUserPasswordCode,
+  sendEmailVerification, 
+  verifyEmail
+} from '@/lib/cloudClient.js';
 
 export default {
   data() {
@@ -140,6 +166,7 @@ export default {
       recoverEmail: null,
       recoverPassword: null,
       recoverCode: null,
+      validationCode: null,
       error: null
     };
   },
@@ -147,6 +174,7 @@ export default {
     async login(){
       try {
         await login(this.loginEmail, this.loginPassword);
+        location.reload();
       } catch (err){
         alert(err);
       }
@@ -159,10 +187,7 @@ export default {
           this.registerFirstName,
           this.registerLastName
         );
-        await login(
-          this.registerEmail, 
-          this.registerPassword
-        );
+        this.state = 'email-verification-code';
       } catch (err){
         alert(err);
       }
@@ -175,7 +200,7 @@ export default {
         alert(err);
       }
     },
-    async submitCode(){
+    async submitRecoveryCode(){
       try {
         await updateUserPasswordCode(
           this.recoverEmail,
@@ -183,6 +208,26 @@ export default {
           this.recoverCode
         );
         await login(this.recoverEmail, this.recoverPassword);
+        location.reload();
+      } catch (err){
+        alert(err);
+      }
+    },
+    async submitVerificationCode(){
+      try {
+        await verifyEmail(this.validationCode);
+        await login(
+          this.registerEmail, 
+          this.registerPassword
+        );
+        location.reload();
+      } catch (err){
+        alert(err);
+      }
+    },
+    async resendVerification(){
+      try {
+        await sendEmailVerification();
       } catch (err){
         alert(err);
       }
