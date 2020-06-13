@@ -27,7 +27,6 @@
         <MenuItemHorizontal
           class="item"
           icon="puzzle-piece"
-          :click="() => { modulesTabOpen = !modulesTabOpen }"
           text="Modules"
           :sub-items="modules"
         />
@@ -75,7 +74,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import { 
-  logout
+  logout,
+  getCourses
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -85,17 +85,24 @@ export default {
   },
   data(){
     return {
-      course: 'Go Mastery',
-      modulesTabOpen: false,
-      modules: [
-        {
-          text: 'Types'
-        },
-        {
-          text: 'Functions'
-        }
-      ]
+      modules: []
     };
+  },
+  async mounted(){
+    try {
+      const courses = await getCourses();
+      if (courses.length > 0) {
+        let modules = [];
+        for (const mod of courses[0].Modules) {
+          modules.push({
+            text: mod.Title
+          });
+        }
+        this.modules = modules;
+      }
+    } catch (err) {
+      alert(err);
+    }
   },
   methods: {
     logout(){

@@ -8,21 +8,21 @@
       <ImageCard
         v-for="(course, i) of courses"
         :key="i"
-        :img-src="course.image"
+        :img-src="course.ImageURL"
         class="card"
       >
         <div class="body">
           <div
-            v-if="!course.purchased"
+            v-if="!course.IsPurchased"
             class="price"
           >
             <FontAwesomeIcon
               icon="gem"
             />
-            <span>{{ course.price }}</span>
+            <span>{{ course.GemCost }}</span>
           </div>
           <div
-            v-if="course.completed"
+            v-if="course.IsComplete"
             class="completed"
           >
             <FontAwesomeIcon
@@ -31,10 +31,10 @@
             <span>Complete</span>
           </div>
           <p class="title">
-            {{ course.title }}
+            {{ course.Title }}
           </p>
           <p class="description">
-            {{ course.description }}
+            {{ course.Description }}
           </p>
         </div>
       </ImageCard>
@@ -46,6 +46,9 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import ImageCard from '@/components/ImageCard';
+import { 
+  getCourses
+} from '@/lib/cloudClient.js';
 
 export default {
   components: {
@@ -54,17 +57,15 @@ export default {
   },
   data() {
     return {
-      courses: [
-        {
-          title: 'Go Mastery',
-          image: 'https://www.edureka.co/blog/wp-content/uploads/2018/09/Golang-Logo-Golang-Tutorial-Edureka.jpg',
-          description: 'Master go web development! Starting with a familiarity of programming concepts is recommended.',
-          price: 1000,
-          purchased: true,
-          completed: true
-        }
-      ]
+      courses: []
     };
+  },
+  async mounted(){
+    try {
+      this.courses = await getCourses();
+    } catch (err) {
+      alert(err);
+    }
   }
 };
 </script>

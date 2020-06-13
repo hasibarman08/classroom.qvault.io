@@ -262,11 +262,11 @@ async function fetchWithAuth(url, params){
   let token = localStorage.getItem(jwtKey);
   let decodedToken = decodeJWT(token);
   const mintuesDelta = 15;
-  if (new Date(decodedToken.exp) < new Date(new Date().getTime() + mintuesDelta*60000)){
+  if (decodedToken.exp < (Date.now() + mintuesDelta*60) / 1000){
     refreshToken();
   }
 
-  params.headers['Authorization'] = `Bearer ${token}`;
+  params.headers.Authorization = `Bearer ${token}`;
   return await fetch(url, params);
 }
 

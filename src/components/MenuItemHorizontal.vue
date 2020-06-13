@@ -46,7 +46,8 @@ export default {
   props: { 
     click:{
       type: Function,
-      required: true
+      required: false,
+      default: () => {}
     },
     icon:{
       type: String,
