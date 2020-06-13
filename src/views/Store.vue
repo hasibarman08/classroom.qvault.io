@@ -18,14 +18,12 @@
     </span>
 
     <div id="cards">
-      <div
+      <ImageCard
         v-for="(product, i) of products"
         :key="i"
         class="card"
+        :img-src="product.image"
       >
-        <img
-          :src="product.image"
-        >
         <div class="body">
           <span class="price">${{ product.price }}</span>
 
@@ -36,7 +34,7 @@
             <span>{{ product.title }}</span>
           </div>
         </div>
-      </div>
+      </ImageCard>
     </div>
   </div>
 </template>
@@ -44,9 +42,12 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import ImageCard from '@/components/ImageCard';
+
 export default {
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    ImageCard
   },
   data() {
     return {
@@ -108,50 +109,20 @@ export default {
   width: 100%;
 
   .card {
-    flex: 0 1 calc(22% - 1em);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    background-color: $white;
-    margin: 15px;
-    overflow: hidden;
-    cursor: pointer;
-    text-align: center;
-
-    &:hover{
-      box-shadow: 0 16px 32px 0 rgba(0,0,0,0.8);
-
-      .body {
-        background-color: $gray-dark;
-
-        .price {
-          transform: scale(1.3);
-        }
-      }
+    .price {
+      color: $green-lighter;
+      margin: 10px;
+      transition: all .3s ease-in-out;
     }
 
-    img {
-      width: 100%;
-    }
+    .title {
+      color: $gold-dark;
+      font-size: 24px;
+      margin: 20px 0 20px 0;
+      color: $purple-lighter;
 
-    .body {
-      background-color: $gray-darkest;
-      padding: 10px;
-
-      .price {
-        color: $green-lighter;
-        margin: 10px;
-        transition: all .3s ease-in-out;
-      }
-
-      .title {
-        color: $gold-dark;
-        font-size: 24px;
-        margin: 20px 0 20px 0;
-        color: $purple-lighter;
-
-        span {
-          margin-left: 15px;
-        }
+      span {
+        margin-left: 15px;
       }
     }
   }

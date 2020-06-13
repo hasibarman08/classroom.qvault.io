@@ -250,7 +250,6 @@ export function isLoggedIn(){
     let decodedToken = decodeJWT(token);
     return decodedToken.exp > Date.now() / 1000;
   } catch (err){
-    console.log(err);
     return false;
   }
 }

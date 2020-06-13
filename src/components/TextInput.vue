@@ -2,7 +2,8 @@
   <input
     :placeholder="placeholder"
     :type="type"
-    @input="handleInput"
+    :value="value"
+    @input="$emit('input', $event.target.value)"
   >
 </template>
 
@@ -11,7 +12,8 @@ export default {
   props: { 
     value:{
       type: String,
-      required: true
+      required: false,
+      default: null
     },
     placeholder:{
       type: String,
@@ -22,11 +24,6 @@ export default {
       type: String,
       required: false,
       default: 'text'
-    }
-  },
-  methods: {
-    handleInput () {
-      this.$emit('input', this.value);
     }
   }
 };

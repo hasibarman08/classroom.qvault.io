@@ -5,14 +5,12 @@
     </span>
 
     <div id="cards">
-      <div
+      <ImageCard
         v-for="(course, i) of courses"
         :key="i"
+        :img-src="course.image"
         class="card"
       >
-        <img
-          :src="course.image"
-        >
         <div class="body">
           <div
             v-if="!course.purchased"
@@ -39,7 +37,7 @@
             {{ course.description }}
           </p>
         </div>
-      </div>
+      </ImageCard>
     </div>
   </div>
 </template>
@@ -47,9 +45,12 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import ImageCard from '@/components/ImageCard';
+
 export default {
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    ImageCard
   },
   data() {
     return {
@@ -89,66 +90,36 @@ export default {
   flex-wrap: wrap;
   width: 100%;
 
-  .card {
-    flex: 0 1 calc(22% - 1em);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    background-color: $white;
-    margin: 15px;
-    overflow: hidden;
-    cursor: pointer;
-    text-align: center;
+  .card{
+    .title {
+      color: $gold-dark;
+      font-size: 2em;
+      margin: 0em;
+    }
 
-    &:hover{
-      box-shadow: 0 16px 32px 0 rgba(0,0,0,0.8);
+    .description {
+      color: $white;
+      font-weight: 400;
+      margin: 1em;
+    }
 
-      .body {
-        background-color: $gray-dark;
+    .price {
+      color: $purple-lighter;
+      margin: 10px;
+      transition: all .3s ease-in-out;
 
-        .price {
-          transform: scale(1.3);
-        }
+      span {
+        margin-left: 10px;
       }
     }
 
-    img {
-      width: 100%;
-    }
+    .completed {
+      color: $green-light;
+      margin: 10px;
+      transition: all .3s ease-in-out;
 
-    .body {
-      background-color: $gray-darkest;
-      padding: 10px;
-
-      .title {
-        color: $gold-dark;
-        font-size: 2em;
-        margin: 0em;
-      }
-
-      .description {
-        color: $white;
-        font-weight: 400;
-        margin: 1em;
-      }
-
-      .price {
-        color: $purple-lighter;
-        margin: 10px;
-        transition: all .3s ease-in-out;
-
-        span {
-          margin-left: 10px;
-        }
-      }
-
-      .completed {
-        color: $green-light;
-        margin: 10px;
-        transition: all .3s ease-in-out;
-
-        span {
-          margin-left: 10px;
-        }
+      span {
+        margin-left: 10px;
       }
     }
   }

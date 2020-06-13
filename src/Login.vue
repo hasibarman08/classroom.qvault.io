@@ -19,21 +19,18 @@
           v-model="loginEmail"
           placeholder="email"
           type="email"
-        >
-          <TextInput
-            v-model="loginPassword"
-            placeholder="password"
-            type="password"
-          >
-            <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
-            <BlockButton>
-              Login
-            </BlockButton>
-            <span><a @click="state='forgot-password'">Forgot Password?</a></span>
-          </textinput>
-        </textinput>
+        />
+        <TextInput
+          v-model="loginPassword"
+          placeholder="password"
+          type="password"
+        />
+        <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
+        <BlockButton>
+          Login
+        </BlockButton>
+        <span><a @click="state='forgot-password'">Forgot Password?</a></span>
       </form>
-
 
       <form
         v-if="state === 'register'"
@@ -45,30 +42,25 @@
           v-model="registerEmail"
           placeholder="email"
           type="email"
-        >
-          <TextInput
-            v-model="registerFirstName"
-            placeholder="first name"
-          >
-            <TextInput
-              v-model="registerLastName"
-              placeholder="last name"
-            >
-              <TextInput
-                v-model="registerPassword"
-                placeholder="password"
-                type="password"
-              >
-                <BlockButton>
-                  Register
-                </BlockButton>
-                <span>Have an account? <a @click="state='login'">Login</a></span>
-              </textinput>
-            </textinput>
-          </textinput>
-        </textinput>
+        />
+        <TextInput
+          v-model="registerFirstName"
+          placeholder="first name"
+        />
+        <TextInput
+          v-model="registerLastName"
+          placeholder="last name"
+        />
+        <TextInput
+          v-model="registerPassword"
+          placeholder="password"
+          type="password"
+        />
+        <BlockButton>
+          Register
+        </BlockButton>
+        <span>Have an account? <a @click="state='login'">Login</a></span>
       </form>
-
 
       <form
         v-if="state === 'forgot-password'"
@@ -80,12 +72,11 @@
           v-model="recoverEmail"
           placeholder="email"
           type="email"
-        >
-          <BlockButton>
-            Submit
-          </BlockButton>
-          <span><a @click="state='login'">Back</a></span>
-        </textinput>
+        />
+        <BlockButton>
+          Submit
+        </BlockButton>
+        <span><a @click="state='login'">Back</a></span>
       </form>
 
       <form
@@ -97,19 +88,17 @@
         <TextInput
           v-model="recoverCode"
           placeholder="6 digit code"
-        >
-          <TextInput
-            v-model="recoverPassword"
-            placeholder="new password"
-            type="password"
-          >
-            <BlockButton>
-              Submit
-            </BlockButton>
-            <span><a @click="resendVerification">Resend Code</a></span>
-            <span><a @click="state = 'login'">Back</a></span>
-          </textinput>
-        </textinput>
+        />
+        <TextInput
+          v-model="recoverPassword"
+          placeholder="new password"
+          type="password"
+        />
+        <BlockButton>
+          Submit
+        </BlockButton>
+        <span><a @click="resendVerification">Resend Code</a></span>
+        <span><a @click="state = 'login'">Back</a></span>
       </form>
 
       <form
@@ -121,13 +110,12 @@
         <TextInput
           v-model="validationCode"
           placeholder="6 digit code"
-        >
-          <BlockButton>
-            Submit
-          </BlockButton>
-          <span><a @click="resendVerification">Resend Code</a></span>
-          <span><a @click="state = 'register'">Back</a></span>
-        </textinput>
+        />
+        <BlockButton>
+          Submit
+        </BlockButton>
+        <span><a @click="resendVerification">Resend Code</a></span>
+        <span><a @click="state = 'register'">Back</a></span>
       </form>
     </div>
 
