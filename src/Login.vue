@@ -26,9 +26,9 @@
           type="password"
         >
         <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
-        <button type="submit">
+        <BlockButton>
           Login
-        </button>
+        </BlockButton>
         <span><a @click="state='forgot-password'">Forgot Password?</a></span>
       </form>
 
@@ -57,9 +57,9 @@
           placeholder="password"
           type="password"
         >
-        <button>
+        <BlockButton>
           Register
-        </button>
+        </BlockButton>
         <span>Have an account? <a @click="state='login'">Login</a></span>
       </form>
 
@@ -75,9 +75,9 @@
           placeholder="email"
           type="email"
         >
-        <button>
+        <BlockButton>
           Submit
-        </button>
+        </BlockButton>
         <span><a @click="state='login'">Back</a></span>
       </form>
 
@@ -96,9 +96,9 @@
           placeholder="new password"
           type="password"
         >
-        <button>
+        <BlockButton>
           Submit
-        </button>
+        </BlockButton>
         <span><a @click="resendVerification">Resend Code</a></span>
         <span><a @click="state = 'login'">Back</a></span>
       </form>
@@ -113,9 +113,9 @@
           v-model="validationCode"
           placeholder="6 digit code"
         >
-        <button>
+        <BlockButton>
           Submit
-        </button>
+        </BlockButton>
         <span><a @click="resendVerification">Resend Code</a></span>
         <span><a @click="state = 'register'">Back</a></span>
       </form>
@@ -143,8 +143,12 @@ import {
   sendEmailVerification, 
   verifyEmail
 } from '@/lib/cloudClient.js';
+import BlockButton from '@/components/BlockButton';
 
 export default {
+  components: {
+    BlockButton
+  },
   data() {
     return {
       state: 'login',
@@ -297,27 +301,6 @@ export default {
           outline: none !important;
           border-color: $purple-mid;
           border-width: 2px;
-        }
-      }
-
-      button {
-        width: 30%;
-        min-width: 75px;
-        border-radius: 0px;
-        border-width: 0px;
-        padding: 10px;
-        background-color: $purple-darker;
-        color: $white;
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
-        cursor: pointer;
-
-        &:hover{
-          box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
-          background-color: $purple-light;
-        }
-
-        &:focus{
-          outline: none !important;
         }
       }
     }
