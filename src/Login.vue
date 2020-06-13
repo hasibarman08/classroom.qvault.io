@@ -25,11 +25,11 @@
           placeholder="password"
           type="password"
         >
-        <span><a @click="state='forgot-password'">Forgot Password?</a></span>
+        <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
         <button type="submit">
           Login
         </button>
-        <span>Need an account? <a @click="state='register'">Sign Up Free</a></span>
+        <span><a @click="state='forgot-password'">Forgot Password?</a></span>
       </form>
 
 
@@ -84,7 +84,6 @@
         </button>
         <span><a @click="state='login'">Back</a></span>
       </form>
-
 
       <form
         v-if="state === 'forgot-password-code'"
