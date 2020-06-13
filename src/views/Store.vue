@@ -22,16 +22,16 @@
         v-for="(product, i) of products"
         :key="i"
         class="card"
-        :img-src="product.image"
+        :img-src="product.ImageURL"
       >
         <div class="body">
-          <span class="price">${{ product.price }}</span>
+          <span class="price">{{ (product.UnitAmount / 100).toLocaleString("en-US", {style:"currency", currency:"USD"}) }}</span>
 
           <div class="title">
             <FontAwesomeIcon
               icon="gem"
             />
-            <span>{{ product.title }}</span>
+            <span>{{ product.Name }}</span>
           </div>
         </div>
       </ImageCard>
@@ -43,6 +43,9 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import ImageCard from '@/components/ImageCard';
+import { 
+  getProducts
+} from '@/lib/cloudClient.js';
 
 export default {
   components: {
@@ -51,18 +54,19 @@ export default {
   },
   data() {
     return {
-      products: [
-        {
-          title: 'Get 1000 Gems',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Yohinki_Purple_Gem.jpg',
-          price: 19.99
-        }
-      ]
+      products: []
     };
   },
   computed: {
     balance(){
       return 10;
+    }
+  },
+  async mounted(){
+    try {
+      this.products = await getProducts();
+    } catch (err) {
+      alert(err);
     }
   }
 };
