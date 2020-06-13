@@ -4,13 +4,6 @@
       <span id="title">
         Store
       </span>
-
-      <span id="balance">
-        <FontAwesomeIcon
-          icon="gem"
-        />
-        {{ balance }}
-      </span>
     </div>
 
     <span id="sub-title">
@@ -57,11 +50,6 @@ export default {
       products: []
     };
   },
-  computed: {
-    balance(){
-      return 10;
-    }
-  },
   async mounted(){
     try {
       this.products = await getProducts();
@@ -90,14 +78,6 @@ export default {
     color: $gray-darker;
     font-size: 3em;
   }
-
-  #balance {
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: $purple-light;
-    font-size: 2em;
-  }
 }
 
 #sub-title {
@@ -111,25 +91,6 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
   width: 100%;
-
-  .card {
-    .price {
-      color: $green-lighter;
-      margin: 10px;
-      transition: all .3s ease-in-out;
-    }
-
-    .title {
-      color: $gold-dark;
-      font-size: 24px;
-      margin: 20px 0 20px 0;
-      color: $purple-lighter;
-
-      span {
-        margin-left: 15px;
-      }
-    }
-  }
 }
 
 </style>

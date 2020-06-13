@@ -144,6 +144,18 @@ export async function compileCode(code){
   return handled;
 }
 
+export async function getLastGemTransaction(){
+  const resp = await fetchWithAuth(`${domain}/v1/gem_transactions/last`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleWasmResponse(resp);
+  return handled;
+}
+
 export async function getProducts(){
   const resp = await fetchWithAuth(`${domain}/v1/products`, {
     method: 'GET',

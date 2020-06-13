@@ -43,6 +43,20 @@
         <div>
           <div id="nav">
             <router-link
+              to="/store"
+            >
+              <div
+                id="balance"
+                class="nav-item left"
+              >
+                <FontAwesomeIcon
+                  icon="gem"
+                />
+                {{ balance }}
+              </div>
+            </router-link>
+
+            <router-link
               to="/profile"
             >
               <div class="nav-item">
@@ -75,7 +89,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import { 
   logout,
-  getCourses
+  getCourses,
+  getLastGemTransaction
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -85,24 +100,36 @@ export default {
   },
   data(){
     return {
-      modules: []
+      modules: [],
+      balance: 0
     };
   },
   async mounted(){
-    try {
-      const courses = await getCourses();
-      if (courses.length > 0) {
-        let modules = [];
-        for (const mod of courses[0].Modules) {
-          modules.push({
-            text: mod.Title
-          });
-        }
-        this.modules = modules;
+    (async () => {
+      try {
+        const lastGemTransaction = await getLastGemTransaction();
+        this.balance = lastGemTransaction.Balance;
+      } catch (err) {
+        alert(err);
       }
-    } catch (err) {
-      alert(err);
-    }
+    })();
+
+    (async () => {
+      try {
+        const courses = await getCourses();
+        if (courses.length > 0) {
+          let modules = [];
+          for (const mod of courses[0].Modules) {
+            modules.push({
+              text: mod.Title
+            });
+          }
+          this.modules = modules;
+        }
+      } catch (err) {
+        alert(err);
+      }
+    })();
   },
   methods: {
     logout(){
@@ -170,6 +197,11 @@ $bar-height: 60px;
     height: $bar-height;
     background-color: $gray-darkest;
 
+    #balance {
+      color: $purple-light;
+      font-size: 2em;
+    }
+
     a {
       color: $white;
       text-decoration: none;
@@ -185,6 +217,10 @@ $bar-height: 60px;
       padding-left: 20px;
       padding-right: 20px;
       line-height: $bar-height;
+
+      &.left {
+        float: left;
+      }
 
       &:hover{
         background-color: $gray-darker;
