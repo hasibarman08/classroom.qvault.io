@@ -57,9 +57,7 @@
           placeholder="password"
           type="password"
         >
-        <button
-          button
-        >
+        <button>
           Register
         </button>
         <span>Have an account? <a @click="state='login'">Login</a></span>
@@ -77,9 +75,7 @@
           placeholder="email"
           type="email"
         >
-        <button
-          button
-        >
+        <button>
           Submit
         </button>
         <span><a @click="state='login'">Back</a></span>
@@ -100,9 +96,7 @@
           placeholder="new password"
           type="password"
         >
-        <button
-          button
-        >
+        <button>
           Submit
         </button>
         <span><a @click="resendVerification">Resend Code</a></span>
@@ -119,9 +113,7 @@
           v-model="validationCode"
           placeholder="6 digit code"
         >
-        <button
-          button
-        >
+        <button>
           Submit
         </button>
         <span><a @click="resendVerification">Resend Code</a></span>
