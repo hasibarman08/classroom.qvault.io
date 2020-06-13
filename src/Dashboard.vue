@@ -10,66 +10,34 @@
           <span> Qvault Classroom </span>
         </div>
 
-        <div
+        <MenuItemHorizontal
+          icon="store"
           class="item"
-          @click="$router.push({name: 'Store'})"
-        >
-          <FontAwesomeIcon
-            icon="store"
-            class="icon"
-          />
-          <span>Store</span>
-        </div>
+          :click="() => {$router.push({name: 'Store'})}"
+          text="Store"
+        />
 
-        <div
+        <MenuItemHorizontal
           class="item"
-          @click="$router.push({name: 'Courses'})"
-        >
-          <FontAwesomeIcon
-            icon="scroll"
-            class="icon"
-          />
-          <span>Courses</span>
-        </div>
-            
-        <div
+          icon="scroll"
+          :click="() => {$router.push({name: 'Courses'}) }"
+          text="Courses"
+        />
+
+        <MenuItemHorizontal
           class="item"
-          @click="modulesTabOpen = !modulesTabOpen"
-        >
-          <FontAwesomeIcon
-            icon="puzzle-piece"
-            class="icon"
-          />
-          <span>Modules</span>
-          <FontAwesomeIcon
-            class="arrow"
-            :class="{'is-open': modulesTabOpen}"
-            icon="arrow-right"
-          />
-        </div>
-        <div
-          class="sub-items"
-          :style="{maxHeight: modulesTabHeight + 'px'}"
-        >
-          <div 
-            v-for="(mod, i) of modules"
-            :key="i"
-            class="sub-item"
-          >
-            <span>{{ i + 1 }}) {{ mod.title }}</span>
-          </div>
-        </div>
-        
-        <div
+          icon="puzzle-piece"
+          :click="() => { modulesTabOpen = !modulesTabOpen }"
+          text="Modules"
+          :sub-items="modules"
+        />
+
+        <MenuItemHorizontal
           class="item"
-          @click="logout"
-        >
-          <FontAwesomeIcon
-            icon="sign-out-alt"
-            class="icon"
-          />
-          <span>Logout</span>
-        </div>
+          icon="sign-out-alt"
+          :click="logout"
+          text="Logout"
+        />
       </div>
 
       <div id="content">
@@ -105,13 +73,15 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import { 
   logout
 } from '@/lib/cloudClient.js';
 
 export default {
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    MenuItemHorizontal
   },
   data(){
     return {
@@ -119,21 +89,13 @@ export default {
       modulesTabOpen: false,
       modules: [
         {
-          title: 'Types'
+          text: 'Types'
         },
         {
-          title: 'Functions'
+          text: 'Functions'
         }
       ]
     };
-  },
-  computed: {
-    modulesTabHeight(){
-      return this.modulesTabOpen ? this.modulesTabHeightExpanded : 0;
-    },
-    modulesTabHeightExpanded(){
-      return this.modules.length * 30;
-    }
   },
   methods: {
     logout(){
@@ -187,68 +149,7 @@ $bar-height: 60px;
       margin-left: 10px;
     }
   }
-
-  .item {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    margin-bottom: 1em;
-
-    span {
-      margin-left: 15px;
-      transition: 0.4s;
-    }
-
-    .icon {
-      margin-left: 15px;
-      color: $white;
-    }
-
-    .arrow {
-      margin-left: 25px;
-      transition: all 0.4s ease;
-      color: $white;
-
-      &.is-open {
-        transform: rotateZ(90deg);
-      }
-    }
-
-    &:hover{
-      background-color: $gray-darker;
-      cursor: pointer;
-
-      span {
-        margin-left: 25px;
-      }
-    }
-  }
-
-  .sub-items {
-    overflow: hidden;
-    transition: max-height 0.2s linear 0s;
-
-    .sub-item {
-      width: 100%;
-      height: 30px;
-      line-height: 30px;
-      font-size: 14px;
-      border: solid $white;
-      border-width: 0 0 0 1px;
-      margin-left: 30px;
-
-      span {
-        padding-left: 20px;
-      }
-
-      &:hover{
-        cursor: pointer;
-        border-color: $purple-mid;
-      }
-    }
-  }
-} 
+}
 
 #content {
 	display: inline-block;
