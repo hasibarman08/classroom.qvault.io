@@ -15,21 +15,23 @@
         @submit="login"
       >
         <span class="title">Log In to Your Account</span>
-        <input
+        <TextInput
           v-model="loginEmail"
           placeholder="email"
           type="email"
         >
-        <input
-          v-model="loginPassword"
-          placeholder="password"
-          type="password"
-        >
-        <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
-        <BlockButton>
-          Login
-        </BlockButton>
-        <span><a @click="state='forgot-password'">Forgot Password?</a></span>
+          <TextInput
+            v-model="loginPassword"
+            placeholder="password"
+            type="password"
+          >
+            <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
+            <BlockButton>
+              Login
+            </BlockButton>
+            <span><a @click="state='forgot-password'">Forgot Password?</a></span>
+          </textinput>
+        </textinput>
       </form>
 
 
@@ -39,28 +41,32 @@
         @submit="register"
       >
         <span class="title">Sign Up Free</span>
-        <input
+        <TextInput
           v-model="registerEmail"
           placeholder="email"
           type="email"
         >
-        <input
-          v-model="registerFirstName"
-          placeholder="first name"
-        >
-        <input
-          v-model="registerLastName"
-          placeholder="last name"
-        >
-        <input
-          v-model="registerPassword"
-          placeholder="password"
-          type="password"
-        >
-        <BlockButton>
-          Register
-        </BlockButton>
-        <span>Have an account? <a @click="state='login'">Login</a></span>
+          <TextInput
+            v-model="registerFirstName"
+            placeholder="first name"
+          >
+            <TextInput
+              v-model="registerLastName"
+              placeholder="last name"
+            >
+              <TextInput
+                v-model="registerPassword"
+                placeholder="password"
+                type="password"
+              >
+                <BlockButton>
+                  Register
+                </BlockButton>
+                <span>Have an account? <a @click="state='login'">Login</a></span>
+              </textinput>
+            </textinput>
+          </textinput>
+        </textinput>
       </form>
 
 
@@ -70,15 +76,16 @@
         @submit="sendEmail"
       >
         <span class="title">Recover Password</span>
-        <input
+        <TextInput
           v-model="recoverEmail"
           placeholder="email"
           type="email"
         >
-        <BlockButton>
-          Submit
-        </BlockButton>
-        <span><a @click="state='login'">Back</a></span>
+          <BlockButton>
+            Submit
+          </BlockButton>
+          <span><a @click="state='login'">Back</a></span>
+        </textinput>
       </form>
 
       <form
@@ -87,20 +94,22 @@
         @submit="submitRecoveryCode"
       >
         <span class="title">Enter Recovery Code</span>
-        <input
+        <TextInput
           v-model="recoverCode"
           placeholder="6 digit code"
         >
-        <input
-          v-model="recoverPassword"
-          placeholder="new password"
-          type="password"
-        >
-        <BlockButton>
-          Submit
-        </BlockButton>
-        <span><a @click="resendVerification">Resend Code</a></span>
-        <span><a @click="state = 'login'">Back</a></span>
+          <TextInput
+            v-model="recoverPassword"
+            placeholder="new password"
+            type="password"
+          >
+            <BlockButton>
+              Submit
+            </BlockButton>
+            <span><a @click="resendVerification">Resend Code</a></span>
+            <span><a @click="state = 'login'">Back</a></span>
+          </textinput>
+        </textinput>
       </form>
 
       <form
@@ -109,15 +118,16 @@
         @submit="submitVerificationCode"
       >
         <span class="title">Check Your Email</span>
-        <input
+        <TextInput
           v-model="validationCode"
           placeholder="6 digit code"
         >
-        <BlockButton>
-          Submit
-        </BlockButton>
-        <span><a @click="resendVerification">Resend Code</a></span>
-        <span><a @click="state = 'register'">Back</a></span>
+          <BlockButton>
+            Submit
+          </BlockButton>
+          <span><a @click="resendVerification">Resend Code</a></span>
+          <span><a @click="state = 'register'">Back</a></span>
+        </textinput>
       </form>
     </div>
 
@@ -144,10 +154,12 @@ import {
   verifyEmail
 } from '@/lib/cloudClient.js';
 import BlockButton from '@/components/BlockButton';
+import TextInput from '@/components/TextInput';
 
 export default {
   components: {
-    BlockButton
+    BlockButton,
+    TextInput
   },
   data() {
     return {
@@ -288,20 +300,6 @@ export default {
 
       a {
         cursor: pointer;
-      }
-
-      input {
-        width: 50%;
-        min-width: 150px;
-        border-radius: 0px;
-        border-width: 1px;
-        padding: 10px;
-
-        &:focus{
-          outline: none !important;
-          border-color: $purple-mid;
-          border-width: 2px;
-        }
       }
     }
   }
