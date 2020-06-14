@@ -68,6 +68,18 @@ export async function updateUser(firstName, lastName){
   return handled;
 }
 
+export async function getUser() {
+  const resp = await fetchWithAuth(`${domain}/v1/users`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
 export async function updateUserPassword(email, oldPassword, newPassword){
   const resp = await fetch(`${domain}/v1/users/password`, {
     method: 'PUT',
@@ -159,6 +171,18 @@ export async function getLastGemTransaction(){
 export async function getProducts(){
   const resp = await fetchWithAuth(`${domain}/v1/products`, {
     method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export async function completePayments() {
+  const resp = await fetchWithAuth(`${domain}/v1/products`, {
+    method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
@@ -273,8 +297,8 @@ async function fetchWithAuth(url, params){
   }
   let token = localStorage.getItem(jwtKey);
   let decodedToken = decodeJWT(token);
-  const mintuesDelta = 15;
-  if (decodedToken.exp < (Date.now() + mintuesDelta*60) / 1000){
+  const hoursDelta = 24;
+  if (decodedToken.exp < (Date.now() + hoursDelta*60*60) / 1000){
     refreshToken();
   }
 

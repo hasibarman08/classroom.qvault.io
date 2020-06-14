@@ -914,6 +914,11 @@
   resolved "https://registry.yarnpkg.com/@soda/get-current-script/-/get-current-script-1.0.1.tgz#f4afffcb36e069a801d5339c90499601c47a2516"
   integrity sha512-zeOomWIE52M9JpYXlsR3iOf7TXTTmNQHnSbqjMsQZ5phzfAenHzL/1+vQ0ZoJfagocK11LNf8vnn2JG0ufRMUQ==
 
+"@stripe/stripe-js@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.7.0.tgz#870885e69b7627e59cd4777da558e494ba5cb698"
+  integrity sha512-/OreTnc8qWBsNrkpNTOxn67oRlqa+PZXukpiyZTcPo9/DRYyxtBZKvplFbH0C/qC/w0TpN8cueRl3h/dNYO4eg==
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -8811,6 +8816,11 @@ vue-loader@^15.9.2:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-loading-overlay@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/vue-loading-overlay/-/vue-loading-overlay-3.3.2.tgz#9853c90d9583ac2ec322da29bb90942bf65449af"
+  integrity sha512-5nBsaeb3quOBVXCgbSu9VNWkBVEsbDCupahv8dqkgbtJ00uKoNOPyw38+reWGHKNDBDl+x7x8wT8u3dV7ali7g==
+
 vue-markdown@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/vue-markdown/-/vue-markdown-2.2.4.tgz#db0f774178f3bc91ee18c626d86a3a0d2de22746"
@@ -8869,6 +8879,11 @@ vue@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vuex@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.4.0.tgz#20cc086062d750769fce1febb34e7fceeaebde45"
+  integrity sha512-ajtqwEW/QhnrBZQsZxCLHThZZaa+Db45c92Asf46ZDXu6uHXgbfVuBaJ4gzD2r4UX0oMJHstFwd2r2HM4l8umg==
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"

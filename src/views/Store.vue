@@ -1,5 +1,10 @@
 <template>
   <div id="container">
+    <LoadingOverlay
+      :is-loading="isLoading" 
+      :is-full-page="true"
+    />
+
     <div id="title">
       <span>
         Store
@@ -18,15 +23,16 @@
         :key="i"
         class="card"
         :img-src="product.ImageURL"
+        :click="() => { checkout(product.ID) }"
       >
         <div class="title">
           <FontAwesomeIcon
             icon="gem"
           />
-          <span>{{ product.Name }}</span>
+          <span>Get {{ product.Name }}</span>
         </div>
         <div class="price">
-          <span>${{ (product.UnitAmount / 100) }}</span>
+          <span>${{ (product.Price.UnitAmount / 100) }}</span>
         </div>
       </ImageCard>
     </div>
@@ -35,27 +41,62 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { loadStripe } from '@stripe/stripe-js';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
+import LoadingOverlay from '@/components/LoadingOverlay';
 import ImageCard from '@/components/ImageCard';
-import { 
-  getProducts
+import {
+  getProducts,
+  startProductCheckout,
+  completePayments,
+  getLastGemTransaction
 } from '@/lib/cloudClient.js';
 
 export default {
   components: {
     FontAwesomeIcon,
-    ImageCard
+    ImageCard,
+    LoadingOverlay
   },
   data() {
     return {
-      products: []
+      products: [],
+      stripeCustomerID: null,
+      stripeCustomerEmail: null,
+      error: null,
+      isLoading: false
     };
   },
   async mounted(){
-    try {
-      this.products = await getProducts();
-    } catch (err) {
-      alert(err);
+    (async () => {
+      try {
+        this.products = await getProducts();
+      } catch (err) {
+        alert(err);
+      } 
+    })();
+
+    (async () => {
+      try {
+        await completePayments();
+        const lastGemTransaction = await getLastGemTransaction();
+        this.$store.commit('updateBalance', lastGemTransaction.Balance);
+      } catch (err) {
+        console.log(err);
+      } 
+    })();
+  },
+  methods: {
+    async checkout(productID){
+      this.isLoading = true;
+      const checkoutSession = await startProductCheckout(productID);
+      const stripe = await loadStripe('pk_test_51EvvJkBNIsXC7YAh92Uwimgy5SGoXLVcWg4AClST38YIf4y2gw0ntIvWfknEoWgtNZK2RhKw8OHe0f56uHLMf1jM00aeqo68fW');
+      const {error} = await stripe.redirectToCheckout({
+        sessionId: checkoutSession.id
+      });
+      this.isLoading = false;
+      this.error = error.message;
     }
   }
 };

@@ -1,6 +1,9 @@
 <template>
   <div id="card">
-    <img :src="imgSrc">
+    <img
+      :src="imgSrc"
+      @click="click"
+    >
     <div class="body">
       <slot />
     </div>
@@ -13,6 +16,11 @@ export default {
     imgSrc: {
       type: String,
       required: true
+    },
+    click: {
+      type: Function,
+      required: false,
+      default: () => {}
     }
   }
 };

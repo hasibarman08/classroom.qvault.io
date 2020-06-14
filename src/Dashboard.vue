@@ -52,7 +52,7 @@
                 <FontAwesomeIcon
                   icon="gem"
                 />
-                {{ balance }}
+                {{ getBalance }}
               </div>
             </router-link>
 
@@ -85,6 +85,7 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { mapGetters } from 'vuex';
 
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import { 
@@ -100,19 +101,14 @@ export default {
   },
   data(){
     return {
-      modules: [],
-      balance: 0
+      modules: []
     };
   },
+  computed: {
+    ...mapGetters([ 'getBalance' ])
+  },
   async mounted(){
-    (async () => {
-      try {
-        const lastGemTransaction = await getLastGemTransaction();
-        this.balance = lastGemTransaction.Balance;
-      } catch (err) {
-        alert(err);
-      }
-    })();
+    this.loadBalance();
 
     (async () => {
       try {
@@ -135,6 +131,14 @@ export default {
     logout(){
       logout();
       location.reload();
+    },
+    async loadBalance(){
+      try {
+        const lastGemTransaction = await getLastGemTransaction();
+        this.$store.commit('updateBalance', lastGemTransaction.Balance);
+      } catch (err) {
+        alert(err);
+      }
     }
   }
 };
