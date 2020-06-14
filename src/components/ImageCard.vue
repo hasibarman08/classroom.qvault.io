@@ -1,9 +1,11 @@
 <template>
   <div id="card">
-    <img
-      :src="imgSrc"
-      @click="click"
-    >
+    <div id="img-container">
+      <img
+        :src="imgSrc"
+        @click="click"
+      >
+    </div>
     <div class="body">
       <slot />
     </div>
@@ -44,9 +46,26 @@ export default {
       background-color: $gray-dark;
     }
   }
-
-  img {
-    width: 100%;
+   
+  #img-container {
+    position: relative;
+    
+    &:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+    }
+    img {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
 
   .body {

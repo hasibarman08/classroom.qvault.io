@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <notifications
+      :duration="-1"
+      classes="custom-notification"
+    />
     <Dashboard v-if="isLoggedIn" />
     <Login v-else />
   </div>
@@ -47,8 +51,40 @@ export default {
 
 <style lang="scss">
 @import 'styles/styles.scss';
+@import 'styles/colors.scss';
 
 #app{
   height: 100%;
+}
+
+.vue-notification-group{
+  margin: 60px 10px 0 0;
+}
+
+.custom-notification {
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+ 
+  font-size: 1em;
+ 
+  color: $white;
+  background: $purple-mid !important;
+  border-left: 5px solid $gray-lightest;
+ 
+  &.warn {
+    background: $gold-mid !important;
+    border-left-color: 5px solid $pink;
+  }
+ 
+  &.error {
+    background: $pink !important;
+    border-left-color: 5px solid $gray-dark;
+  }
+ 
+  &.success {
+    background: $purple-mid !important;
+    border-left-color: 5px solid $gray-lightest;
+  }
 }
 </style>

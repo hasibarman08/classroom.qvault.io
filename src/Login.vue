@@ -26,7 +26,7 @@
           type="password"
         />
         <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
-        <BlockButton>
+        <BlockButton class="btn">
           Login
         </BlockButton>
         <span><a @click="state='forgot-password'">Forgot Password?</a></span>
@@ -56,7 +56,7 @@
           placeholder="password"
           type="password"
         />
-        <BlockButton>
+        <BlockButton class="btn">
           Register
         </BlockButton>
         <span>Have an account? <a @click="state='login'">Login</a></span>
@@ -73,7 +73,7 @@
           placeholder="email"
           type="email"
         />
-        <BlockButton>
+        <BlockButton class="btn">
           Submit
         </BlockButton>
         <span><a @click="state='login'">Back</a></span>
@@ -94,7 +94,7 @@
           placeholder="new password"
           type="password"
         />
-        <BlockButton>
+        <BlockButton class="btn">
           Submit
         </BlockButton>
         <span><a @click="resendVerification">Resend Code</a></span>
@@ -111,7 +111,7 @@
           v-model="validationCode"
           placeholder="6 digit code"
         />
-        <BlockButton>
+        <BlockButton class="btn">
           Submit
         </BlockButton>
         <span><a @click="resendVerification">Resend Code</a></span>
@@ -171,7 +171,10 @@ export default {
         await login(this.loginEmail, this.loginPassword);
         location.reload();
       } catch (err){
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     },
     async register(){
@@ -184,7 +187,10 @@ export default {
         );
         this.state = 'email-verification-code';
       } catch (err){
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     },
     async sendEmail(){
@@ -192,7 +198,10 @@ export default {
         await login(this.loginEmail, this.loginPassword);
         this.state='forgot-password-code';
       } catch (err){
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     },
     async submitRecoveryCode(){
@@ -205,7 +214,10 @@ export default {
         await login(this.recoverEmail, this.recoverPassword);
         location.reload();
       } catch (err){
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     },
     async submitVerificationCode(){
@@ -217,14 +229,20 @@ export default {
         );
         location.reload();
       } catch (err){
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     },
     async resendVerification(){
       try {
         await sendEmailVerification();
       } catch (err){
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     }
   }
@@ -284,6 +302,11 @@ export default {
       .title {
         font-size: 24px;
         font-weight: 100;
+      }
+
+      .btn {
+        width: 30%;
+        min-width: 75px;
       }
 
       a {

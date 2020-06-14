@@ -1,5 +1,9 @@
 <template>
   <div id="container">
+    <ConfirmOverlay
+      ref="confirmPurchase"
+      :on-confirm="()=>{}"
+    />
     <div id="title">
       <span>
         Courses
@@ -18,8 +22,12 @@
         :key="i"
         :img-src="course.ImageURL"
         class="card"
+        :click="() => {clickOnCourse(course.GemCost) }"
       >
         <div class="body">
+          <p class="title">
+            {{ course.Title }}
+          </p>
           <div
             v-if="!course.IsPurchased"
             class="price"
@@ -38,9 +46,6 @@
             />
             <span>Complete</span>
           </div>
-          <p class="title">
-            {{ course.Title }}
-          </p>
           <p class="description">
             {{ course.Description }}
           </p>
@@ -54,6 +59,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import ImageCard from '@/components/ImageCard';
+import ConfirmOverlay from '@/components/ConfirmOverlay';
 import { 
   getCourses
 } from '@/lib/cloudClient.js';
@@ -61,7 +67,8 @@ import {
 export default {
   components: {
     FontAwesomeIcon,
-    ImageCard
+    ImageCard,
+    ConfirmOverlay
   },
   data() {
     return {
@@ -72,7 +79,16 @@ export default {
     try {
       this.courses = await getCourses();
     } catch (err) {
-      alert(err);
+      this.$notify({
+        type: 'error',
+        text: err
+      });
+    }
+  },
+  methods: {
+    clickOnCourse(gemAmount){
+      this.$refs['confirmPurchase'].openNav(
+        `Would you like to purchase this course for ${gemAmount} gems?`);
     }
   }
 };
@@ -129,7 +145,7 @@ export default {
     .price {
       color: $purple-lighter;
       margin: 10px;
-      transition: all .3s ease-in-out;
+      font-size: 24px;
 
       span {
         margin-left: 10px;
@@ -139,7 +155,6 @@ export default {
     .completed {
       color: $green-light;
       margin: 10px;
-      transition: all .3s ease-in-out;
 
       span {
         margin-left: 10px;

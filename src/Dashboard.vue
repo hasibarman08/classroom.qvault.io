@@ -123,7 +123,10 @@ export default {
           this.modules = modules;
         }
       } catch (err) {
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     })();
   },
@@ -137,7 +140,10 @@ export default {
         const lastGemTransaction = await getLastGemTransaction();
         this.$store.commit('updateBalance', lastGemTransaction.Balance);
       } catch (err) {
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       }
     }
   }

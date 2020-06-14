@@ -73,7 +73,10 @@ export default {
       try {
         this.products = await getProducts();
       } catch (err) {
-        alert(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       } 
     })();
 

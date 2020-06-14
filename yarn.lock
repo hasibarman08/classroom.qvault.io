@@ -8840,6 +8840,11 @@ vue-markdown@^2.2.4:
     markdown-it-task-lists "^2.0.1"
     markdown-it-toc-and-anchor "^4.1.2"
 
+vue-notification@^1.3.20:
+  version "1.3.20"
+  resolved "https://registry.yarnpkg.com/vue-notification/-/vue-notification-1.3.20.tgz#d85618127763b46f3e25b8962b857947d5a97cbe"
+  integrity sha512-vPj67Ah72p8xvtyVE8emfadqVWguOScAjt6OJDEUdcW5hW189NsqvfkOrctxHUUO9UYl9cTbIkzAEcPnHu+zBQ==
+
 vue-prism-editor@^0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/vue-prism-editor/-/vue-prism-editor-0.6.1.tgz#e7c5ed39eecd798d2b4a3a6864985e90ed1f0c00"
