@@ -1,8 +1,16 @@
 <template>
   <div id="container">
-    <span id="title">
-      Courses
-    </span>
+    <div id="title">
+      <span>
+        Courses
+      </span>
+    </div>
+
+    <div id="sub-title">
+      <span>
+        Learn to code, earn gems by completing exercises, and unlock certifications
+      </span>
+    </div>
 
     <div id="cards">
       <ImageCard
@@ -79,19 +87,33 @@ export default {
   text-align: center;
 }
 
-#title {
-  text-align: center;
+#title{
+  width: 100%;
+  margin: 20px;
+  position: relative;
   color: $gray-darker;
   font-size: 3em;
 }
 
+#sub-title {
+  text-align: center;
+  color: $gray-mid;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
 #cards {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
 
-  .card{
+  .card {
+    flex: 1 1 calc(22% - 1em);
+    margin: 20px;
+    max-width: 400px;
+    min-width: 200px;
+
     .title {
       color: $gold-dark;
       font-size: 2em;

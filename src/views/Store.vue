@@ -1,14 +1,16 @@
 <template>
   <div id="container">
-    <div id="title-container">
-      <span id="title">
+    <div id="title">
+      <span>
         Store
       </span>
     </div>
 
-    <span id="sub-title">
-      Gems are used to unlock courses, purchase certifications, and complete workshops
-    </span>
+    <div id="sub-title">
+      <span>
+        Gems are used to unlock courses and certifications
+      </span>
+    </div>
 
     <div id="cards">
       <ImageCard
@@ -17,15 +19,14 @@
         class="card"
         :img-src="product.ImageURL"
       >
-        <div class="body">
-          <span class="price">{{ (product.UnitAmount / 100).toLocaleString("en-US", {style:"currency", currency:"USD"}) }}</span>
-
-          <div class="title">
-            <FontAwesomeIcon
-              icon="gem"
-            />
-            <span>{{ product.Name }}</span>
-          </div>
+        <div class="title">
+          <FontAwesomeIcon
+            icon="gem"
+          />
+          <span>{{ product.Name }}</span>
+        </div>
+        <div class="price">
+          <span>${{ (product.UnitAmount / 100) }}</span>
         </div>
       </ImageCard>
     </div>
@@ -64,33 +65,54 @@ export default {
 @import '@/styles/colors.scss';
 
 #container {
-  padding: 20px;
+  margin: 20px;
   display: block;
   text-align: center;
 }
 
-#title-container{
+#title{
   width: 100%;
   margin: 20px;
   position: relative;
-
-  #title {
-    color: $gray-darker;
-    font-size: 3em;
-  }
+  color: $gray-darker;
+  font-size: 3em;
 }
 
 #sub-title {
   text-align: center;
   color: $gray-mid;
-  font-size: 1em;
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
 #cards {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
+
+  .card{
+    flex: 1 1 calc(22% - 1em);
+    margin: 20px;
+    max-width: 400px;
+    min-width: 200px;
+
+    .title {
+      color: $purple-lighter;
+      font-size: 2em;
+      margin: 1em;
+
+      span {
+        margin-left: 10px;
+      }
+    }
+
+    .price {
+      font-size: 24px;
+      color: $green-dark;
+      margin: 1em;
+    }
+  }
 }
 
 </style>

@@ -152,7 +152,7 @@ export async function getLastGemTransaction(){
       'Content-Type': 'application/json'
     }
   });
-  const handled = await handleWasmResponse(resp);
+  const handled = await handleJSONResponse(resp);
   return handled;
 }
 
