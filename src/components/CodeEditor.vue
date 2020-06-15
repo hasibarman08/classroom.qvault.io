@@ -1,6 +1,9 @@
 <template>
   <div>
     <div id="code-editor-root">
+      <LoadingOverlay
+        :is-loading="isLoading"
+      />
       <div id="editor-container">
         <PrismEditor
           id="editor"
@@ -10,16 +13,15 @@
         />
       </div>
       <div id="console-output">
-        <button
+        <BlockButton
           id="run-btn"
-          :disabled="code.trim().length === 0"
-          @click="runCode"
+          :click="runCode"
         >
           <FontAwesomeIcon
             icon="play"
           />
           Run
-        </button>
+        </BlockButton>
         <p
           v-for="(line, i) of output"
           :key="i"
@@ -39,6 +41,8 @@ import 'prismjs/components/prism-go.min.js';
 
 import 'vue-prism-editor/dist/VuePrismEditor.css';
 
+import BlockButton from '@/components/BlockButton';
+import LoadingOverlay from '@/components/LoadingOverlay';
 import runGoWasm from '@/lib/runGoWasm.js';
 import { compileCode } from '@/lib/cloudClient.js';
 import PrismEditor from 'vue-prism-editor';
@@ -47,7 +51,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 export default {
   components: {
     PrismEditor,
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    LoadingOverlay,
+    BlockButton
   },
   props: { 
     placeholder:{
@@ -60,16 +66,20 @@ export default {
     return {
       code: this.placeholder,
       output: [],
-      err: false
+      err: false,
+      isLoading: false
     };
   },
   methods: {
     async runCode() {
       try {
+        this.isLoading = true;
         const wasm = await compileCode(this.code);
         this.output = await runGoWasm(wasm);
         this.err = false;
+        this.isLoading = false;
       } catch(err) {
+        this.isLoading = false;
         this.output = [ err ];
         this.err = true;
       }
@@ -112,23 +122,10 @@ export default {
     #run-btn {
       float: right;
       margin: 20px;
-      background-color: $purple-mid;
-      border: none;
-      color: white;
       height: 50px;
       padding: 0 30px 0 30px;
       line-height: 50px;
       font-size: 16px;
-      text-align: center;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $purple-light;
-      }
-
-      &:disabled {
-        background-color: $gray-mid;
-      }
     }
 
     p {

@@ -2,7 +2,6 @@
   <div id="container">
     <LoadingOverlay
       :is-loading="isLoading" 
-      :is-full-page="true"
     />
 
     <div id="title">

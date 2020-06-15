@@ -2,7 +2,7 @@
   <div class="vld-parent">
     <loading
       :active.sync="isLoading" 
-      :is-full-page="isFullPage"
+      :is-full-page="true"
     />
   </div>
 </template>
@@ -17,10 +17,6 @@ export default {
   },
   props: { 
     isLoading:{
-      type: Boolean,
-      required: true
-    },
-    isFullPage:{
       type: Boolean,
       required: true
     }
