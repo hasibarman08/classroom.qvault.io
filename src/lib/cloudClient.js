@@ -217,8 +217,8 @@ export async function getCourses(){
 }
 
 export async function purchaseCourse(courseUUID){
-  const resp = await fetchWithAuth(`${domain}/v1/courses${courseUUID}`, {
-    method: 'GET',
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/purchase`, {
+    method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json'

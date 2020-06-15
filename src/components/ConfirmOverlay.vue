@@ -29,22 +29,18 @@ export default {
   components: {
     BlockButton
   },
-  props: {
-    onConfirm:{
-      type: Function,
-      required: true
-    }
-  },
   data(){
     return {
       isOpen: false,
-      text: null
+      text: null,
+      onConfirm: () => {}
     };
   },
   methods: {
-    openNav(text){
+    openNav(text, onConfirm){
       this.isOpen = true;
       this.text = text;
+      this.onConfirm = onConfirm;
     },
     closeNav(){
       this.isOpen = false;
@@ -66,7 +62,7 @@ export default {
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0, 0.95);
   overflow-y: hidden;
-  transition: 0.5s;
+  transition: 0.4s;
 
   p {
     padding: 8px;

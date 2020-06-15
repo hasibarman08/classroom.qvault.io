@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <notifications
-      :duration="-1"
+      :duration="3000"
       classes="custom-notification"
     />
     <Dashboard v-if="isLoggedIn" />

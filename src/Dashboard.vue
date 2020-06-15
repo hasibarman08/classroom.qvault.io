@@ -217,7 +217,7 @@ $bar-height: 60px;
     background-color: $gray-darkest;
 
     #balance {
-      color: $purple-light;
+      color: $purple-lighter;
       font-size: 2em;
     }
 

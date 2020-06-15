@@ -2,7 +2,6 @@
   <div id="container">
     <ConfirmOverlay
       ref="confirmPurchase"
-      :on-confirm="()=>{}"
     />
     <div id="title">
       <span>
@@ -12,7 +11,7 @@
 
     <div id="sub-title">
       <span>
-        Learn to code, earn gems by completing exercises, and unlock certifications
+        Learn to code, earn gems by completing exercises and unlock certifications
       </span>
     </div>
 
@@ -22,21 +21,16 @@
         :key="i"
         :img-src="course.ImageURL"
         class="card"
-        :click="() => {clickOnCourse(course.GemCost) }"
+        :click="() => {clickOnCourse(course.UUID, course.GemCost, course.IsPurchased) }"
       >
         <div class="body">
           <p class="title">
             {{ course.Title }}
           </p>
-          <div
-            v-if="!course.IsPurchased"
-            class="price"
-          >
-            <FontAwesomeIcon
-              icon="gem"
-            />
-            <span>{{ course.GemCost }}</span>
-          </div>
+          <p class="description">
+            {{ course.Description }}
+          </p>
+
           <div
             v-if="course.IsComplete"
             class="completed"
@@ -46,9 +40,24 @@
             />
             <span>Complete</span>
           </div>
-          <p class="description">
-            {{ course.Description }}
-          </p>
+          <div
+            v-else-if="course.IsPurchased"
+            class="purchased"
+          >
+            <FontAwesomeIcon
+              icon="check"
+            />
+            <span>Purchased</span>
+          </div>
+          <div
+            v-else
+            class="price"
+          >
+            <FontAwesomeIcon
+              icon="gem"
+            />
+            <span>{{ course.GemCost }}</span>
+          </div>
         </div>
       </ImageCard>
     </div>
@@ -61,7 +70,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ImageCard from '@/components/ImageCard';
 import ConfirmOverlay from '@/components/ConfirmOverlay';
 import { 
-  getCourses
+  getCourses,
+  purchaseCourse,
+  getLastGemTransaction
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -76,19 +87,50 @@ export default {
     };
   },
   async mounted(){
-    try {
-      this.courses = await getCourses();
-    } catch (err) {
-      this.$notify({
-        type: 'error',
-        text: err
-      });
-    }
+    this.loadCourses();
   },
   methods: {
-    clickOnCourse(gemAmount){
+    async loadCourses() {
+      try {
+        this.courses = await getCourses();
+      } catch (err) {
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
+    },
+    clickOnCourse(courseUUID, gemAmount, isPurchased){
+      if (isPurchased) {
+        this.$router.push({name: 'Modules'});
+        return;
+      }
+
+      if (this.$store.getters.getBalance < gemAmount){
+        this.$notify({
+          type: 'warn',
+          title: 'Need More Gems',
+          text: 'Go grab some gems in the store!'
+        });
+        return;
+      }
+
       this.$refs['confirmPurchase'].openNav(
-        `Would you like to purchase this course for ${gemAmount} gems?`);
+        `Would you like to purchase this course for ${gemAmount} gems?`,
+        async () => {
+          try {
+            await purchaseCourse(courseUUID);
+            this.loadCourses();
+            const lastGemTransaction = await getLastGemTransaction();
+            this.$store.commit('setBalance', lastGemTransaction.Balance);
+          } catch (err) {
+            this.$notify({
+              type: 'error',
+              text: err
+            });
+          }
+        }
+      );
     }
   }
 };
@@ -142,19 +184,28 @@ export default {
       margin: 1em;
     }
 
-    .price {
-      color: $purple-lighter;
+    .completed {
+      color: $green-light;
       margin: 10px;
-      font-size: 24px;
 
       span {
         margin-left: 10px;
       }
     }
 
-    .completed {
-      color: $green-light;
+    .purchased {
+      color: $gold-lighter;
       margin: 10px;
+
+      span {
+        margin-left: 10px;
+      }
+    }
+
+    .price {
+      color: $purple-lighter;
+      margin: 10px;
+      font-size: 24px;
 
       span {
         margin-left: 10px;
