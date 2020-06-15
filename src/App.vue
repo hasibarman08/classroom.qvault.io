@@ -4,13 +4,12 @@
       :duration="3000"
       classes="custom-notification"
     />
-    <Dashboard v-if="isLoggedIn" />
+    <Dashboard v-if="$store.getters.getIsLoggedIn" />
     <Login v-else />
   </div>
 </template>
 
 <script>
-import { isLoggedIn } from '@/lib/cloudClient.js';
 import Dashboard from '@/Dashboard.vue';
 import Login from '@/Login.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -25,6 +24,10 @@ import {
   faCheck,
   faStore
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  isLoggedIn
+} from '@/lib/cloudClient.js';
+
 
 library.add(faArrowRight);
 library.add(faUserTie);
@@ -41,10 +44,8 @@ export default {
     Dashboard,
     Login
   },
-  computed: {
-    isLoggedIn(){
-      return isLoggedIn();
-    }
+  mounted(){
+    this.$store.commit('setIsLoggedIn', isLoggedIn());
   }
 };
 </script>

@@ -134,7 +134,8 @@
 </template>
 
 <script>
-import { 
+import {
+  isLoggedIn,
   login, 
   createUser, 
   updateUserPasswordCode,
@@ -169,7 +170,7 @@ export default {
     async login(){
       try {
         await login(this.loginEmail, this.loginPassword);
-        location.reload();
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
       } catch (err){
         this.$notify({
           type: 'error',
@@ -212,7 +213,7 @@ export default {
           this.recoverCode
         );
         await login(this.recoverEmail, this.recoverPassword);
-        location.reload();
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
       } catch (err){
         this.$notify({
           type: 'error',
@@ -227,7 +228,7 @@ export default {
           this.registerEmail, 
           this.registerPassword
         );
-        location.reload();
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
       } catch (err){
         this.$notify({
           type: 'error',

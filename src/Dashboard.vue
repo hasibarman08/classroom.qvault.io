@@ -87,7 +87,8 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
-import { 
+import {
+  isLoggedIn,
   logout,
   getCourses,
   getLastGemTransaction,
@@ -112,7 +113,7 @@ export default {
   methods: {
     logout(){
       logout();
-      location.reload();
+      this.$store.commit('setIsLoggedIn', isLoggedIn());
     },
     async loadModules(){
       try {

@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     balance: 0,
-    products: []
+    products: [],
+    isLoggedIn: false
   },
   mutations: {
     setBalance(state, newBalance) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     setProducts(state, newProducts) {
       state.products = newProducts;
+    },
+    setIsLoggedIn(state, newIsLoggedIn) {
+      state.isLoggedIn = newIsLoggedIn;
     }
   },
   actions: {},
@@ -23,6 +27,9 @@ export default new Vuex.Store({
     },
     getProducts(state) {
       return state.products;
+    },
+    getIsLoggedIn(state) {
+      return state.isLoggedIn;
     }
   }
 });
