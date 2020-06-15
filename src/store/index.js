@@ -5,17 +5,24 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    balance: 0
+    balance: 0,
+    products: []
   },
   mutations: {
-    updateBalance(state, newBalance) {
+    setBalance(state, newBalance) {
       state.balance = newBalance;
+    },
+    setProducts(state, newProducts) {
+      state.products = newProducts;
     }
   },
   actions: {},
   getters: {
     getBalance(state) {
       return state.balance;
+    },
+    getProducts(state) {
+      return state.products;
     }
   }
 });

@@ -2,6 +2,7 @@
   <div>
     <div
       id="item"
+      :class="{'current': current}"
       @click="() => {
         click(); 
         subItems.length > 0 ? subItemsTabOpen = !subItemsTabOpen : null
@@ -61,6 +62,11 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    },
+    current:{
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data(){
@@ -86,6 +92,11 @@ export default {
   height: 50px;
   line-height: 50px;
   font-size: 18px;
+  color: $white;
+
+  &.current {
+    color: $gold-light;
+  }
 
   &:hover{
     background-color: $gray-darker;
@@ -103,13 +114,11 @@ export default {
 
   .icon {
       margin-left: 15px;
-      color: $white;
   }
 
   .arrow {
     margin-left: 25px;
     transition: all 0.4s ease;
-    color: $white;
 
     &.is-open {
     transform: rotateZ(90deg);

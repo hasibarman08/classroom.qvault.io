@@ -12,27 +12,27 @@
 
         <MenuItemHorizontal
           icon="store"
-          class="item"
           :click="() => {$router.push({name: 'Store'})}"
           text="Store"
+          :current="$router.currentRoute.name === 'Store'"
         />
 
         <MenuItemHorizontal
-          class="item"
           icon="scroll"
           :click="() => {$router.push({name: 'Courses'}) }"
           text="Courses"
+          :current="$router.currentRoute.name === 'Courses'"
         />
 
         <MenuItemHorizontal
-          class="item"
           icon="puzzle-piece"
           text="Modules"
           :sub-items="modules"
+          :click="() => {$router.push({name: 'Modules'}) }"
+          :current="$router.currentRoute.name === 'Modules'"
         />
 
         <MenuItemHorizontal
-          class="item"
           icon="sign-out-alt"
           :click="logout"
           text="Logout"
@@ -52,7 +52,7 @@
                 <FontAwesomeIcon
                   icon="gem"
                 />
-                {{ getBalance }}
+                {{ $store.getters.getBalance }}
               </div>
             </router-link>
 
@@ -85,13 +85,13 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { mapGetters } from 'vuex';
 
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import { 
   logout,
   getCourses,
-  getLastGemTransaction
+  getLastGemTransaction,
+  getProducts
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -104,13 +104,17 @@ export default {
       modules: []
     };
   },
-  computed: {
-    ...mapGetters([ 'getBalance' ])
-  },
   async mounted(){
     this.loadBalance();
-
-    (async () => {
+    this.loadModules();
+    this.loadProducts();
+  },
+  methods: {
+    logout(){
+      logout();
+      location.reload();
+    },
+    async loadModules(){
       try {
         const courses = await getCourses();
         if (courses.length > 0) {
@@ -128,17 +132,22 @@ export default {
           text: err
         });
       }
-    })();
-  },
-  methods: {
-    logout(){
-      logout();
-      location.reload();
     },
     async loadBalance(){
       try {
         const lastGemTransaction = await getLastGemTransaction();
-        this.$store.commit('updateBalance', lastGemTransaction.Balance);
+        this.$store.commit('setBalance', lastGemTransaction.Balance);
+      } catch (err) {
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
+    },
+    async loadProducts(){
+      try {
+        const products = await getProducts();
+        this.$store.commit('setProducts', products);
       } catch (err) {
         this.$notify({
           type: 'error',

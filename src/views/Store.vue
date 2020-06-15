@@ -19,7 +19,7 @@
 
     <div id="cards">
       <ImageCard
-        v-for="(product, i) of products"
+        v-for="(product, i) of $store.getters.getProducts"
         :key="i"
         class="card"
         :img-src="product.ImageURL"
@@ -47,7 +47,6 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import ImageCard from '@/components/ImageCard';
 import {
-  getProducts,
   startProductCheckout,
   completePayments,
   getLastGemTransaction
@@ -61,7 +60,6 @@ export default {
   },
   data() {
     return {
-      products: [],
       stripeCustomerID: null,
       stripeCustomerEmail: null,
       error: null,
@@ -71,20 +69,9 @@ export default {
   async mounted(){
     (async () => {
       try {
-        this.products = await getProducts();
-      } catch (err) {
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      } 
-    })();
-
-    (async () => {
-      try {
         await completePayments();
         const lastGemTransaction = await getLastGemTransaction();
-        this.$store.commit('updateBalance', lastGemTransaction.Balance);
+        this.$store.commit('setBalance', lastGemTransaction.Balance);
       } catch (err) {
         console.log(err);
       } 
