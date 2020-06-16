@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     balance: 0,
     products: [],
-    isLoggedIn: false
+    isLoggedIn: false,
+    courses: []
   },
   mutations: {
     setBalance(state, newBalance) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setIsLoggedIn(state, newIsLoggedIn) {
       state.isLoggedIn = newIsLoggedIn;
+    },
+    setCourses(state, newCourses) {
+      state.courses = newCourses;
     }
   },
   actions: {},
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     },
     getIsLoggedIn(state) {
       return state.isLoggedIn;
+    },
+    getCourses(state) {
+      return state.courses;
     }
   }
 });

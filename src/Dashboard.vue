@@ -25,9 +25,11 @@
         />
 
         <MenuItemHorizontal
+          v-for="(course, i) of activeCourses"
+          :key="i"
           icon="puzzle-piece"
-          text="Modules"
-          :sub-items="modules"
+          :text="course.Title"
+          :sub-items="modulesToSubItems(course.Modules)"
           :click="() => {$router.push({name: 'Modules'}) }"
           :current="$router.currentRoute.name === 'Modules'"
         />
@@ -100,33 +102,34 @@ export default {
     FontAwesomeIcon,
     MenuItemHorizontal
   },
-  data(){
-    return {
-      modules: []
-    };
+  computed: {
+    activeCourses(){
+      return this.$store.getters.getCourses.filter(course => course.IsPurchased);
+    }
   },
   async mounted(){
     this.loadBalance();
-    this.loadModules();
+    this.loadCourses();
     this.loadProducts();
   },
   methods: {
+    modulesToSubItems(modules){
+      let subItems = [];
+      for (const mod of modules) {
+        subItems.push({
+          text: mod.Title
+        });
+      }
+      return subItems;
+    },
     logout(){
       logout();
       this.$store.commit('setIsLoggedIn', isLoggedIn());
     },
-    async loadModules(){
+    async loadCourses(){
       try {
         const courses = await getCourses();
-        if (courses.length > 0) {
-          let modules = [];
-          for (const mod of courses[0].Modules) {
-            modules.push({
-              text: mod.Title
-            });
-          }
-          this.modules = modules;
-        }
+        this.$store.commit('setCourses', courses);
       } catch (err) {
         this.$notify({
           type: 'error',

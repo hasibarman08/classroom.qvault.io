@@ -18,7 +18,7 @@
 
     <div id="cards">
       <ImageCard
-        v-for="(product, i) of $store.getters.getProducts"
+        v-for="(product, i) of products"
         :key="i"
         class="card"
         :img-src="product.ImageURL"
@@ -64,6 +64,14 @@ export default {
       error: null,
       isLoading: false
     };
+  },
+  computed: {
+    products(){
+      let products = this.$store.getters.getProducts;
+      products.sort((p1, p2) => p1.Price.UnitAmount > p2.Price.UnitAmount ? 1 : -1);
+      console.log(products);
+      return products;
+    }
   },
   async mounted(){
     (async () => {

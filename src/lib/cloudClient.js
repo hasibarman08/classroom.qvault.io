@@ -223,6 +223,7 @@ export async function purchaseCourse(courseUUID){
     headers: {
       'Content-Type': 'application/json'
     }
+    
   });
   const handled = await handleJSONResponse(resp);
   return handled;

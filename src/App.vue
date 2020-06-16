@@ -28,7 +28,6 @@ import {
   isLoggedIn
 } from '@/lib/cloudClient.js';
 
-
 library.add(faArrowRight);
 library.add(faUserTie);
 library.add(faScroll);
