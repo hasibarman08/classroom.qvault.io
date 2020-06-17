@@ -223,14 +223,13 @@ export async function purchaseCourse(courseUUID){
     headers: {
       'Content-Type': 'application/json'
     }
-    
   });
   const handled = await handleJSONResponse(resp);
   return handled;
 }
 
 export async function getNextExercise(courseUUID){
-  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/excersizes/current`, {
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/exercises/current`, {
     method: 'GET',
     mode: 'cors',
     headers: {
@@ -241,32 +240,39 @@ export async function getNextExercise(courseUUID){
   return handled;
 }
 
-export async function submitCodeExercise(courseUUID, moduleUUID, codeUUID){
-  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/excersizes/${codeUUID}/code`, {
+export async function submitCodeExercise(courseUUID, moduleUUID, exerciseUUID, output){
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/exercises/${exerciseUUID}/code`, {
     method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    body: JSON.stringify({
+      output
+    })
   });
   const handled = await handleJSONResponse(resp);
   return handled;
 }
 
-export async function submitMultipleChoiceExercise(courseUUID, moduleUUID, codeUUID){
-  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/excersizes/${codeUUID}/multiple_choice`, {
+export async function submitMultipleChoiceExercise(courseUUID, moduleUUID, exerciseUUID, question, answer){
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/exercises/${exerciseUUID}/multiple_choice`, {
     method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    body: JSON.stringify({
+      question,
+      answer
+    })
   });
   const handled = await handleJSONResponse(resp);
   return handled;
 }
 
-export async function submitInformationalExercise(courseUUID, moduleUUID, codeUUID){
-  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/excersizes/${codeUUID}/informational`, {
+export async function submitInformationalExercise(courseUUID, moduleUUID, exerciseUUID){
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/modules/${moduleUUID}/exercises/${exerciseUUID}/informational`, {
     method: 'POST',
     mode: 'cors',
     headers: {

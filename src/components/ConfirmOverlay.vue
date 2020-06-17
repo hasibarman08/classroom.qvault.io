@@ -14,7 +14,7 @@
       <BlockButton
         class="btn"
         :click="closeNav"
-        type="cancel"
+        color="gray"
       >
         Cancel
       </BlockButton>

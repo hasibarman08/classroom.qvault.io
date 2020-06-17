@@ -41,12 +41,15 @@ import 'prismjs/components/prism-go.min.js';
 
 import 'vue-prism-editor/dist/VuePrismEditor.css';
 
+import PrismEditor from 'vue-prism-editor';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 import BlockButton from '@/components/BlockButton';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import runGoWasm from '@/lib/runGoWasm.js';
-import { compileCode } from '@/lib/cloudClient.js';
-import PrismEditor from 'vue-prism-editor';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { 
+  compileCode
+} from '@/lib/cloudClient.js';
 
 export default {
   components: {
@@ -55,22 +58,24 @@ export default {
     LoadingOverlay,
     BlockButton
   },
-  props: { 
-    placeholder:{
-      type: String,
-      required: false,
-      default: '\n\n\n\n\n\n'
+  props: {
+    callback: {
+      type: Function,
+      required: true
     }
   },
   data() {
     return {
-      code: this.placeholder,
+      code: '',
       output: [],
       err: false,
       isLoading: false
     };
   },
   methods: {
+    setCode(code){
+      this.code = code;
+    },
     async runCode() {
       try {
         this.isLoading = true;
@@ -78,6 +83,7 @@ export default {
         this.output = await runGoWasm(wasm);
         this.err = false;
         this.isLoading = false;
+        await this.callback(this.output.join());
       } catch(err) {
         this.isLoading = false;
         this.output = [ err ];
@@ -115,8 +121,9 @@ export default {
 
   #console-output{
     align-self: flex-end;
-    background-color: $gray-dark;
+    background-color: $gray-darkest;
     flex: 1;
+    flex-direction: column;
     width: 100%;
 
     #run-btn {
@@ -131,7 +138,7 @@ export default {
     p {
       margin: 0;
       font-size: 1em;
-      padding: 5px;
+      padding: 10px;
       color: $white;
     }
 

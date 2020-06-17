@@ -69,7 +69,6 @@ export default {
     products(){
       let products = this.$store.getters.getProducts;
       products.sort((p1, p2) => p1.Price.UnitAmount > p2.Price.UnitAmount ? 1 : -1);
-      console.log(products);
       return products;
     }
   },
@@ -80,7 +79,10 @@ export default {
         const lastGemTransaction = await getLastGemTransaction();
         this.$store.commit('setBalance', lastGemTransaction.Balance);
       } catch (err) {
-        console.log(err);
+        this.$notify({
+          type: 'error',
+          text: err
+        });
       } 
     })();
   },

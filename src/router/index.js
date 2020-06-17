@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Courses from '../views/Courses.vue';
 import Profile from '../views/Profile.vue';
-import Modules from '../views/Modules.vue';
+import Exercise from '../views/Exercise.vue';
 import Store from '../views/Store.vue';
 
 Vue.use(VueRouter);
@@ -10,18 +10,18 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Modules',
-    component: Modules
+    name: 'Courses',
+    component: Courses
+  },
+  {
+    path: '/exercise/:courseUUID/:moduleUUID?',
+    name: 'Exercise',
+    component: Exercise
   },
   {
     path: '/store',
     name: 'Store',
     component: Store
-  },
-  {
-    path: '/courses',
-    name: 'Courses',
-    component: Courses
   },
   {
     path: '/profile',

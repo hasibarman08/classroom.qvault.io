@@ -1,7 +1,7 @@
 <template>
   <button
     type="submit"
-    :class="type"
+    :class="color"
     @click="click"
   >
     <slot />
@@ -16,10 +16,10 @@ export default {
       required: false,
       default: () =>{}
     },
-    type:{
+    color:{
       type: String,
       required: false,
-      default: 'success'
+      default: 'purple'
     }
   }
 };
@@ -36,7 +36,7 @@ button {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
   cursor: pointer;
 
-  &.cancel {
+  &.gray {
     background-color: $gray-dark;
 
     &:hover{
@@ -45,7 +45,16 @@ button {
     }
   }
 
-  &.success {
+  &.green {
+    background-color: $green-darker;
+
+    &:hover{
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+      background-color: $green-mid;
+    }
+  }
+
+  &.purple {
     background-color: $purple-dark;
 
     &:hover{

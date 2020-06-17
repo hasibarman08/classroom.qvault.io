@@ -30,8 +30,8 @@
           icon="puzzle-piece"
           :text="course.Title"
           :sub-items="modulesToSubItems(course.Modules)"
-          :click="() => {$router.push({name: 'Modules'}) }"
-          :current="$router.currentRoute.name === 'Modules'"
+          :click="() => {$router.push({name: 'Exercise', params: {courseUUID: course.UUID}}) }"
+          :current="$router.currentRoute.name === 'Exercise'"
         />
 
         <MenuItemHorizontal

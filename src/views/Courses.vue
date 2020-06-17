@@ -102,7 +102,7 @@ export default {
     },
     clickOnCourse(courseUUID, gemAmount, isPurchased){
       if (isPurchased) {
-        this.$router.push({name: 'Modules'});
+        this.$router.push({name: 'Exercise', params: {courseUUID}});
         return;
       }
 

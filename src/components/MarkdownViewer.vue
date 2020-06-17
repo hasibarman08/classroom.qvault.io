@@ -3,6 +3,7 @@
     <VueMarkdown
       id="viewer"
       :source="source"
+      :breaks="false"
       @rendered="update"
     />
   </div>
@@ -21,20 +22,11 @@ export default {
     VueMarkdown
   },
   props: { 
-    url:{
+    source:{
       type: String,
       required: false,
-      default: null
+      default: ''
     }
-  },
-  data(){
-    return {
-      source: ''
-    };
-  },
-  async mounted(){
-    let resp = await fetch(this.url);
-    this.source = await resp.text();
   },
   methods: {
     update() {
