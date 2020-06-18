@@ -22,7 +22,9 @@ import {
   faPlay,
   faGem,
   faCheck,
-  faStore
+  faStore,
+  faCertificate,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import {
   isLoggedIn
@@ -37,6 +39,8 @@ library.add(faPlay);
 library.add(faGem);
 library.add(faCheck);
 library.add(faStore);
+library.add(faCertificate);
+library.add(faTimes);
 
 export default {
   components: {
@@ -70,21 +74,18 @@ export default {
  
   color: $white;
   background: $purple-mid !important;
-  border-left: 5px solid $gray-lightest;
+  border-right: 5px solid $gray-darker;
  
   &.warn {
     background: $gold-mid !important;
-    border-left-color: 5px solid $pink;
   }
  
   &.error {
-    background: $pink !important;
-    border-left-color: 5px solid $gray-dark;
+    background: $pink-mid !important;
   }
  
   &.success {
-    background: $purple-mid !important;
-    border-left-color: 5px solid $gray-lightest;
+    background: $green-dark !important;
   }
 }
 </style>

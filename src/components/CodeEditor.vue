@@ -83,7 +83,7 @@ export default {
         this.output = await runGoWasm(wasm);
         this.err = false;
         this.isLoading = false;
-        await this.callback(this.output.join());
+        await this.callback(this.output.join(''));
       } catch(err) {
         this.isLoading = false;
         this.output = [ err ];
@@ -101,11 +101,10 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
+  align-items: stretch;
 
   #editor-container {
-    align-self: flex-start;
-    flex: 3;
-    width: 100%;
+    flex: 4;
     overflow: auto;
 
     #editor {
@@ -120,15 +119,14 @@ export default {
   }
 
   #console-output{
-    align-self: flex-end;
     background-color: $gray-darkest;
-    flex: 1;
+    flex: 2;
     flex-direction: column;
-    width: 100%;
+    padding: 10px;
+    overflow: auto;
 
     #run-btn {
       float: right;
-      margin: 20px;
       height: 50px;
       padding: 0 30px 0 30px;
       line-height: 50px;
@@ -138,7 +136,6 @@ export default {
     p {
       margin: 0;
       font-size: 1em;
-      padding: 10px;
       color: $white;
     }
 

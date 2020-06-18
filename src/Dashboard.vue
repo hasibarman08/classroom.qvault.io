@@ -35,6 +35,14 @@
         />
 
         <MenuItemHorizontal
+          icon="certificate"
+          :click="() => {$router.push({name: 'Certificates'}) }"
+          text="Certificates"
+          :current="$router.currentRoute.name === 'Certificates'"
+        />
+
+
+        <MenuItemHorizontal
           icon="sign-out-alt"
           :click="logout"
           text="Logout"

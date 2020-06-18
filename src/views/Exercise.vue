@@ -67,7 +67,7 @@ export default {
   computed: {
     answers(){
       if (this.questions) {
-        this.shuffle(this.questions[this.currentQuestionIndex].Answers);
+        return this.shuffle(this.questions[this.currentQuestionIndex].Answers);
       }
       return null;
     },
@@ -108,7 +108,11 @@ export default {
           this.exerciseUUID,
           output
         );
-        this.sleep(2000);
+        this.$notify({
+          type: 'success',
+          text: 'Correct! Great Job :)'
+        });
+        await this.sleep(1500);
         await this.getNextExercise();
       } catch(err) {
         this.$notify({
@@ -137,6 +141,10 @@ export default {
     async getNextExercise(){
       try {
         const exercise = await getNextExercise(this.$route.params.courseUUID);
+        if (exercise.CourseDone){
+          // congratz
+
+        }
         this.markdownSource = exercise.CurrentExercise.Readme;
         this.type = exercise.CurrentExercise.Type;
         this.moduleUUID = exercise.CurrentExercise.ModuleUUID;

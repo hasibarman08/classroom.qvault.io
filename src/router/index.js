@@ -4,6 +4,7 @@ import Courses from '../views/Courses.vue';
 import Profile from '../views/Profile.vue';
 import Exercise from '../views/Exercise.vue';
 import Store from '../views/Store.vue';
+import Certificates from '../views/Certificates.vue';
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/certificates',
+    name: 'Certificates',
+    component: Certificates
   }
 ];
 

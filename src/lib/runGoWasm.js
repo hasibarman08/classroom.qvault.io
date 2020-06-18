@@ -4,7 +4,7 @@ export default async function runGoWasm(rawData) {
   let oldLog = console.log;
   let stdOut = [];
   console.log = (line) => {stdOut.push(line);};
-  go.run(result.instance);
+  await go.run(result.instance);
   console.log = oldLog;
   return stdOut;
 }

@@ -228,6 +228,18 @@ export async function purchaseCourse(courseUUID){
   return handled;
 }
 
+export async function purchaseCourseCertificate(courseUUID) {
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/certificates/purchase`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
 export async function getNextExercise(courseUUID){
   const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/exercises/current`, {
     method: 'GET',
