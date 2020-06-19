@@ -4,14 +4,11 @@
       :duration="3000"
       classes="custom-notification"
     />
-    <Dashboard v-if="$store.getters.getIsLoggedIn" />
-    <Login v-else />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Dashboard from '@/Dashboard.vue';
-import Login from '@/Login.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faArrowRight, 
@@ -43,12 +40,13 @@ library.add(faCertificate);
 library.add(faTimes);
 
 export default {
-  components: {
-    Dashboard,
-    Login
-  },
   mounted(){
     this.$store.commit('setIsLoggedIn', isLoggedIn());
+    if (this.$store.getters.getIsLoggedIn){
+      this.$router.push({name: 'Dashboard'});
+    } else {
+      this.$router.push({name: 'Login'});
+    }
   }
 };
 </script>

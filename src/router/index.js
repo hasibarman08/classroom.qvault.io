@@ -5,34 +5,54 @@ import Profile from '../views/Profile.vue';
 import Exercise from '../views/Exercise.vue';
 import Store from '../views/Store.vue';
 import Certificates from '../views/Certificates.vue';
+import Dashboard from '../views/Dashboard.vue';
+import Certificate from '../views/Certificate.vue';
+import Login from '../views/Login.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'Courses',
-    component: Courses
+    name: 'Login',
+    component: Login
   },
   {
-    path: '/exercise/:courseUUID/:moduleUUID?',
-    name: 'Exercise',
-    component: Exercise
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+    children: [
+      {
+        path: '/',
+        name: 'Courses',
+        component: Courses
+      },
+      {
+        path: '/exercise/:courseUUID/:moduleUUID?',
+        name: 'Exercise',
+        component: Exercise
+      },
+      {
+        path: '/store',
+        name: 'Store',
+        component: Store
+      },
+      {
+        path: '/profile',
+        name: 'Profile',
+        component: Profile
+      },
+      {
+        path: '/certificates',
+        name: 'Certificates',
+        component: Certificates
+      }
+    ]
   },
   {
-    path: '/store',
-    name: 'Store',
-    component: Store
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile
-  },
-  {
-    path: '/certificates',
-    name: 'Certificates',
-    component: Certificates
+    path: '/certificate/:userUUID/:courseUUID',
+    name: 'Certificate',
+    component: Certificate
   }
 ];
 

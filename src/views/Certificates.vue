@@ -133,8 +133,13 @@ export default {
         return;
       }
 
+      console.log(courseUUID);
+
       if (isPurchased) {
-        this.$router.push({name: 'Certificate', params: {courseUUID}});
+        this.$router.push({name: 'Certificate', params: {
+          courseUUID,
+          userUUID: this.$store.getters.getUser.UUID
+        }});
         return;
       }
 

@@ -1,11 +1,11 @@
 <template>
   <div id="dashboard">
-    <div id="container">
+    <div id="dashboard-container">
       <div id="sidebar">
         <div class="logo-item">
           <img
             alt="Qvault logo"
-            src="./img/qvault-icon.png"
+            src="../img/qvault-icon.png"
           >
           <span> Qvault Classroom </span>
         </div>
@@ -102,7 +102,8 @@ import {
   logout,
   getCourses,
   getLastGemTransaction,
-  getProducts
+  getProducts,
+  getUser
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -119,6 +120,7 @@ export default {
     this.loadBalance();
     this.loadCourses();
     this.loadProducts();
+    this.loadUser();
   },
   methods: {
     modulesToSubItems(modules){
@@ -133,6 +135,7 @@ export default {
     logout(){
       logout();
       this.$store.commit('setIsLoggedIn', isLoggedIn());
+      this.$router.push({name: 'Login'});
     },
     async loadCourses(){
       try {
@@ -166,6 +169,17 @@ export default {
           text: err
         });
       }
+    },
+    async loadUser(){
+      try {
+        const user = await getUser();
+        this.$store.commit('setUser', user);
+      } catch (err) {
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
     }
   }
 };
@@ -178,11 +192,11 @@ $bar-height: 60px;
 
 #dashboard {
   height: 100%;
-}
 
-#container {
-	height: 100%;
-  display: flex;
+  #dashboard-container {
+    height: 100%;
+    display: flex;
+  }
 }
 
 #sidebar {

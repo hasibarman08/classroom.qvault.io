@@ -3,7 +3,7 @@
     <div id="title-container">
       <img
         alt="Qvault logo"
-        src="./img/qvault-icon.png"
+        src="../img/qvault-icon.png"
       >
       <span id="title">Qvault Classroom</span>
     </div>
@@ -135,7 +135,6 @@
 
 <script>
 import {
-  isLoggedIn,
   login, 
   createUser, 
   updateUserPasswordCode,
@@ -170,7 +169,8 @@ export default {
     async login(){
       try {
         await login(this.loginEmail, this.loginPassword);
-        this.$store.commit('setIsLoggedIn', isLoggedIn());
+        this.$store.commit('setIsLoggedIn', true);
+        this.$router.push({name: 'Dashboard'});
       } catch (err){
         this.$notify({
           type: 'error',
@@ -213,7 +213,8 @@ export default {
           this.recoverCode
         );
         await login(this.recoverEmail, this.recoverPassword);
-        this.$store.commit('setIsLoggedIn', isLoggedIn());
+        this.$store.commit('setIsLoggedIn', true);
+        this.$router.push({name: 'Dashboard'});
       } catch (err){
         this.$notify({
           type: 'error',
@@ -228,7 +229,8 @@ export default {
           this.registerEmail, 
           this.registerPassword
         );
-        this.$store.commit('setIsLoggedIn', isLoggedIn());
+        this.$store.commit('setIsLoggedIn', true);
+        this.$router.push({name: 'Dashboard'});
       } catch (err){
         this.$notify({
           type: 'error',
