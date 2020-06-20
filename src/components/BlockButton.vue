@@ -31,7 +31,7 @@ export default {
 button {
   border-radius: 0px;
   border-width: 0px;
-  padding: 10px;
+  padding: 10px 30px 10px 30px;
   color: $white;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
   cursor: pointer;
@@ -41,7 +41,7 @@ button {
 
     &:hover{
       box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
-      background-color: $gray-light;
+      background-color: $gray-mid;
     }
   }
 
@@ -59,7 +59,7 @@ button {
 
     &:hover{
       box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
-      background-color: $purple-light;
+      background-color: $purple-lighter;
     }
   }
 

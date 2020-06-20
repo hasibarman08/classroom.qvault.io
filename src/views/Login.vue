@@ -139,7 +139,8 @@ import {
   createUser, 
   updateUserPasswordCode,
   sendEmailVerification, 
-  verifyEmail
+  verifyEmail,
+  isLoggedIn
 } from '@/lib/cloudClient.js';
 import BlockButton from '@/components/BlockButton';
 import TextInput from '@/components/TextInput';
@@ -169,13 +170,19 @@ export default {
     async login(){
       try {
         await login(this.loginEmail, this.loginPassword);
-        this.$store.commit('setIsLoggedIn', true);
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
         this.$router.push({name: 'Dashboard'});
       } catch (err){
         this.$notify({
           type: 'error',
           text: err
         });
+      }
+    },
+    mounted(){
+      this.$store.commit('setIsLoggedIn', isLoggedIn());
+      if (this.$store.getters.getIsLoggedIn){
+        this.$router.push({name: 'Dashboard'});
       }
     },
     async register(){
@@ -213,7 +220,7 @@ export default {
           this.recoverCode
         );
         await login(this.recoverEmail, this.recoverPassword);
-        this.$store.commit('setIsLoggedIn', true);
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
         this.$router.push({name: 'Dashboard'});
       } catch (err){
         this.$notify({
@@ -229,7 +236,7 @@ export default {
           this.registerEmail, 
           this.registerPassword
         );
-        this.$store.commit('setIsLoggedIn', true);
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
         this.$router.push({name: 'Dashboard'});
       } catch (err){
         this.$notify({
@@ -304,7 +311,6 @@ export default {
 
       .title {
         font-size: 24px;
-        font-weight: 100;
       }
 
       .btn {

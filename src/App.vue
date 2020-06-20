@@ -21,11 +21,9 @@ import {
   faCheck,
   faStore,
   faCertificate,
-  faTimes
+  faTimes,
+  faUndo
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  isLoggedIn
-} from '@/lib/cloudClient.js';
 
 library.add(faArrowRight);
 library.add(faUserTie);
@@ -38,16 +36,10 @@ library.add(faCheck);
 library.add(faStore);
 library.add(faCertificate);
 library.add(faTimes);
+library.add(faUndo);
 
 export default {
-  mounted(){
-    this.$store.commit('setIsLoggedIn', isLoggedIn());
-    if (this.$store.getters.getIsLoggedIn){
-      this.$router.push({name: 'Dashboard'});
-    } else {
-      this.$router.push({name: 'Login'});
-    }
-  }
+  
 };
 </script>
 

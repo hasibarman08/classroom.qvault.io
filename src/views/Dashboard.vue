@@ -31,6 +31,8 @@
           :text="course.Title"
           :sub-items="modulesToSubItems(course.Modules)"
           :click="() => {$router.push({name: 'Exercise', params: {courseUUID: course.UUID}}) }"
+          :sub-items-tab-open="$router.currentRoute.name === 'Exercise'"
+          :active-sub-item-u-u-i-d="$store.getters.getCurrentModuleUUID"
           :current="$router.currentRoute.name === 'Exercise'"
         />
 
@@ -117,6 +119,11 @@ export default {
     }
   },
   async mounted(){
+    this.$store.commit('setIsLoggedIn', isLoggedIn());
+    if (!this.$store.getters.getIsLoggedIn){
+      this.$router.push({name: 'Login'});
+    }
+      
     this.loadBalance();
     this.loadCourses();
     this.loadProducts();
@@ -127,7 +134,8 @@ export default {
       let subItems = [];
       for (const mod of modules) {
         subItems.push({
-          text: mod.Title
+          text: mod.Title,
+          uuid: mod.UUID
         });
       }
       return subItems;

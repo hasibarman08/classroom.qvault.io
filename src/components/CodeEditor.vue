@@ -15,12 +15,24 @@
       <div id="console-output">
         <BlockButton
           id="run-btn"
+          class="btn"
           :click="runCode"
         >
           <FontAwesomeIcon
             icon="play"
           />
           Run
+        </BlockButton>
+        <BlockButton
+          id="reset-btn"
+          class="btn"
+          :click="runReset"
+          color="gray"
+        >
+          <FontAwesomeIcon
+            icon="undo"
+          />
+          Reset
         </BlockButton>
         <p
           v-for="(line, i) of output"
@@ -59,7 +71,11 @@ export default {
     BlockButton
   },
   props: {
-    callback: {
+    runCallback: {
+      type: Function,
+      required: true
+    },
+    resetCallback: {
       type: Function,
       required: true
     }
@@ -83,11 +99,19 @@ export default {
         this.output = await runGoWasm(wasm);
         this.err = false;
         this.isLoading = false;
-        await this.callback(this.output.join(''));
+        await this.runCallback(this.output.join(''));
       } catch(err) {
         this.isLoading = false;
         this.output = [ err ];
         this.err = true;
+      }
+    },
+    async runReset() {
+      try {
+        await this.resetCallback(this.output.join(''));
+      } catch(err) {
+        this.output = null;
+        this.err = false;
       }
     }
   }
@@ -125,12 +149,10 @@ export default {
     padding: 10px;
     overflow: auto;
 
-    #run-btn {
+    .btn {
       float: right;
-      height: 50px;
-      padding: 0 30px 0 30px;
-      line-height: 50px;
-      font-size: 16px;
+      margin-left: 1em;
+      font-size: 1em;
     }
 
     p {

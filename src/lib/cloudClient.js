@@ -4,6 +4,10 @@ export const domain = 'http://localhost:5000';
 
 const jwtKey = 'cloudJWT';
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function login(email, password){
   const resp = await fetch(`${domain}/v1/auth`, {
     method: 'POST',
@@ -18,6 +22,7 @@ export async function login(email, password){
   });
   const handled = await handleJSONResponse(resp);
   localStorage.setItem(jwtKey, handled.token);
+  await sleep(10);
   return handled;
 }
 
@@ -231,6 +236,18 @@ export async function purchaseCourse(courseUUID){
 export async function purchaseCourseCertificate(courseUUID) {
   const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/certificates/purchase`, {
     method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export async function getCourseCertificateInfo(courseUUID, userUUID) {
+  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/certificates/info/${userUUID}`, {
+    method: 'GET',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json'

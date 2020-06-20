@@ -79,7 +79,6 @@ export default {
 
     .btn {
       font-size: 24px;
-      padding: 10px 30px 10px 30px;
       margin: 15px;
     }
   }

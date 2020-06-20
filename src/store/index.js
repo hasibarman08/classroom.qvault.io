@@ -9,7 +9,8 @@ export default new Vuex.Store({
     products: [],
     isLoggedIn: false,
     courses: [],
-    user: null
+    user: null,
+    currentModuleUUID: null
   },
   mutations: {
     setBalance(state, newBalance) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     setUser(state, newUser) {
       state.user = newUser;
+    },
+    setCurrentModuleUUID(state, newCurrentModuleUUID) {
+      state.currentModuleUUID = newCurrentModuleUUID;
     }
   },
   actions: {},
@@ -44,6 +48,9 @@ export default new Vuex.Store({
     },
     getUser(state) {
       return state.user;
+    },
+    getCurrentModuleUUID(state) {
+      return state.currentModuleUUID;
     }
   }
 });

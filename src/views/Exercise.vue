@@ -22,7 +22,8 @@
       v-else-if="type === 'type_code'"
       ref="codeEditor"
       class="side"
-      :callback="submitTypeCode"
+      :run-callback="submitTypeCode"
+      :reset-callback="getNextExercise"
     />
     <MultipleChoice
       v-else-if="type === 'type_choice'"
@@ -57,7 +58,7 @@ export default {
   data(){
     return {
       markdownSource: '',
-      type: 'type_code',
+      type: '',
       moduleUUID: this.$route.params.moduleUUID,
       exerciseUUID: null,
       questions: null,
@@ -142,14 +143,22 @@ export default {
       try {
         const exercise = await getNextExercise(this.$route.params.courseUUID);
         if (exercise.CourseDone){
-          // congratz
-
+          this.$notify({
+            type: 'success',
+            text: 'You\'ve completed this course! Congragulations! Grab a certificate to show off your accomplishment'
+          });
+          await this.sleep(1500);
+          this.$router.push({name: 'Certificates'});
         }
         this.markdownSource = exercise.CurrentExercise.Readme;
         this.type = exercise.CurrentExercise.Type;
         this.moduleUUID = exercise.CurrentExercise.ModuleUUID;
+        this.$store.commit('setCurrentModuleUUID', this.moduleUUID);
         this.exerciseUUID = exercise.CurrentExercise.UUID;
-        if (this.$refs.codeEditor){
+
+        // Allow DOM to render changes before setting data on components
+        await this.$nextTick();
+        if (this.type === 'type_code'){
           this.$refs.codeEditor.setCode(exercise.CurrentExercise.Code);
         }
         if (exercise.CurrentExercise.Questions){
@@ -204,7 +213,6 @@ export default {
 
   .btn {
     font-size: 2em;
-    padding: 20px;
   }
 }
 

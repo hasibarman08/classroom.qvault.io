@@ -3,10 +3,7 @@
     <div
       id="item"
       :class="{'current': current}"
-      @click="() => {
-        click(); 
-        subItems.length > 0 ? subItemsTabOpen = !subItemsTabOpen : null
-      }"
+      @click="click"
     >
       <FontAwesomeIcon
         :icon="icon"
@@ -28,6 +25,7 @@
       <div 
         v-for="(subItem, i) of subItems"
         :key="i"
+        :class="{'current': subItem.uuid === activeSubItemUUID}"
         class="sub-item"
         @click="()=> {subItem.click ? subItem.click() : null}"
       >
@@ -67,12 +65,17 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    subItemsTabOpen:{
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    activeSubItemUUID:{
+      type: String,
+      required: false,
+      default: null
     }
-  },
-  data(){
-    return {
-      subItemsTabOpen: false
-    };
   },
   computed: {
     subitemsTabHeight(){
@@ -138,14 +141,15 @@ export default {
     border: solid $white;
     border-width: 0 0 0 1px;
     margin-left: 30px;
+    cursor: text;
 
     span {
       padding-left: 20px;
     }
 
-    &:hover{
-      cursor: pointer;
+    &.current {
       border-color: $purple-mid;
+      color: $purple-lighter;
     }
   }
 }
