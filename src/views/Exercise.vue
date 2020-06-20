@@ -45,7 +45,8 @@ import {
   getNextExercise,
   submitInformationalExercise,
   submitCodeExercise,
-  submitMultipleChoiceExercise
+  submitMultipleChoiceExercise,
+  getLastGemTransaction
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -93,6 +94,17 @@ export default {
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
+    async loadBalance(){
+      try {
+        const lastGemTransaction = await getLastGemTransaction();
+        this.$store.commit('setBalance', lastGemTransaction.Balance);
+      } catch (err) {
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
+    },
     async submitTypeInfo(){
       await submitInformationalExercise(
         this.$route.params.courseUUID,
@@ -103,16 +115,24 @@ export default {
     },
     async submitTypeCode(output) {
       try {
-        await submitCodeExercise(
+        const credit = await submitCodeExercise(
           this.$route.params.courseUUID,
           this.moduleUUID,
           this.exerciseUUID,
           output
         );
-        this.$notify({
-          type: 'success',
-          text: 'Correct! Great Job :)'
-        });
+        if (credit.GemCredit && credit.Message){
+          this.$notify({
+            type: 'success',
+            text: `${credit.Message} 💎x${credit.GemCredit}`
+          });
+          this.loadBalance();
+        } else{
+          this.$notify({
+            type: 'success',
+            text: 'Correct! Great Job :)'
+          });
+        }
         await this.sleep(1500);
         await this.getNextExercise();
       } catch(err) {
@@ -124,13 +144,26 @@ export default {
     },
     async submitTypeChoice(question, answer) {
       try {
-        await submitMultipleChoiceExercise(
+        const credit = await submitMultipleChoiceExercise(
           this.$route.params.courseUUID,
           this.moduleUUID,
           this.exerciseUUID,
           question,
           answer
         );
+        if (credit.GemCredit && credit.Message){
+          this.$notify({
+            type: 'success',
+            text: `${credit.Message} 💎x${credit.GemCredit}`
+          });
+          this.loadBalance();
+        } else{
+          this.$notify({
+            type: 'success',
+            text: 'Correct! Great Job :)'
+          });
+        }
+        await this.sleep(1500);
         await this.getNextExercise();
       } catch(err) {
         this.$notify({
