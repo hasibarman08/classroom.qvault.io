@@ -14,7 +14,7 @@
 
     <form
       id="form"
-      @submit="updatePassword"
+      @submit.prevent="updatePassword"
     >
       <p>
         Update Password

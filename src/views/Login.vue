@@ -12,7 +12,7 @@
       <form
         v-if="state === 'login'"
         class="panel-content"
-        @submit="login"
+        @submit.prevent="login"
       >
         <span class="title">Log In to Your Account</span>
         <TextInput
@@ -35,7 +35,7 @@
       <form
         v-if="state === 'register'"
         class="panel-content"
-        @submit="register"
+        @submit.prevent="register"
       >
         <span class="title">Sign Up Free</span>
         <TextInput
@@ -65,7 +65,7 @@
       <form
         v-if="state === 'forgot-password'"
         class="panel-content"
-        @submit="sendEmail"
+        @submit.prevent="sendEmail"
       >
         <span class="title">Recover Password</span>
         <TextInput
@@ -82,7 +82,7 @@
       <form
         v-if="state === 'forgot-password-code'"
         class="panel-content"
-        @submit="submitRecoveryCode"
+        @submit.prevent="submitRecoveryCode"
       >
         <span class="title">Enter Recovery Code</span>
         <TextInput
@@ -104,7 +104,7 @@
       <form
         v-if="state === 'email-verification-code'"
         class="panel-content"
-        @submit="submitVerificationCode"
+        @submit.prevent="submitVerificationCode"
       >
         <span class="title">Check Your Email</span>
         <TextInput
