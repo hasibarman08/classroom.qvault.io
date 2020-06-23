@@ -67,7 +67,7 @@
       <form
         v-if="state === 'forgot-password'"
         class="panel-content"
-        @submit.prevent="sendEmail"
+        @submit.prevent="submitForgotPasswordEmail"
       >
         <span class="title">Recover Password</span>
         <TextInput
@@ -197,6 +197,8 @@ export default {
           this.registerFirstName,
           this.registerLastName
         );
+        await login(this.registerEmail, this.registerPassword);
+        await sendEmailVerification();
         this.state = 'email-verification-code';
       } catch (err){
         this.$notify({
@@ -205,7 +207,7 @@ export default {
         });
       }
     },
-    async sendEmail(){
+    async submitForgotPasswordEmail(){
       try {
         await login(this.loginEmail, this.loginPassword);
         this.state='forgot-password-code';
@@ -221,7 +223,7 @@ export default {
         await updateUserPasswordCode(
           this.recoverEmail,
           this.recoverPassword,
-          this.recoverCode
+          Number(this.recoverCode)
         );
         await login(this.recoverEmail, this.recoverPassword);
         this.$store.commit('setIsLoggedIn', isLoggedIn());
@@ -235,7 +237,7 @@ export default {
     },
     async submitVerificationCode(){
       try {
-        await verifyEmail(this.validationCode);
+        await verifyEmail(Number(this.validationCode));
         await login(
           this.registerEmail, 
           this.registerPassword

@@ -17,7 +17,7 @@
 
     <div id="cards">
       <ImageCard
-        v-for="(course, i) of courses"
+        v-for="(course, i) of $store.getters.getCourses"
         :key="i"
         :img-src="course.ImageURL"
         class="card"
@@ -81,18 +81,11 @@ export default {
     ImageCard,
     ConfirmOverlay
   },
-  data() {
-    return {
-      courses: []
-    };
-  },
-  async mounted(){
-    this.loadCourses();
-  },
   methods: {
     async loadCourses() {
       try {
-        this.courses = await getCourses();
+        const courses = await getCourses();
+        this.$store.commit('setCourses', courses);
       } catch (err) {
         this.$notify({
           type: 'error',
