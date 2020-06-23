@@ -46,10 +46,12 @@
         <TextInput
           v-model="registerFirstName"
           placeholder="first name"
+          type="text"
         />
         <TextInput
           v-model="registerLastName"
           placeholder="last name"
+          type="text"
         />
         <TextInput
           v-model="registerPassword"
@@ -88,6 +90,7 @@
         <TextInput
           v-model="recoverCode"
           placeholder="6 digit code"
+          type="number"
         />
         <TextInput
           v-model="recoverPassword"
@@ -110,6 +113,7 @@
         <TextInput
           v-model="validationCode"
           placeholder="6 digit code"
+          type="number"
         />
         <BlockButton class="btn">
           Submit
