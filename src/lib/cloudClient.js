@@ -1,6 +1,6 @@
 import decodeJWT from './decodeJWT';
 
-export const domain = 'http://localhost:5000';
+export const domain = 'https://api.classroom.qvault.io';
 
 const jwtKey = 'cloudJWT';
 
