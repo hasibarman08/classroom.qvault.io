@@ -4,6 +4,7 @@
       id="viewer"
       :source="source"
       :breaks="false"
+      :anchor-attributes="{target: '_blank'}"
       @rendered="update"
     />
   </div>

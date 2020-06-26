@@ -127,7 +127,7 @@ export default {
         this.$notify({
           type: 'warn',
           title: 'Course Not Complete',
-          text: 'Head to the Courses tab to complete the course'
+          text: 'Head to the courses tab to complete the course'
         });
         return;
       }
