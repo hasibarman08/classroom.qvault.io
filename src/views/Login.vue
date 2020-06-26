@@ -6,6 +6,11 @@
         src="../img/qvault-icon.png"
       >
       <span id="title">Qvault Classroom</span>
+      <div id="sub-title-container">
+        <span>
+          <b>Learn to code online, anytime, anywhere.</b> The future of education is laser focused on <b>mastery</b>, not due dates and diplomas. 
+        </span>
+      </div>
     </div>
 
     <div id="panel">
@@ -56,6 +61,11 @@
         <TextInput
           v-model="registerPassword"
           placeholder="password"
+          type="password"
+        />
+        <TextInput
+          v-model="registerPasswordConfirm"
+          placeholder="confirm password"
           type="password"
         />
         <BlockButton class="btn">
@@ -163,6 +173,7 @@ export default {
       registerFirstName: null,
       registerLastName: null,
       registerPassword: null,
+      registerPasswordConfirm: null,
       recoverEmail: null,
       recoverPassword: null,
       recoverCode: null,
@@ -190,6 +201,13 @@ export default {
       }
     },
     async register(){
+      if (this.registerPassword !== this.registerPasswordConfirm){
+        this.$notify({
+          type: 'error',
+          text: 'Passwords don\'t match'
+        });
+        return;
+      }
       try {
         await createUser(
           this.registerEmail, 
@@ -280,7 +298,6 @@ export default {
   #title-container {
     width: 100%;
     text-align: center;
-    color: $gray-lightest;
 
     img {
       vertical-align: middle;
@@ -288,9 +305,17 @@ export default {
     }
 
     #title {
-      margin-left: 25px;
-      font-size: 36px;
+      margin-left: .75em;
+      font-size: 3em;
       vertical-align: middle;
+      color: $gray-lightest;
+    }
+
+    #sub-title-container {
+      margin-top: 2em;
+      font-size: 1em;
+      vertical-align: middle;
+      color: $gray-lighter;
     }
   }
 
