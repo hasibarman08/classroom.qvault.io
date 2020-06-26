@@ -30,7 +30,7 @@
           clickOnCertificate(
             course.UUID,
             course.IsComplete,
-            course.CertificateCost,
+            course.CertificateGemCost,
             course.IsCertificatePurchased
           )}"
       >
@@ -62,24 +62,23 @@
             <span>Purchased</span>
           </div>
 
-          <div
-            v-else-if="course.IsComplete"
-            class="completed"
-          >
-            <FontAwesomeIcon
-              icon="check"
-            />
-            <span>Ready to Be Unlocked</span>
-          </div>
-
-          <div
-            v-else
-            class="price"
-          >
-            <FontAwesomeIcon
-              icon="gem"
-            />
-            <span>{{ course.CertificateGemCost }}</span>
+          <div v-else-if="course.IsComplete">
+            <div
+              class="price"
+            >
+              <FontAwesomeIcon
+                icon="gem"
+              />
+              <span>{{ course.CertificateGemCost }}</span>
+            </div>
+            <div
+              class="completed"
+            >
+              <FontAwesomeIcon
+                icon="check"
+              />
+              <span>Ready to Be Unlocked</span>
+            </div>
           </div>
         </div>
       </ImageCard>
@@ -153,7 +152,7 @@ export default {
       }
 
       this.$refs['confirmPurchase'].openNav(
-        `Would you like to purchase this certificate for ${gemAmount} gems?`,
+        `Would you like to purchase this certificate for 💎${gemAmount} gems?`,
         async () => {
           try {
             await purchaseCourseCertificate(courseUUID);
@@ -219,6 +218,8 @@ export default {
       color: $white;
       font-weight: 400;
       margin: 1em;
+      line-height: 1.3em;
+      font-size: 1em;
     }
 
     .incomplete {

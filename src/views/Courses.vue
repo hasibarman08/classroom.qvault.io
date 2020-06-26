@@ -175,6 +175,8 @@ export default {
       color: $white;
       font-weight: 400;
       margin: 1em;
+      line-height: 1.3em;
+      font-size: 1em;
     }
 
     .completed {

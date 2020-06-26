@@ -246,7 +246,7 @@ export async function purchaseCourseCertificate(courseUUID) {
 }
 
 export async function getCourseCertificateInfo(courseUUID, userUUID) {
-  const resp = await fetchWithAuth(`${domain}/v1/courses/${courseUUID}/certificates/info/${userUUID}`, {
+  const resp = await fetch(`${domain}/v1/courses/${courseUUID}/certificates/info/${userUUID}`, {
     method: 'GET',
     mode: 'cors',
     headers: {
