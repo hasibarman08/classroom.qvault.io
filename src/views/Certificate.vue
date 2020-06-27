@@ -42,7 +42,7 @@
       id="btn"
       :click="() => {
         if (this.$store.getters.getIsLoggedIn){
-          this.$router.push({name: 'Dashboard'});
+          this.$router.push({name: 'Courses'});
         } else {
           this.$router.push({name: 'Login'});
         }
@@ -65,10 +65,10 @@ export default {
   },
   data(){
     return {
-      firstName: 'Lane',
-      lastName: 'Wagners',
-      courseName: 'Go Mastery',
-      courseCompletedAt: 'June 1st, 1776'
+      firstName: null,
+      lastName: null,
+      courseName: null,
+      courseCompletedAt: null
     };
   },
   computed: {

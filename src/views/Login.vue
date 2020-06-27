@@ -100,7 +100,7 @@
         <TextInput
           v-model="recoverCode"
           placeholder="6 digit code"
-          type="number"
+          type="text"
         />
         <TextInput
           v-model="recoverPassword"
@@ -123,7 +123,7 @@
         <TextInput
           v-model="validationCode"
           placeholder="6 digit code"
-          type="number"
+          type="text"
         />
         <BlockButton class="btn">
           Submit
@@ -186,7 +186,7 @@ export default {
       try {
         await login(this.loginEmail, this.loginPassword);
         this.$store.commit('setIsLoggedIn', isLoggedIn());
-        this.$router.push({name: 'Dashboard'});
+        this.$router.push({name: 'Courses'});
       } catch (err){
         this.$notify({
           type: 'error',
@@ -197,7 +197,7 @@ export default {
     mounted(){
       this.$store.commit('setIsLoggedIn', isLoggedIn());
       if (this.$store.getters.getIsLoggedIn){
-        this.$router.push({name: 'Dashboard'});
+        this.$router.push({name: 'Courses'});
       }
     },
     async register(){
@@ -245,7 +245,7 @@ export default {
         );
         await login(this.recoverEmail, this.recoverPassword);
         this.$store.commit('setIsLoggedIn', isLoggedIn());
-        this.$router.push({name: 'Dashboard'});
+        this.$router.push({name: 'Courses'});
       } catch (err){
         this.$notify({
           type: 'error',
@@ -261,7 +261,7 @@ export default {
           this.registerPassword
         );
         this.$store.commit('setIsLoggedIn', isLoggedIn());
-        this.$router.push({name: 'Dashboard'});
+        this.$router.push({name: 'Courses'});
       } catch (err){
         this.$notify({
           type: 'error',

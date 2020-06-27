@@ -23,7 +23,7 @@ const routes = [
     component: Dashboard,
     children: [
       {
-        path: '/',
+        path: '/courses',
         name: 'Courses',
         component: Courses
       },
