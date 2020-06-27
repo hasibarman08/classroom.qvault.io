@@ -5,10 +5,12 @@
         alt="Qvault logo"
         src="../img/qvault-icon.png"
       >
+
       <span id="title">Qvault Classroom</span>
+
       <div id="sub-title-container">
         <span>
-          <b>Learn to code online, anytime, anywhere.</b> The future of education is laser focused on <b>mastery</b>, not due dates and diplomas. 
+          <b>Learn to code online, anytime, anywhere.</b> The future of education is laser-focused on mastery, not due dates and test scores. 
         </span>
       </div>
     </div>
@@ -131,6 +133,34 @@
         <span><a @click="resendVerification">Resend Code</a></span>
         <span><a @click="state = 'register'">Back</a></span>
       </form>
+    </div>
+
+    <div id="widget-container">
+      <div class="widget">
+        <!-- https://icons8.com/icons/set/coin --> 
+        <img src="https://img.icons8.com/nolan/64/certificate.png">
+        <span>Earn a Certificate</span>
+        <p>
+          Add certificates to your resume!
+          Stand out to land those interviews
+        </p>
+      </div>
+      <div class="widget">
+        <img src="https://img.icons8.com/nolan/64/coin-wallet.png">
+        <span>Level-Up Your Salary</span>
+        <p>
+          Take your career to the next level.
+          Complete the Go Mastery course to help land that backend job.
+        </p>
+      </div>
+      <div class="widget">
+        <img src="https://img.icons8.com/nolan/64/school.png">
+        <span>Learn From Home</span>
+        <p>
+          Complete your education at your own pace.
+          Don't stress about timed tests or deadlines
+        </p>
+      </div>
     </div>
 
     <div>
@@ -288,16 +318,21 @@ export default {
 
 #container {
   background-color: $gray-darkest;
-  height: 100%;
+  min-height: 100%;
   color: $gray-lightest;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 
+  b {
+    color: $gold-dark;
+  }
+
   #title-container {
     width: 100%;
     text-align: center;
+    margin-top: 1em;
 
     img {
       vertical-align: middle;
@@ -306,13 +341,13 @@ export default {
 
     #title {
       margin-left: .75em;
-      font-size: 3em;
+      font-size: 2.5em;
       vertical-align: middle;
       color: $gray-lightest;
     }
 
     #sub-title-container {
-      margin-top: 2em;
+      margin: 2em 0 1em 0;
       font-size: 1em;
       vertical-align: middle;
       color: $gray-lighter;
@@ -322,6 +357,7 @@ export default {
   #panel {
     background-color: $gray-lightest;
     flex: 1;
+    min-height: 300px;
     max-height: 400px;
     width: 30vw;
     min-width: 400px;
@@ -351,6 +387,32 @@ export default {
 
       a {
         cursor: pointer;
+      }
+    }
+  }
+
+  #widget-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    text-align: center;
+    width: 80%;
+    margin: 1em;
+
+    .widget{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      max-width: 250px;
+
+      span {
+        margin-top: 5px;
+        font-size: 1.5em;
+      }
+
+      p {
+        font-size: 1em;
       }
     }
   }

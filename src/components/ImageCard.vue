@@ -6,7 +6,7 @@
         @click="click"
       >
     </div>
-    <div class="body">
+    <div id="body">
       <slot />
     </div>
   </div>
@@ -68,7 +68,7 @@ export default {
     }
   }
 
-  .body {
+  #body {
     background-color: $gray-darkest;
     padding: 10px;
   }
