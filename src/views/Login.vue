@@ -10,7 +10,7 @@
 
       <div id="sub-title-container">
         <span>
-          <b>Learn to code online, anytime, anywhere.</b> The future of education is laser-focused on mastery, not due dates and test scores. 
+          <b>Learn to code online, anytime, anywhere.</b> The future of education is laser-focused on mastery, not due dates and test scores
         </span>
       </div>
     </div>
@@ -163,7 +163,7 @@
       </div>
     </div>
 
-    <div>
+    <div id="footer">
       <span><a
         href="https://qvault.io"
         target="_blank"
@@ -351,6 +351,7 @@ export default {
       font-size: 1em;
       vertical-align: middle;
       color: $gray-lighter;
+      padding: 1em;
     }
   }
 
@@ -415,6 +416,10 @@ export default {
         font-size: 1em;
       }
     }
+  }
+
+  #footer {
+    margin: 1em 0 2em 0;
   }
 
   a {
