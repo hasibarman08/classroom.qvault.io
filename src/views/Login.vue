@@ -149,8 +149,12 @@
         <img src="https://img.icons8.com/nolan/64/coin-wallet.png">
         <span>Level-Up Your Salary</span>
         <p>
-          Take your career to the next level.
-          Complete the Go Mastery course to help land that backend job.
+          Take our new <i>Go Mastery</i> course! Go devs make <b>$28k more per year</b> on average than JavaScript devs.
+          <a
+            href="https://insights.stackoverflow.com/survey/2020#technology-what-languages-are-associated-with-the-highest-salaries-worldwide-united-states"
+          >
+            source
+          </a>
         </p>
       </div>
       <div class="widget">
@@ -414,6 +418,10 @@ export default {
 
       p {
         font-size: 1em;
+      }
+      
+      a {
+        color: $purple-darker;
       }
     }
   }
