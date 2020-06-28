@@ -1,9 +1,11 @@
 <template>
-  <div id="card">
+  <div
+    id="card"
+    @click="click"
+  >
     <div id="img-container">
       <img
         :src="imgSrc"
-        @click="click"
       >
     </div>
     <div id="body">
@@ -41,10 +43,6 @@ export default {
 
   &:hover{
     box-shadow: 0 16px 32px 0 rgba(0,0,0,0.8);
-
-    .body {
-      background-color: $gray-dark;
-    }
   }
    
   #img-container {
