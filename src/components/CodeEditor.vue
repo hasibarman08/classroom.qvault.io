@@ -10,8 +10,6 @@
           v-model="code"
           language="go"
           :line-numbers="true"
-          :emit-events="true"
-          @keydown="onEditorKeydown"
         />
       </div>
       <div id="console-output">
@@ -93,14 +91,6 @@ export default {
   methods: {
     setCode(code){
       this.code = code;
-    },
-    async onEditorKeydown(evt) {
-      if (evt.keyCode === 74 &&
-        evt.metaKey !== evt.ctrlKey &&
-        !evt.altKey){
-        console.log('hello');
-      }
-      evt.preventDefault();
     },
     async runCode() {
       try {

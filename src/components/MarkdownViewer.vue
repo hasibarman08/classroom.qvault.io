@@ -1,12 +1,14 @@
 <template>
-  <div id="container">
-    <VueMarkdown
-      id="viewer"
-      :source="source"
-      :breaks="false"
-      :anchor-attributes="{target: '_blank'}"
-      @rendered="update"
-    />
+  <div>
+    <div id="markdown-viewer-container">
+      <VueMarkdown
+        id="viewer"
+        :source="source"
+        :breaks="false"
+        :anchor-attributes="{target: '_blank'}"
+        @rendered="update"
+      />
+    </div>
   </div>
 </template>
 
@@ -39,16 +41,26 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import '@/styles/colors.scss';
 
-#container {
+#markdown-viewer-container {
   height: var(--containerHeight);
-}
 
-#viewer{
-  padding: 20px;
-  overflow: auto;
+  #viewer{
+    padding: 20px;
+    overflow: auto;
+
+    pre {
+      code {
+        color: inherit;
+      }
+    }
+
+    code {
+      color: $pink-dark;
+    }
+  }
 }
 
 </style>

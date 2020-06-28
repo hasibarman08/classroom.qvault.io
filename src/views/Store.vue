@@ -90,7 +90,7 @@ export default {
     async checkout(productID){
       this.isLoading = true;
       const checkoutSession = await startProductCheckout(productID);
-      const stripe = await loadStripe('pk_test_51EvvJkBNIsXC7YAh92Uwimgy5SGoXLVcWg4AClST38YIf4y2gw0ntIvWfknEoWgtNZK2RhKw8OHe0f56uHLMf1jM00aeqo68fW');
+      const stripe = await loadStripe('pk_live_fbxxM4d9vtfIeSClZwjRtBCs00IzxS2rqu');
       const {error} = await stripe.redirectToCheckout({
         sessionId: checkoutSession.id
       });
