@@ -43,6 +43,12 @@
           :current="$router.currentRoute.name === 'Certificates'"
         />
 
+        <MenuItemHorizontal
+          icon="cubes"
+          :click="() => {$router.push({name: 'Playground', params: {lang: 'go'}}) }"
+          text="Playground"
+          :current="$router.currentRoute.name === 'Playground'"
+        />
 
         <MenuItemHorizontal
           icon="sign-out-alt"

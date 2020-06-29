@@ -122,9 +122,9 @@ export default {
 @import '@/styles/colors.scss';
 
 #code-editor-root {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
   align-items: stretch;
 
   #editor-container {

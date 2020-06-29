@@ -221,12 +221,9 @@ export default {
   // VH - header bar - 2x container padding
   height: calc(100vh - 60px - 2*20px);
   overflow: auto;
-  display: inline-block;
   flex: 1;
-  resize: width;
   background-color: $white;
   display: inline-block;
-  flex: 1;
 }
 
 #mdviewer {

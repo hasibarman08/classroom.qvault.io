@@ -8,6 +8,7 @@ import Certificates from '../views/Certificates.vue';
 import Dashboard from '../views/Dashboard.vue';
 import Certificate from '../views/Certificate.vue';
 import Login from '../views/Login.vue';
+import Playground from '../views/Playground.vue';
 
 Vue.use(VueRouter);
 
@@ -53,6 +54,11 @@ const routes = [
     path: '/certificate/:userUUID/:courseUUID',
     name: 'Certificate',
     component: Certificate
+  },
+  {
+    path: '/playground/:lang',
+    name: 'Playground',
+    component: Playground
   }
 ];
 
