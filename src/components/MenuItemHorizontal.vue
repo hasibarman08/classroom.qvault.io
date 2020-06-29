@@ -124,7 +124,7 @@ export default {
     transition: all 0.4s ease;
 
     &.is-open {
-    transform: rotateZ(90deg);
+      transform: rotateZ(90deg);
     }
   }
 }
