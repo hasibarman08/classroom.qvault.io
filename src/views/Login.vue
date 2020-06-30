@@ -70,6 +70,13 @@
           placeholder="confirm password"
           type="password"
         />
+        <div>
+          <input
+            v-model="registerSubscribeNews"
+            type="checkbox"
+          >
+          <span>send me programming content and news</span>
+        </div>
         <BlockButton class="btn">
           Register
         </BlockButton>
@@ -208,6 +215,7 @@ export default {
       registerLastName: null,
       registerPassword: null,
       registerPasswordConfirm: null,
+      registerSubscribeNews: true,
       recoverEmail: null,
       recoverPassword: null,
       recoverCode: null,
@@ -247,7 +255,8 @@ export default {
           this.registerEmail, 
           this.registerPassword,
           this.registerFirstName,
-          this.registerLastName
+          this.registerLastName,
+          this.registerSubscribeNews
         );
         await login(this.registerEmail, this.registerPassword);
         await sendEmailVerification();

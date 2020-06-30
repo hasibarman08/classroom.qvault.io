@@ -39,7 +39,7 @@ async function refreshToken(){
   return handled;
 }
 
-export async function createUser(email, password, firstName, lastName){
+export async function createUser(email, password, firstName, lastName, isSubscribedNews){
   const resp = await fetch(`${domain}/v1/users`, {
     method: 'POST',
     mode: 'cors',
@@ -50,7 +50,8 @@ export async function createUser(email, password, firstName, lastName){
       email,
       password, 
       firstName,
-      lastName
+      lastName,
+      isSubscribedNews
     })
   });
   const handled = await handleJSONResponse(resp);
