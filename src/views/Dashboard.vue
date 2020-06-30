@@ -21,7 +21,7 @@
           icon="scroll"
           :click="() => {$router.push({name: 'Courses'}) }"
           text="Courses"
-          :current="$router.currentRoute.name === 'Courses'"
+          :current="$router.currentRoute.name === 'Courses' || $router.currentRoute.name === 'CourseProduct'"
         />
 
         <MenuItemHorizontal

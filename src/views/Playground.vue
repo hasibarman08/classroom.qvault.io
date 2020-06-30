@@ -76,7 +76,7 @@ func main(){
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: $gray-mid;
+  background-color: $gray-darker;
   height: 100%;
 
   #editor {

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Courses from '../views/Courses.vue';
+import CourseProduct from '../views/CourseProduct.vue';
 import Profile from '../views/Profile.vue';
 import Exercise from '../views/Exercise.vue';
 import Store from '../views/Store.vue';
@@ -27,6 +28,11 @@ const routes = [
         path: '/courses',
         name: 'Courses',
         component: Courses
+      },
+      {
+        path: '/course_product/:courseUUID',
+        name: 'CourseProduct',
+        component: CourseProduct
       },
       {
         path: '/exercise/:courseUUID/:moduleUUID?',

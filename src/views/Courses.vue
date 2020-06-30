@@ -100,11 +100,7 @@ export default {
       }
 
       if (this.$store.getters.getBalance < gemAmount){
-        this.$notify({
-          type: 'warn',
-          title: 'Need More Gems',
-          text: 'Go grab some gems in the store!'
-        });
+        this.$router.push({name: 'CourseProduct', params: {courseUUID}});
         return;
       }
 

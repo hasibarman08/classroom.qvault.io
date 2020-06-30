@@ -43,6 +43,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { loadStripe } from '@stripe/stripe-js';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
+import { publicKey } from '@/lib/stripeConsts';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import ImageCard from '@/components/ImageCard';
 import {
@@ -90,7 +91,7 @@ export default {
     async checkout(productID){
       this.isLoading = true;
       const checkoutSession = await startProductCheckout(productID);
-      const stripe = await loadStripe('pk_live_fbxxM4d9vtfIeSClZwjRtBCs00IzxS2rqu');
+      const stripe = await loadStripe(publicKey);
       const {error} = await stripe.redirectToCheckout({
         sessionId: checkoutSession.id
       });
