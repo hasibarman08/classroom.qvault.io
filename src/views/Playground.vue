@@ -27,7 +27,7 @@
           Qvault Playground
         </span>
         <span id="sub-title">
-          Run {{ lang }} in your browser with web assembly (desktop only)
+          Run {{ lang }} in your browser with web assembly
         </span>
       </div>
       <div>
@@ -95,7 +95,7 @@ func main(){
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: $gray-darker;
+  background-color: $gray-darkest;
   height: 100%;
 
   #editor {
@@ -132,7 +132,7 @@ func main(){
 
       #sub-title{
         font-size: 1em;
-        color: $purple-lighter;
+        color: $gray-lighter;
       }
     }
 
