@@ -143,7 +143,7 @@ export async function verifyEmail(code){
 }
 
 export async function compileCode(code){
-  const resp = await fetchWithAuth(`${domain}/v1/compile`, {
+  const resp = await fetch(`${domain}/v1/compile`, {
     method: 'POST',
     mode: 'cors',
     headers: {

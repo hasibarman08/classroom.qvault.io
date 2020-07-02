@@ -32,7 +32,7 @@
       </div>
       <div>
         <a
-          href="https://qvault.io"
+          href="https://qvault.io/2020/07/01/running-go-in-the-browser-with-web-assembly-wasm/"
           target="_blank"
         >
           About
