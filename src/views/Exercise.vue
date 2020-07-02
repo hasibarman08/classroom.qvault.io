@@ -24,7 +24,7 @@
       class="side"
       :run-callback="submitTypeCode"
       :reset-callback="getNextExercise"
-      prog-lang="go"
+      :prog-lang="progLang"
     />
     <MultipleChoice
       v-else-if="type === 'type_choice'"
@@ -64,7 +64,8 @@ export default {
       moduleUUID: this.$route.params.moduleUUID,
       exerciseUUID: null,
       questions: null,
-      currentQuestionIndex: 0
+      currentQuestionIndex: 0,
+      progLang: 'go'
     };
   },
   computed: {
@@ -194,8 +195,9 @@ export default {
         await this.$nextTick();
         if (this.type === 'type_code'){
           this.$refs.codeEditor.setCode(exercise.CurrentExercise.Code);
-        }
-        if (exercise.CurrentExercise.Questions){
+          this.progLang = exercise.CurrentExercise.ProgLang;
+          console.log(this.progLang);
+        } else if (exercise.CurrentExercise.Questions){
           this.questions = this.shuffle(exercise.CurrentExercise.Questions);
         }
       } catch (err) {
