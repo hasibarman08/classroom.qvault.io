@@ -8,7 +8,7 @@
         <PrismEditor
           id="editor"
           v-model="code"
-          language="go"
+          :language="progLang"
           :line-numbers="true"
         />
       </div>
@@ -58,7 +58,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import BlockButton from '@/components/BlockButton';
 import LoadingOverlay from '@/components/LoadingOverlay';
-import runGoWasm from '@/lib/runGoWasm.js';
+import { runGoWasm, runJavaScript } from '@/lib/runCode.js';
 import { 
   compileCode
 } from '@/lib/cloudClient.js';
@@ -78,6 +78,10 @@ export default {
     resetCallback: {
       type: Function,
       required: true
+    },
+    progLang: {
+      type: String,
+      required: true
     }
   },
   data() {
@@ -89,14 +93,25 @@ export default {
     };
   },
   methods: {
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
     setCode(code){
       this.code = code;
     },
     async runCode() {
       try {
         this.isLoading = true;
-        const wasm = await compileCode(this.code);
-        this.output = await runGoWasm(wasm);
+
+        if (this.progLang === 'go'){
+          const wasm = await compileCode(this.code);
+          this.output = await runGoWasm(wasm);
+        } else if (this.progLang === 'js'){
+          // make it feel like something is running
+          await this.sleep(250);
+          this.output = await runJavaScript(this.code);
+        }
+
         this.err = false;
         this.isLoading = false;
         await this.runCallback(this.output.join(''));

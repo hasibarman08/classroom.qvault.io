@@ -27,7 +27,7 @@
           Qvault Playground
         </span>
         <span id="sub-title">
-          Run {{ lang }} in your browser with web assembly
+          {{ subTitle }}
         </span>
       </div>
       <div>
@@ -44,6 +44,7 @@
       ref="codeEditor"
       :run-callback="() => {}"
       :reset-callback="setCode"
+      :prog-lang="$route.params.lang"
     />
   </div>
 </template>
@@ -61,9 +62,12 @@ export default {
     FontAwesomeIcon
   },
   computed: {
-    lang(){
+    subTitle(){
       if (this.$route.params.lang === 'go'){
-        return 'Go';
+        return 'Run Go in your browser with web assembly';
+      }
+      if (this.$route.params.lang === 'js'){
+        return 'Run JavaScript in your browser';
       }
       return 'unknown';
     }
@@ -73,9 +77,8 @@ export default {
   },
   methods:{
     setCode(){
-      this.$refs.codeEditor.setCode(
-        `
-package main
+      if (this.$route.params.lang === 'go'){
+        this.$refs.codeEditor.setCode(`package main
 
 import "fmt"
 
@@ -83,6 +86,13 @@ func main(){
     fmt.Println("hello world")
 }
     `);
+        return;
+      }
+      if (this.$route.params.lang === 'js'){
+        this.$refs.codeEditor.setCode('console.log("hello world")');
+        return;
+      }
+      this.$refs.codeEditor.setCode('unknown language');
     }
   }
 };

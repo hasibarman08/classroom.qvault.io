@@ -24,6 +24,7 @@
       class="side"
       :run-callback="submitTypeCode"
       :reset-callback="getNextExercise"
+      prog-lang="go"
     />
     <MultipleChoice
       v-else-if="type === 'type_choice'"

@@ -4,10 +4,6 @@ export const domain = 'https://api.classroom.qvault.io';
 
 const jwtKey = 'cloudJWT';
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export async function login(email, password){
   const resp = await fetch(`${domain}/v1/auth`, {
     method: 'POST',
@@ -22,7 +18,6 @@ export async function login(email, password){
   });
   const handled = await handleJSONResponse(resp);
   localStorage.setItem(jwtKey, handled.token);
-  await sleep(10);
   return handled;
 }
 
