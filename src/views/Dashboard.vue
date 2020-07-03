@@ -31,9 +31,9 @@
           :text="course.Title"
           :sub-items="modulesToSubItems(course.Modules)"
           :click="() => {$router.push({name: 'Exercise', params: {courseUUID: course.UUID}}) }"
-          :sub-items-tab-open="$router.currentRoute.name === 'Exercise'"
+          :sub-items-tab-open="$router.currentRoute.params.courseUUID === course.UUID"
           :active-sub-item-u-u-i-d="$store.getters.getCurrentModuleUUID"
-          :current="$router.currentRoute.name === 'Exercise'"
+          :current="$router.currentRoute.params.courseUUID === course.UUID"
         />
 
         <MenuItemHorizontal
