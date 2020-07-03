@@ -61,7 +61,8 @@ export default {
     return {
       markdownSource: '',
       type: '',
-      moduleUUID: this.$route.params.moduleUUID,
+      courseUUID: this.$route.params.courseUUID,
+      moduleUUID: null,
       exerciseUUID: null,
       questions: null,
       currentQuestionIndex: 0,
@@ -84,6 +85,11 @@ export default {
   },
   async mounted(){
     await this.getNextExercise();
+  },
+  async beforeRouteUpdate (to, from, next) {
+    this.courseUUID = to.params.courseUUID;
+    await this.getNextExercise();
+    next();
   },
   methods: {
     shuffle(a) {
@@ -109,7 +115,7 @@ export default {
     },
     async submitTypeInfo(){
       await submitInformationalExercise(
-        this.$route.params.courseUUID,
+        this.courseUUID,
         this.moduleUUID,
         this.exerciseUUID
       );
@@ -118,7 +124,7 @@ export default {
     async submitTypeCode(output) {
       try {
         const credit = await submitCodeExercise(
-          this.$route.params.courseUUID,
+          this.courseUUID,
           this.moduleUUID,
           this.exerciseUUID,
           output
@@ -147,7 +153,7 @@ export default {
     async submitTypeChoice(question, answer) {
       try {
         const credit = await submitMultipleChoiceExercise(
-          this.$route.params.courseUUID,
+          this.courseUUID,
           this.moduleUUID,
           this.exerciseUUID,
           question,
@@ -176,14 +182,12 @@ export default {
     },
     async getNextExercise(){
       try {
-        const exercise = await getNextExercise(this.$route.params.courseUUID);
+        const exercise = await getNextExercise(this.courseUUID);
         if (exercise.CourseDone){
           this.$notify({
             type: 'success',
             text: 'You\'ve completed this course! Congragulations! Grab a certificate to show off your accomplishment'
           });
-          await this.sleep(1500);
-          this.$router.push({name: 'Certificates'});
         }
         this.markdownSource = exercise.CurrentExercise.Readme;
         this.type = exercise.CurrentExercise.Type;
@@ -196,7 +200,6 @@ export default {
         if (this.type === 'type_code'){
           this.$refs.codeEditor.setCode(exercise.CurrentExercise.Code);
           this.progLang = exercise.CurrentExercise.ProgLang;
-          console.log(this.progLang);
         } else if (exercise.CurrentExercise.Questions){
           this.questions = this.shuffle(exercise.CurrentExercise.Questions);
         }
