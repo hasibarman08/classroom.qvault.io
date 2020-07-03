@@ -96,6 +96,9 @@ export default {
   line-height: 50px;
   font-size: 18px;
   color: $white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &.current {
     color: $gold-light;
