@@ -17,12 +17,14 @@ export default new Vuex.Store({
       state.balance = newBalance;
     },
     setProducts(state, newProducts) {
+      newProducts.sort((p1, p2) => p1.Price.UnitAmount > p2.Price.UnitAmount ? 1 : -1);
       state.products = newProducts;
     },
     setIsLoggedIn(state, newIsLoggedIn) {
       state.isLoggedIn = newIsLoggedIn;
     },
     setCourses(state, newCourses) {
+      newCourses.sort((c1, c2) => c1.Title < c2.Title ? 1 : -1);
       state.courses = newCourses;
     },
     setUser(state, newUser) {
