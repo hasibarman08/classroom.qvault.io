@@ -44,7 +44,7 @@
       ref="codeEditor"
       :run-callback="() => {}"
       :reset-callback="setCode"
-      :prog-lang="$route.params.lang"
+      :prog-lang="lang"
     />
   </div>
 </template>
@@ -61,12 +61,17 @@ export default {
     BlockButton,
     FontAwesomeIcon
   },
+  data(){
+    return {
+      lang: this.$route.params.lang
+    };
+  },
   computed: {
     subTitle(){
-      if (this.$route.params.lang === 'go'){
+      if (this.lang === 'go'){
         return 'Run Go in your browser with web assembly';
       }
-      if (this.$route.params.lang === 'js'){
+      if (this.lang === 'js'){
         return 'Run JavaScript in your browser';
       }
       return 'unknown';
@@ -75,9 +80,14 @@ export default {
   mounted(){
     this.setCode();
   },
+  beforeRouteUpdate (to, from, next) {
+    this.lang = to.params.lang;
+    this.setCode();
+    next();
+  },
   methods:{
     setCode(){
-      if (this.$route.params.lang === 'go'){
+      if (this.lang === 'go'){
         this.$refs.codeEditor.setCode(`package main
 
 import "fmt"
@@ -88,7 +98,7 @@ func main(){
     `);
         return;
       }
-      if (this.$route.params.lang === 'js'){
+      if (this.lang === 'js'){
         this.$refs.codeEditor.setCode('console.log("hello world")');
         return;
       }
@@ -111,6 +121,8 @@ func main(){
   #editor {
     flex: 1;
     background-color: $white;
+    max-height: 100%;
+    overflow: auto;
   }
 
   #header {

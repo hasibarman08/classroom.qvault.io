@@ -110,7 +110,6 @@ export default {
     async loadCourses() {
       try {
         let courses = await getCourses();
-        courses.sort((c1, c2) => c1.Title < c2.Title ? 1 : -1);
         this.$store.commit('setCourses', courses);
       } catch (err) {
         this.$notify({
