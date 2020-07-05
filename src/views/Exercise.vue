@@ -188,6 +188,12 @@ export default {
             type: 'success',
             text: 'You\'ve completed this course! Congragulations! Grab a certificate to show off your accomplishment'
           });
+          if (exercise.Message && exercise.GemCredit){
+            this.$notify({
+              type: 'success',
+              text: `${exercise.Message} 💎x${exercise.GemCredit}`
+            });
+          }
         }
         this.markdownSource = exercise.CurrentExercise.Readme;
         this.type = exercise.CurrentExercise.Type;

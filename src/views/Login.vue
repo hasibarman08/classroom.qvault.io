@@ -3,7 +3,7 @@
     <div id="title-container">
       <img
         alt="Qvault logo"
-        src="../img/qvault-icon.png"
+        src="../img/qvault-icon-250.png"
       >
 
       <span id="title">Qvault Classroom</span>
@@ -345,7 +345,7 @@ export default {
   #title-container {
     width: 100%;
     text-align: center;
-    margin-top: 1em;
+    margin-top: 3em;
 
     img {
       vertical-align: middle;
