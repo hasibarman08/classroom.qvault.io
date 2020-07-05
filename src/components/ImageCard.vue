@@ -41,7 +41,7 @@ export default {
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   &:hover{
     box-shadow: 0 16px 32px 0 rgba(0,0,0,0.8);
@@ -55,6 +55,7 @@ export default {
 
   #body {
     padding: 10px;
+    flex: 1;
   }
 }
 </style>

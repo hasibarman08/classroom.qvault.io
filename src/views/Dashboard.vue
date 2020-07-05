@@ -107,12 +107,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import {
   isLoggedIn,
-  logout,
-  getCourses,
-  getLastGemTransaction,
-  getProducts,
-  getUser
+  logout
 } from '@/lib/cloudClient.js';
+
+import {
+  loadCourses,
+  loadBalance,
+  loadProducts,
+  loadUser,
+  loadLoggedIn
+} from '@/lib/cloudStore.js';
 
 export default {
   components: {
@@ -125,15 +129,11 @@ export default {
     }
   },
   async mounted(){
-    this.$store.commit('setIsLoggedIn', isLoggedIn());
-    if (!this.$store.getters.getIsLoggedIn){
-      this.$router.push({name: 'Login'});
-    }
-      
-    this.loadBalance();
-    this.loadCourses();
-    this.loadProducts();
-    this.loadUser();
+    loadLoggedIn(this);  
+    loadBalance(this);
+    loadCourses(this);
+    loadProducts(this);
+    loadUser(this);
   },
   methods: {
     modulesToSubItems(modules){
@@ -150,50 +150,6 @@ export default {
       logout();
       this.$store.commit('setIsLoggedIn', isLoggedIn());
       this.$router.push({name: 'Login'});
-    },
-    async loadCourses(){
-      try {
-        const courses = await getCourses();
-        this.$store.commit('setCourses', courses);
-      } catch (err) {
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
-    async loadBalance(){
-      try {
-        const lastGemTransaction = await getLastGemTransaction();
-        this.$store.commit('setBalance', lastGemTransaction.Balance);
-      } catch (err) {
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
-    async loadProducts(){
-      try {
-        const products = await getProducts();
-        this.$store.commit('setProducts', products);
-      } catch (err) {
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
-    async loadUser(){
-      try {
-        const user = await getUser();
-        this.$store.commit('setUser', user);
-      } catch (err) {
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
     }
   }
 };

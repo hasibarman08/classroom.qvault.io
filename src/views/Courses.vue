@@ -161,45 +161,52 @@ export default {
     max-width: 400px;
     min-width: 200px;
 
-    .title {
-      color: $gold-dark;
-      font-size: 2em;
-      margin: 0em;
-    }
+    .body {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-    .description {
-      color: $white;
-      font-weight: 400;
-      margin: 1em;
-      line-height: 1.3em;
-      font-size: 1em;
-    }
-
-    .completed {
-      color: $green-light;
-      margin: 10px;
-
-      span {
-        margin-left: 10px;
+      .title {
+        color: $gold-dark;
+        font-size: 2em;
+        margin: 0em;
       }
-    }
 
-    .purchased {
-      color: $gold-lighter;
-      margin: 10px;
-
-      span {
-        margin-left: 10px;
+      .description {
+        color: $white;
+        font-weight: 400;
+        margin: 1em;
+        line-height: 1.3em;
+        font-size: 1em;
       }
-    }
 
-    .price {
-      color: $purple-lighter;
-      margin: 10px;
-      font-size: 24px;
+      .completed {
+        color: $green-light;
+        margin: 10px;
 
-      span {
-        margin-left: 10px;
+        span {
+          margin-left: 10px;
+        }
+      }
+
+      .purchased {
+        color: $gold-lighter;
+        margin: 10px;
+
+        span {
+          margin-left: 10px;
+        }
+      }
+
+      .price {
+        color: $purple-lighter;
+        margin: 10px;
+        font-size: 24px;
+
+        span {
+          margin-left: 10px;
+        }
       }
     }
   }
