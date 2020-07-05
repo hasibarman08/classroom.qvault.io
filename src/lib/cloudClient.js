@@ -169,6 +169,18 @@ export async function getLastGemTransaction(){
   return handled;
 }
 
+export async function getRewards() {
+  const resp = await fetchWithAuth(`${domain}/v1/rewards`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
 export async function getProducts(){
   const resp = await fetchWithAuth(`${domain}/v1/products`, {
     method: 'GET',

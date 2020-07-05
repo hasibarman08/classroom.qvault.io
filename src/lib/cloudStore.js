@@ -3,7 +3,8 @@ import {
   getLastGemTransaction,
   getUser,
   getProducts,
-  isLoggedIn
+  isLoggedIn,
+  logout
 } from '@/lib/cloudClient.js';
 
 export async function loadCourses(thisComponent){
@@ -55,12 +56,20 @@ export async function loadUser(thisComponent) {
   }
 }
 
-export async function loadLoggedIn(thisComponent) {
+export function loadLoggedIn(thisComponent) {
   thisComponent.$store.commit('setIsLoggedIn', isLoggedIn());
   if (!thisComponent.$store.getters.getIsLoggedIn) {
     thisComponent.$router.push({ name: 'Login' });
   }
 }
+
+export function setLogout(thisComponent) {
+  logout();
+  thisComponent.$store.commit('setIsLoggedIn', isLoggedIn());
+  thisComponent.$router.push({ name: 'Login' });
+}
+
+
 
 
 

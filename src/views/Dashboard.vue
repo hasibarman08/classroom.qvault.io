@@ -106,8 +106,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import {
-  isLoggedIn,
-  logout
+  getRewards
 } from '@/lib/cloudClient.js';
 
 import {
@@ -115,7 +114,8 @@ import {
   loadBalance,
   loadProducts,
   loadUser,
-  loadLoggedIn
+  loadLoggedIn,
+  setLogout
 } from '@/lib/cloudStore.js';
 
 export default {
@@ -130,12 +130,31 @@ export default {
   },
   async mounted(){
     loadLoggedIn(this);  
-    loadBalance(this);
     loadCourses(this);
     loadProducts(this);
     loadUser(this);
+
+    await this.loadRewards();
+    loadBalance(this);
   },
   methods: {
+    async loadRewards(){
+      try {
+        const rewards = await getRewards();
+        console.log(rewards);
+        for (const reward of rewards.Rewards){
+          this.$notify({
+            type: 'success',
+            text: `${reward.Message} 💎x${reward.GemCredit}`
+          });
+        }
+      } catch (err) {
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
+    },
     modulesToSubItems(modules){
       let subItems = [];
       for (const mod of modules) {
@@ -147,9 +166,7 @@ export default {
       return subItems;
     },
     logout(){
-      logout();
-      this.$store.commit('setIsLoggedIn', isLoggedIn());
-      this.$router.push({name: 'Login'});
+      setLogout(this);
     }
   }
 };
