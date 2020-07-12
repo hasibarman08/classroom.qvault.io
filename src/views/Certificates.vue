@@ -128,8 +128,6 @@ export default {
         return;
       }
 
-      console.log(courseUUID);
-
       if (isPurchased) {
         this.$router.push({name: 'Certificate', params: {
           courseUUID,

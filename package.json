@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open --host 127.0.0.1",
+    "serve": "vue-cli-service serve --open --host localhost",
     "build": "vue-cli-service build --dest docs && echo classroom.qvault.io > docs/CNAME",
     "lint": "vue-cli-service lint"
   },

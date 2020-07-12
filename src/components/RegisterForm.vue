@@ -1,5 +1,18 @@
 <template>
   <div id="register-form">
+    <div
+      v-if="'register'"
+      class="col"
+    >
+      <h2>
+        One-Click Sign Up
+      </h2>
+      <GoogleButton
+        :on-success="onGoogleSuccess"
+        text="Sign up with Google"
+      />
+      <div />
+    </div>
     <form
       v-if="state === 'register'"
       class="col"
@@ -9,7 +22,7 @@
         v-model="email"
         placeholder="email"
         type="email"
-        class="item"
+        class="item input"
       />
       <TextInput
         v-model="firstName"
@@ -47,40 +60,29 @@
         Sign Up Free
       </BlockButton>
     </form>
-    <div
-      v-if="'register'"
-      class="col right"
-    >
-      <GoogleLogin
-        :params="googleButtonParams"
-      >
-        Login with Google
-      </GoogleLogin>
-    </div>
 
     <form
       v-if="state === 'email-verification-code'"
       class="col"
       @submit.prevent="submitVerificationCode"
     >
-      <span class="title">Check Your Email</span>
+      <span class="title item">Check Your Email</span>
       <TextInput
         v-model="validationCode"
         placeholder="6 digit code"
         type="text"
+        class="item"
       />
-      <BlockButton class="btn">
+      <BlockButton class="btn item">
         Submit
       </BlockButton>
       <span><a @click="resendVerification">Resend Code</a></span>
-      <span><a @click="state = 'register'">Back</a></span>
     </form>
   </div>
 </template>
 
 <script>
-import { GoogleLogin } from 'vue-google-login';
-
+import GoogleButton from '@/components/GoogleButton';
 import BlockButton from '@/components/BlockButton';
 import TextInput from '@/components/TextInput';
 
@@ -89,12 +91,14 @@ import {
   createUser, 
   sendEmailVerification, 
   verifyEmail,
-  isLoggedIn
+  isLoggedIn,
+  createUserGoogle,
+  loginGoogle
 } from '@/lib/cloudClient.js';
 
 export default {
   components: {
-    GoogleLogin,
+    GoogleButton,
     BlockButton,
     TextInput
   },
@@ -107,73 +111,78 @@ export default {
       password: null,
       passwordConfirm: null,
       subscribeNews: true,
-      googleButtonParams: {
-        client_id: '44792168937-1rpf8k8v1uv7eqoc8u2bg8qaenkfj41n.apps.googleusercontent.com'
-      }
+      validationCode: null
     };
   },
   methods: {
-    async onSuccess(googleUser){
-      console.log(googleUser);
-      console.log(googleUser.getBasicProfile());
+    async onGoogleSuccess(googleUser){
+      try {
+        await createUserGoogle(
+          googleUser.Qt.Au, 
+          googleUser.wc.id_token,
+          this.subscribeNews
+        );
+        await loginGoogle(googleUser.Qt.Au, googleUser.wc.id_token);
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
+        this.$router.push({name: 'Courses'});
+      } catch (err){
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
     },
-    async onFailure(err){
-      this.$notify({
-        type: 'error',
-        text: err
-      });
-    }
-  },
-  async submitRegister(){
-    if (this.registerPassword !== this.registerPasswordConfirm){
-      this.$notify({
-        type: 'error',
-        text: 'Passwords don\'t match'
-      });
-      return;
-    }
-    try {
-      await createUser(
-        this.registerEmail, 
-        this.registerPassword,
-        this.registerFirstName,
-        this.registerLastName,
-        this.registerSubscribeNews
-      );
-      await login(this.registerEmail, this.registerPassword);
-      await sendEmailVerification();
-      this.state = 'email-verification-code';
-    } catch (err){
-      this.$notify({
-        type: 'error',
-        text: err
-      });
-    }
-  },
-  async submitVerificationCode(){
-    try {
-      await verifyEmail(Number(this.validationCode));
-      await login(
-        this.registerEmail, 
-        this.registerPassword
-      );
-      this.$store.commit('setIsLoggedIn', isLoggedIn());
-      this.$router.push({name: 'Courses'});
-    } catch (err){
-      this.$notify({
-        type: 'error',
-        text: err
-      });
-    }
-  },
-  async resendVerification(){
-    try {
-      await sendEmailVerification();
-    } catch (err){
-      this.$notify({
-        type: 'error',
-        text: err
-      });
+    async submitRegister(){
+      if (this.registerPassword !== this.registerPasswordConfirm){
+        this.$notify({
+          type: 'error',
+          text: 'Passwords don\'t match'
+        });
+        return;
+      }
+      try {
+        await createUser(
+          this.email, 
+          this.password,
+          this.firstName,
+          this.lastName,
+          this.subscribeNews
+        );
+        await login(this.email, this.password);
+        await sendEmailVerification(this.email);
+        this.state = 'email-verification-code';
+      } catch (err){
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
+    },
+    async submitVerificationCode(){
+      try {
+        await verifyEmail(Number(this.validationCode));
+        await login(
+          this.email, 
+          this.password
+        );
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
+        this.$router.push({name: 'Courses'});
+      } catch (err){
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
+    },
+    async resendVerification(){
+      try {
+        await sendEmailVerification(this.email);
+      } catch (err){
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
     }
   }
 };
@@ -183,12 +192,12 @@ export default {
 @import '@/styles/colors.scss';
 
 #register-form {
-  flex: 1;
   display: flex;
   flex-direction: row;
+  flex-flow: row wrap;
 
   .col {
-    flex: 3;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -199,14 +208,14 @@ export default {
       margin: 10px;
     }
 
+    .input {
+      min-width: 150px;
+    }
+
     .btn {
       width: 50%;
       min-width: 75px;
     }
   }
-
-  .right {
-    border-left: 1px solid $gray-mid;
-  } 
 }
 </style>

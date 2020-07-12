@@ -16,6 +16,16 @@
     </div>
 
     <div
+      v-if="state === 'register'"
+      class="panel"
+    >
+      <RegisterForm />
+      <div class="bottom">
+        <span>Have an account? <a @click="state='login'">Login</a></span>
+      </div>
+    </div>
+
+    <div
       v-if="state === 'login'"
       class="panel"
     >
@@ -25,63 +35,15 @@
         <span><a @click="state='forgot-password'">Forgot Password?</a></span>
       </div>
     </div>
-
-    <div
-      v-if="state === 'register'"
-      class="panel"
-    >
-      <RegisterForm />
-      <div class="bottom">
-        <span>Have an account? <a @click="state='login'">Login</a></span>
-      </div>
-    </div>
     
     <div
       v-if="state === 'forgot-password'"
       class="panel"
     >
-      <form
-        class="panel-content"
-        @submit.prevent="submitForgotPasswordEmail"
-      >
-        <span class="title">Recover Password</span>
-        <TextInput
-          v-model="recoverEmail"
-          placeholder="email"
-          type="email"
-        />
-        <BlockButton class="btn">
-          Submit
-        </BlockButton>
+      <ForgotPasswordForm class="top" />
+      <div class="bottom">
         <span><a @click="state='login'">Back</a></span>
-      </form>
-    </div>
-
-    <div
-      v-if="state === 'forgot-password-code'"
-      class="panel"
-    >
-      <form
-        class="panel-content"
-        @submit.prevent="submitRecoveryCode"
-      >
-        <span class="title">Enter Recovery Code</span>
-        <TextInput
-          v-model="recoverCode"
-          placeholder="6 digit code"
-          type="text"
-        />
-        <TextInput
-          v-model="recoverPassword"
-          placeholder="new password"
-          type="password"
-        />
-        <BlockButton class="btn">
-          Submit
-        </BlockButton>
-        <span><a @click="resendVerification">Resend Code</a></span>
-        <span><a @click="state = 'login'">Back</a></span>
-      </form>
+      </div>
     </div>
 
     <div id="widget-container">
@@ -134,26 +96,19 @@
 import {
   isLoggedIn
 } from '@/lib/cloudClient.js';
-import BlockButton from '@/components/BlockButton';
-import TextInput from '@/components/TextInput';
 import LoginForm from '@/components/LoginForm';
 import RegisterForm from '@/components/RegisterForm';
+import ForgotPasswordForm from '@/components/ForgotPasswordForm';
 
 export default {
   components: {
-    BlockButton,
-    TextInput,
     LoginForm,
+    ForgotPasswordForm,
     RegisterForm
   },
   data() {
     return {
-      state: 'login',
-      validationCode: null,
-      error: null,
-      googleButtonParams: {
-        client_id: '44792168937-1rpf8k8v1uv7eqoc8u2bg8qaenkfj41n.apps.googleusercontent.com'
-      }
+      state: 'register'
     };
   },
   methods: {
@@ -215,12 +170,12 @@ export default {
     min-height: 300px;
     width: 50vw;
     min-width: 400px;
-    border-radius: 3px;
     color: $gray-dark;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     padding: 20px;
+    box-shadow: 0 10px 20px 0px $gray-mid;
 
     .top {
       flex: 1;

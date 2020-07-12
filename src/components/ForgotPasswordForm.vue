@@ -14,7 +14,6 @@
       <BlockButton class="btn">
         Submit
       </BlockButton>
-      <span><a @click="state='login'">Back</a></span>
     </form>
 
     <form
@@ -37,7 +36,6 @@
         Submit
       </BlockButton>
       <span><a @click="resendVerification">Resend Code</a></span>
-      <span><a @click="state = 'login'">Back</a></span>
     </form>
   </div>
 </template>
@@ -49,7 +47,8 @@ import TextInput from '@/components/TextInput';
 import {
   login, 
   updateUserPasswordCode,
-  isLoggedIn
+  isLoggedIn,
+  sendEmailVerification
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -68,8 +67,8 @@ export default {
   methods: {
     async submitForgotPasswordEmail(){
       try {
-        await login(this.loginEmail, this.loginPassword);
-        this.state='forgot-password-code';
+        await sendEmailVerification(this.email);
+        this.state='submit-code';
       } catch (err){
         this.$notify({
           type: 'error',
@@ -80,13 +79,23 @@ export default {
     async submitRecoveryCode(){
       try {
         await updateUserPasswordCode(
-          this.recoverEmail,
-          this.recoverPassword,
-          Number(this.recoverCode)
+          this.email,
+          this.newPassword,
+          Number(this.code)
         );
-        await login(this.recoverEmail, this.recoverPassword);
+        await login(this.email, this.newPassword);
         this.$store.commit('setIsLoggedIn', isLoggedIn());
         this.$router.push({name: 'Courses'});
+      } catch (err){
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
+    },
+    async resendVerification(){
+      try {
+        await sendEmailVerification(this.email);
       } catch (err){
         this.$notify({
           type: 'error',
@@ -114,6 +123,7 @@ export default {
 
   .btn {
     width: 50%;
+    max-width: 150px;
     min-width: 75px;
   }
 }

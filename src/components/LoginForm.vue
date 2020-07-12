@@ -1,5 +1,14 @@
 <template>
   <div id="login-form">
+    <div class="col">
+      <h2>
+        One-Click Sign In
+      </h2>
+      <GoogleButton
+        :on-success="onGoogleSuccess"
+        text="Sign in with Google"
+      />
+    </div>
     <form
       class="col"
       @submit.prevent="submitLogin"
@@ -19,32 +28,23 @@
         Login
       </BlockButton>
     </form>
-    <div class="col right">
-      <GoogleLogin
-        :params="googleButtonParams"
-        :on-success="onSuccess"
-        :on-failure="onFailure"
-      >
-        Login with Google
-      </GoogleLogin>
-    </div>
   </div>
 </template>
 
 <script>
-import { GoogleLogin } from 'vue-google-login';
-
+import GoogleButton from '@/components/GoogleButton';
 import BlockButton from '@/components/BlockButton';
 import TextInput from '@/components/TextInput';
 
 import {
-  login, 
+  login,
+  loginGoogle,
   isLoggedIn
 } from '@/lib/cloudClient.js';
 
 export default {
   components: {
-    GoogleLogin,
+    GoogleButton,
     BlockButton,
     TextInput
   },
@@ -58,27 +58,29 @@ export default {
     };
   },
   methods: {
-    async onSuccess(googleUser){
-      console.log(googleUser);
-      console.log(googleUser.getBasicProfile());
+    async onGoogleSuccess(googleUser){
+      try {
+        await loginGoogle(googleUser.Qt.Au, googleUser.wc.id_token);
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
+        this.$router.push({name: 'Courses'});
+      } catch (err){
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
     },
-    async onFailure(err){
-      this.$notify({
-        type: 'error',
-        text: err
-      });
-    }
-  },
-  async submitLogin(){
-    try {
-      await login(this.loginEmail, this.loginPassword);
-      this.$store.commit('setIsLoggedIn', isLoggedIn());
-      this.$router.push({name: 'Courses'});
-    } catch (err){
-      this.$notify({
-        type: 'error',
-        text: err
-      });
+    async submitLogin(){
+      try {
+        await login(this.email, this.password);
+        this.$store.commit('setIsLoggedIn', isLoggedIn());
+        this.$router.push({name: 'Courses'});
+      } catch (err){
+        this.$notify({
+          type: 'error',
+          text: err
+        });
+      }
     }
   }
 };
@@ -109,9 +111,5 @@ export default {
       min-width: 75px;
     }
   }
-
-  .right {
-    border-left: 1px solid $gray-mid;
-  } 
 }
 </style>

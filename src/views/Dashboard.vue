@@ -141,7 +141,6 @@ export default {
     async loadRewards(){
       try {
         const rewards = await getRewards();
-        console.log(rewards);
         for (const reward of rewards.Rewards){
           this.$notify({
             type: 'success',

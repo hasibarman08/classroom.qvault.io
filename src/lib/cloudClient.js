@@ -21,6 +21,23 @@ export async function login(email, password){
   return handled;
 }
 
+export async function loginGoogle(email, googleJWT) {
+  const resp = await fetch(`${domain}/v1/auth`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      googleJWT
+    })
+  });
+  const handled = await handleJSONResponse(resp);
+  localStorage.setItem(jwtKey, handled.token);
+  return handled;
+}
+
 async function refreshToken(){
   const resp = await fetchWithAuth(`${domain}/v1/auth/refresh`, {
     method: 'POST',
@@ -46,6 +63,23 @@ export async function createUser(email, password, firstName, lastName, isSubscri
       password, 
       firstName,
       lastName,
+      isSubscribedNews
+    })
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export async function createUserGoogle(email, googleJWT, isSubscribedNews) {
+  const resp = await fetch(`${domain}/v1/users`, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      googleJWT,
       isSubscribedNews
     })
   });
@@ -115,13 +149,16 @@ export async function updateUserPasswordCode(email, newPassword, code){
   return handled;
 }
 
-export async function sendEmailVerification(){
-  const resp = await fetchWithAuth(`${domain}/v1/users/email/send_verification`, {
+export async function sendEmailVerification(email){
+  const resp = await fetch(`${domain}/v1/users/email/send_verification`, {
     method: 'POST',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
-    }
+    },
+    body: JSON.stringify({
+      email
+    })
   });
   const handled = await handleJSONResponse(resp);
   return handled;

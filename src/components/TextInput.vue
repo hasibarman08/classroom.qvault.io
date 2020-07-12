@@ -33,8 +33,6 @@ export default {
 @import '@/styles/colors.scss';
 
 input {
-  width: 50%;
-  min-width: 150px;
   border-radius: 0px;
   border-width: 1px;
   padding: 10px;

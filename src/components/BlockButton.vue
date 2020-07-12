@@ -33,14 +33,14 @@ button {
   border-width: 0px;
   padding: 10px 30px 10px 30px;
   color: $white;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.4);
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
   cursor: pointer;
 
   &.gray {
     background-color: $gray-dark;
 
     &:hover{
-      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
       background-color: $gray-mid;
     }
   }
@@ -49,7 +49,7 @@ button {
     background-color: $green-darker;
 
     &:hover{
-      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
       background-color: $green-mid;
     }
   }
@@ -58,7 +58,7 @@ button {
     background-color: $purple-dark;
 
     &:hover{
-      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.8);
       background-color: $purple-lighter;
     }
   }
