@@ -2,7 +2,7 @@
   <div id="login-form">
     <div class="col">
       <h2>
-        One-Click Sign In
+        Sign In
       </h2>
       <GoogleButton
         :on-success="onGoogleSuccess"

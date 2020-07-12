@@ -5,7 +5,7 @@
       class="col"
     >
       <h2>
-        One-Click Sign Up
+        Sign Up Free
       </h2>
       <GoogleButton
         :on-success="onGoogleSuccess"
