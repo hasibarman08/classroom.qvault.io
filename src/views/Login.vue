@@ -113,7 +113,6 @@ export default {
   },
   mounted(){
     this.$store.commit('setIsLoggedIn', isLoggedIn());
-    console.log(isLoggedIn());
     if (this.$store.getters.getIsLoggedIn){
       this.$router.push({name: 'Courses'});
     }

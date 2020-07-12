@@ -15,42 +15,44 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '',
+    alias: '/#',
     name: 'Login',
     component: Login
   },
   {
     path: '/dashboard',
+    alias: '/#/dashboard',
     name: 'Dashboard',
     component: Dashboard,
     children: [
       {
-        path: '/courses',
+        path: 'courses',
         name: 'Courses',
         component: Courses
       },
       {
-        path: '/course_product/:courseUUID',
+        path: 'course_product/:courseUUID',
         name: 'CourseProduct',
         component: CourseProduct
       },
       {
-        path: '/exercise/:courseUUID/:moduleUUID?',
+        path: 'exercise/:courseUUID/:moduleUUID?',
         name: 'Exercise',
         component: Exercise
       },
       {
-        path: '/store',
+        path: 'store',
         name: 'Store',
         component: Store
       },
       {
-        path: '/profile',
+        path: 'profile',
         name: 'Profile',
         component: Profile
       },
       {
-        path: '/certificates',
+        path: 'certificates',
         name: 'Certificates',
         component: Certificates
       }
@@ -58,17 +60,20 @@ const routes = [
   },
   {
     path: '/certificate/:userUUID/:courseUUID',
+    alias: '/#/certificate/:userUUID/:courseUUID',
     name: 'Certificate',
     component: Certificate
   },
   {
     path: '/playground/:lang',
+    alias: '/#/playground/:lang',
     name: 'Playground',
     component: Playground
   }
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 });
 
