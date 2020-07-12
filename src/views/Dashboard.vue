@@ -60,30 +60,27 @@
       <div id="content">
         <div>
           <div id="nav">
-            <router-link
-              to="/store"
+            <div
+              id="balance"
+              class="nav-item left"
+              @click="() => {$router.push({name: 'Store'})}"
             >
-              <div
-                id="balance"
-                class="nav-item left"
-              >
-                <FontAwesomeIcon
-                  icon="gem"
-                />
-                {{ $store.getters.getBalance }}
-              </div>
-            </router-link>
+              <FontAwesomeIcon
+                icon="gem"
+              />
+              {{ $store.getters.getBalance }}
+            </div>
 
-            <router-link
-              to="/profile"
+            <div
+              class="nav-item"
+              :class="{current: $router.currentRoute.name === 'Profile'}"
+              @click="() => {$router.push({name: 'Profile'})}"
             >
-              <div class="nav-item">
-                <FontAwesomeIcon
-                  icon="user-tie"
-                  class="icon"
-                />
-              </div>
-            </router-link>
+              <FontAwesomeIcon
+                icon="user-tie"
+                class="icon"
+              />
+            </div>
 
             <a
               href="https://qvault.io"
@@ -237,17 +234,18 @@ $bar-height: 60px;
       color: $white;
       text-decoration: none;
     }
-
-    .router-link-exact-active {
-      color: $gold-mid;
-    }
-
     .nav-item {
+      color: $white;
+      cursor: pointer;
       float: right;
       height: 100%;
       padding-left: 20px;
       padding-right: 20px;
       line-height: $bar-height;
+
+      &.current {
+        color: $gold-mid;
+      }
 
       &.left {
         float: left;

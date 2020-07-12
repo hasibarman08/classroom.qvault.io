@@ -15,14 +15,12 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '',
-    alias: '/#',
+    path: '/',
     name: 'Login',
     component: Login
   },
   {
     path: '/dashboard',
-    alias: '/#/dashboard',
     name: 'Dashboard',
     component: Dashboard,
     children: [
@@ -60,13 +58,11 @@ const routes = [
   },
   {
     path: '/certificate/:userUUID/:courseUUID',
-    alias: '/#/certificate/:userUUID/:courseUUID',
     name: 'Certificate',
     component: Certificate
   },
   {
     path: '/playground/:lang',
-    alias: '/#/playground/:lang',
     name: 'Playground',
     component: Playground
   }
@@ -75,6 +71,17 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes
+});
+
+// Redirect if path begins with a hash (ignore hashes later in path)
+router.beforeEach((to, from, next) => {
+  // Redirect if fullPath begins with a hash (ignore hashes later in path)
+  if (to.fullPath.substr(0, 2) === '/#') {
+    const path = to.fullPath.substr(2);
+    next(path);
+    return;
+  }
+  next();
 });
 
 // Supress redundant navigation errors
