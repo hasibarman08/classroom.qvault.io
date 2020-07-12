@@ -12,6 +12,7 @@
         text="Sign up with Google"
       />
       <div />
+      <div class="divider" />
     </div>
     <form
       v-if="state === 'register'"
@@ -195,6 +196,18 @@ export default {
   display: flex;
   flex-direction: row;
   flex-flow: row wrap;
+
+  .divider {
+    border-bottom: 1px solid $gray-dark;
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    display: none;
+
+    @media (max-width: 720px) {
+      display: block;
+    }
+  }
 
   .col {
     flex: 1;

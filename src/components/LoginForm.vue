@@ -8,6 +8,7 @@
         :on-success="onGoogleSuccess"
         text="Sign in with Google"
       />
+      <div class="divider" />
     </div>
     <form
       class="col"
@@ -18,13 +19,15 @@
         v-model="email"
         placeholder="email"
         type="email"
+        class="item"
       />
       <TextInput
         v-model="password"
         placeholder="password"
         type="password"
+        class="item"
       />
-      <BlockButton class="btn">
+      <BlockButton class="btn item">
         Login
       </BlockButton>
     </form>
@@ -90,9 +93,21 @@ export default {
 @import '@/styles/colors.scss';
 
 #login-form {
-  flex: 1;
   display: flex;
+  flex-flow: row wrap;
   flex-direction: row;
+
+  .divider {
+    border-bottom: 1px solid $gray-dark;
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    display: none;
+
+    @media (max-width: 720px) {
+      display: block;
+    }
+  }
 
   .title {
     font-size: 24px;
@@ -105,6 +120,10 @@ export default {
     justify-content: space-evenly;
     width: 100%;
     align-items: center;
+
+    .item {
+      margin: 10px;
+    }
 
     .btn {
       width: 50%;

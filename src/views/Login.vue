@@ -19,7 +19,7 @@
       v-if="state === 'register'"
       class="panel"
     >
-      <RegisterForm />
+      <RegisterForm class="top" />
       <div class="bottom">
         <span>Have an account? <a @click="state='login'">Login</a></span>
       </div>
@@ -156,7 +156,7 @@ export default {
     }
 
     #sub-title-container {
-      margin: 2em 0 1em 0;
+      margin: 1em 0 4em 0;
       font-size: 1em;
       vertical-align: middle;
       color: $gray-lighter;
@@ -205,7 +205,7 @@ export default {
     justify-content: space-around;
     text-align: center;
     width: 80%;
-    margin: 1em;
+    margin: 3em;
 
     .widget{
       display: flex;
