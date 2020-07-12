@@ -15,76 +15,32 @@
       </div>
     </div>
 
-    <div id="panel">
-      <form
-        v-if="state === 'login'"
-        class="panel-content"
-        @submit.prevent="login"
-      >
-        <span class="title">Log In to Your Account</span>
-        <TextInput
-          v-model="loginEmail"
-          placeholder="email"
-          type="email"
-        />
-        <TextInput
-          v-model="loginPassword"
-          placeholder="password"
-          type="password"
-        />
+    <div
+      v-if="state === 'login'"
+      class="panel"
+    >
+      <LoginForm class="top" />
+      <div class="bottom">
         <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
-        <BlockButton class="btn">
-          Login
-        </BlockButton>
         <span><a @click="state='forgot-password'">Forgot Password?</a></span>
-      </form>
+      </div>
+    </div>
 
-      <form
-        v-if="state === 'register'"
-        class="panel-content"
-        @submit.prevent="register"
-      >
-        <span class="title">Sign Up Free</span>
-        <TextInput
-          v-model="registerEmail"
-          placeholder="email"
-          type="email"
-        />
-        <TextInput
-          v-model="registerFirstName"
-          placeholder="first name"
-          type="text"
-        />
-        <TextInput
-          v-model="registerLastName"
-          placeholder="last name"
-          type="text"
-        />
-        <TextInput
-          v-model="registerPassword"
-          placeholder="password"
-          type="password"
-        />
-        <TextInput
-          v-model="registerPasswordConfirm"
-          placeholder="confirm password"
-          type="password"
-        />
-        <div>
-          <input
-            v-model="registerSubscribeNews"
-            type="checkbox"
-          >
-          <span>send me programming content and news</span>
-        </div>
-        <BlockButton class="btn">
-          Register
-        </BlockButton>
+    <div
+      v-if="state === 'register'"
+      class="panel"
+    >
+      <RegisterForm />
+      <div class="bottom">
         <span>Have an account? <a @click="state='login'">Login</a></span>
-      </form>
-
+      </div>
+    </div>
+    
+    <div
+      v-if="state === 'forgot-password'"
+      class="panel"
+    >
       <form
-        v-if="state === 'forgot-password'"
         class="panel-content"
         @submit.prevent="submitForgotPasswordEmail"
       >
@@ -99,9 +55,13 @@
         </BlockButton>
         <span><a @click="state='login'">Back</a></span>
       </form>
+    </div>
 
+    <div
+      v-if="state === 'forgot-password-code'"
+      class="panel"
+    >
       <form
-        v-if="state === 'forgot-password-code'"
         class="panel-content"
         @submit.prevent="submitRecoveryCode"
       >
@@ -121,24 +81,6 @@
         </BlockButton>
         <span><a @click="resendVerification">Resend Code</a></span>
         <span><a @click="state = 'login'">Back</a></span>
-      </form>
-
-      <form
-        v-if="state === 'email-verification-code'"
-        class="panel-content"
-        @submit.prevent="submitVerificationCode"
-      >
-        <span class="title">Check Your Email</span>
-        <TextInput
-          v-model="validationCode"
-          placeholder="6 digit code"
-          type="text"
-        />
-        <BlockButton class="btn">
-          Submit
-        </BlockButton>
-        <span><a @click="resendVerification">Resend Code</a></span>
-        <span><a @click="state = 'register'">Back</a></span>
       </form>
     </div>
 
@@ -190,136 +132,35 @@
 
 <script>
 import {
-  login, 
-  createUser, 
-  updateUserPasswordCode,
-  sendEmailVerification, 
-  verifyEmail,
   isLoggedIn
 } from '@/lib/cloudClient.js';
 import BlockButton from '@/components/BlockButton';
 import TextInput from '@/components/TextInput';
+import LoginForm from '@/components/LoginForm';
+import RegisterForm from '@/components/RegisterForm';
 
 export default {
   components: {
     BlockButton,
-    TextInput
+    TextInput,
+    LoginForm,
+    RegisterForm
   },
   data() {
     return {
       state: 'login',
-      loginEmail: null,
-      loginPassword: null,
-      registerEmail: null,
-      registerFirstName: null,
-      registerLastName: null,
-      registerPassword: null,
-      registerPasswordConfirm: null,
-      registerSubscribeNews: true,
-      recoverEmail: null,
-      recoverPassword: null,
-      recoverCode: null,
       validationCode: null,
-      error: null
+      error: null,
+      googleButtonParams: {
+        client_id: '44792168937-1rpf8k8v1uv7eqoc8u2bg8qaenkfj41n.apps.googleusercontent.com'
+      }
     };
   },
   methods: {
-    async login(){
-      try {
-        await login(this.loginEmail, this.loginPassword);
-        this.$store.commit('setIsLoggedIn', isLoggedIn());
-        this.$router.push({name: 'Courses'});
-      } catch (err){
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
     mounted(){
       this.$store.commit('setIsLoggedIn', isLoggedIn());
       if (this.$store.getters.getIsLoggedIn){
         this.$router.push({name: 'Courses'});
-      }
-    },
-    async register(){
-      if (this.registerPassword !== this.registerPasswordConfirm){
-        this.$notify({
-          type: 'error',
-          text: 'Passwords don\'t match'
-        });
-        return;
-      }
-      try {
-        await createUser(
-          this.registerEmail, 
-          this.registerPassword,
-          this.registerFirstName,
-          this.registerLastName,
-          this.registerSubscribeNews
-        );
-        await login(this.registerEmail, this.registerPassword);
-        await sendEmailVerification();
-        this.state = 'email-verification-code';
-      } catch (err){
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
-    async submitForgotPasswordEmail(){
-      try {
-        await login(this.loginEmail, this.loginPassword);
-        this.state='forgot-password-code';
-      } catch (err){
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
-    async submitRecoveryCode(){
-      try {
-        await updateUserPasswordCode(
-          this.recoverEmail,
-          this.recoverPassword,
-          Number(this.recoverCode)
-        );
-        await login(this.recoverEmail, this.recoverPassword);
-        this.$store.commit('setIsLoggedIn', isLoggedIn());
-        this.$router.push({name: 'Courses'});
-      } catch (err){
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
-    async submitVerificationCode(){
-      try {
-        await verifyEmail(Number(this.validationCode));
-        await login(
-          this.registerEmail, 
-          this.registerPassword
-        );
-        this.$store.commit('setIsLoggedIn', isLoggedIn());
-        this.$router.push({name: 'Courses'});
-      } catch (err){
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
-    async resendVerification(){
-      try {
-        await sendEmailVerification();
-      } catch (err){
-        this.$notify({
-          type: 'error',
-          text: err
-        });
       }
     }
   }
@@ -368,39 +209,37 @@ export default {
     }
   }
 
-  #panel {
+  .panel {
     background-color: $gray-lightest;
     flex: 1;
     min-height: 300px;
-    max-height: 400px;
-    width: 30vw;
+    width: 50vw;
     min-width: 400px;
     border-radius: 3px;
     color: $gray-dark;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;
+    padding: 20px;
 
-    .panel-content {
+    .top {
       flex: 1;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .bottom {
+      padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
       align-items: center;
-      width: 100%;
 
-      .title {
-        font-size: 24px;
-      }
-
-      .btn {
-        width: 30%;
-        min-width: 75px;
-      }
-
-      a {
-        cursor: pointer;
+      span {
+        margin-bottom: 10px;
+        a {
+          cursor: pointer;
+        }
       }
     }
   }
