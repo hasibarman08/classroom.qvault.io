@@ -111,12 +111,11 @@ export default {
       state: 'register'
     };
   },
-  methods: {
-    mounted(){
-      this.$store.commit('setIsLoggedIn', isLoggedIn());
-      if (this.$store.getters.getIsLoggedIn){
-        this.$router.push({name: 'Courses'});
-      }
+  mounted(){
+    this.$store.commit('setIsLoggedIn', isLoggedIn());
+    console.log(isLoggedIn());
+    if (this.$store.getters.getIsLoggedIn){
+      this.$router.push({name: 'Courses'});
     }
   }
 };
