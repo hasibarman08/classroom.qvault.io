@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open --host localhost",
-    "build": "vue-cli-service build --dest dist",
+    "build": "vue-cli-service build --dest dist && echo '/* /index.html 200' >> dist/_redirects",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
