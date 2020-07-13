@@ -25,10 +25,7 @@
         :click="() => { checkout(product.ID) }"
       >
         <div class="title">
-          <FontAwesomeIcon
-            icon="gem"
-          />
-          <span>Get {{ product.Name }}</span>
+          <span> Get {{ product.GemAmount }} Gems</span>
         </div>
         <div class="price">
           <span>${{ (product.Price.UnitAmount / 100) }}</span>
@@ -39,7 +36,6 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { loadStripe } from '@stripe/stripe-js';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
@@ -54,7 +50,6 @@ import {
 
 export default {
   components: {
-    FontAwesomeIcon,
     ImageCard,
     LoadingOverlay
   },

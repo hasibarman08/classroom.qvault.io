@@ -65,10 +65,7 @@
               class="nav-item left"
               @click="() => {$router.push({name: 'Store'})}"
             >
-              <FontAwesomeIcon
-                icon="gem"
-              />
-              {{ $store.getters.getBalance }}
+              <GemDisplay :cost="$store.getters.getBalance" />
             </div>
 
             <div
@@ -102,6 +99,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
+import GemDisplay from '@/components/GemDisplay';
 import {
   getRewards
 } from '@/lib/cloudClient.js';
@@ -118,7 +116,8 @@ import {
 export default {
   components: {
     FontAwesomeIcon,
-    MenuItemHorizontal
+    MenuItemHorizontal,
+    GemDisplay
   },
   computed: {
     activeCourses(){
@@ -234,6 +233,7 @@ $bar-height: 60px;
       color: $white;
       text-decoration: none;
     }
+
     .nav-item {
       color: $white;
       cursor: pointer;
@@ -241,7 +241,8 @@ $bar-height: 60px;
       height: 100%;
       padding-left: 20px;
       padding-right: 20px;
-      line-height: $bar-height;
+      display: flex;
+      align-items: center;
 
       &.current {
         color: $gold-mid;

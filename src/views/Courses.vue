@@ -49,15 +49,10 @@
             />
             <span>Purchased</span>
           </div>
-          <div
+          <GemDisplay
             v-else
-            class="price"
-          >
-            <FontAwesomeIcon
-              icon="gem"
-            />
-            <span>{{ course.GemCost }}</span>
-          </div>
+            :cost="course.GemCost"
+          />
         </div>
       </ImageCard>
     </div>
@@ -69,6 +64,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import ImageCard from '@/components/ImageCard';
 import ConfirmOverlay from '@/components/ConfirmOverlay';
+import GemDisplay from '@/components/GemDisplay';
 import { 
   getCourses,
   purchaseCourse,
@@ -79,7 +75,8 @@ export default {
   components: {
     FontAwesomeIcon,
     ImageCard,
-    ConfirmOverlay
+    ConfirmOverlay,
+    GemDisplay
   },
   methods: {
     async loadCourses() {
@@ -193,16 +190,6 @@ export default {
       .purchased {
         color: $gold-lighter;
         margin: 10px;
-
-        span {
-          margin-left: 10px;
-        }
-      }
-
-      .price {
-        color: $purple-lighter;
-        margin: 10px;
-        font-size: 24px;
 
         span {
           margin-left: 10px;

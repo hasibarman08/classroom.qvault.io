@@ -63,14 +63,9 @@
           </div>
 
           <div v-else-if="course.IsComplete">
-            <div
-              class="price"
-            >
-              <FontAwesomeIcon
-                icon="gem"
-              />
-              <span>{{ course.CertificateGemCost }}</span>
-            </div>
+            <GemDisplay
+              :cost="course.CertificateGemCost"
+            />
             <div
               class="completed"
             >
@@ -91,6 +86,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import ImageCard from '@/components/ImageCard';
 import ConfirmOverlay from '@/components/ConfirmOverlay';
+import GemDisplay from '@/components/GemDisplay';
+
 import { 
   getCourses,
   purchaseCourseCertificate,
@@ -101,7 +98,8 @@ export default {
   components: {
     FontAwesomeIcon,
     ImageCard,
-    ConfirmOverlay
+    ConfirmOverlay,
+    GemDisplay
   },
   async mounted(){
     this.loadCourses();
@@ -199,7 +197,7 @@ export default {
   .card {
     flex: 1 1 calc(22% - 1em);
     margin: 20px;
-    max-width: 400px;
+    max-width: 350px;
     min-width: 200px;
 
     .title {
@@ -237,16 +235,6 @@ export default {
     .purchased {
       color: $gold-lighter;
       margin: 10px;
-
-      span {
-        margin-left: 10px;
-      }
-    }
-
-    .price {
-      color: $purple-lighter;
-      margin: 10px;
-      font-size: 24px;
 
       span {
         margin-left: 10px;

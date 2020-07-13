@@ -9,13 +9,7 @@
         {{ course.Title }}
       </span>
 
-      <div id="cost">
-        <FontAwesomeIcon
-          id="icon"
-          icon="gem"
-        />
-        <span>{{ course.GemCost }}</span>
-      </div>
+      <GemDisplay :cost="course.GemCost" />
     </div>
 
     <div id="sub-title">
@@ -48,10 +42,7 @@
           :click="() => { checkout(product.ID) }"
         >
           <div class="title">
-            <FontAwesomeIcon
-              icon="gem"
-            />
-            <span>Get {{ product.Name }}</span>
+            <span> Get {{ product.GemAmount }} Gems</span>
           </div>
           <div class="price">
             <span>${{ (product.Price.UnitAmount / 100) }}</span>
@@ -63,8 +54,8 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ImageCard from '@/components/ImageCard';
+import GemDisplay from '@/components/GemDisplay';
 import { publicKey } from '@/lib/stripeConsts';
 
 import { loadStripe } from '@stripe/stripe-js';
@@ -74,8 +65,8 @@ import {
 
 export default {
   components: {
-    FontAwesomeIcon,
-    ImageCard
+    ImageCard,
+    GemDisplay
   },
   computed: {
     course(){
@@ -141,22 +132,6 @@ export default {
   img {
     height: 75px;
   }
-
-  #cost {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    span {
-      color: $purple-mid;
-    }
-
-    #icon {
-      font-size: 3em;
-      color: $purple-mid;
-      margin: 10px;
-    }
-  }
 }
 
 #sub-title {
@@ -219,10 +194,6 @@ export default {
         color: $purple-lighter;
         font-size: 2em;
         margin: 1em;
-
-        span {
-          margin-left: 10px;
-        }
       }
 
       .price {

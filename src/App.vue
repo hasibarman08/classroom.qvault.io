@@ -17,7 +17,6 @@ import {
   faPuzzlePiece,
   faSignOutAlt,
   faPlay,
-  faGem,
   faCheck,
   faStore,
   faCertificate,
@@ -32,7 +31,6 @@ library.add(faScroll);
 library.add(faPuzzlePiece);
 library.add(faSignOutAlt);
 library.add(faPlay);
-library.add(faGem);
 library.add(faCheck);
 library.add(faStore);
 library.add(faCertificate);
