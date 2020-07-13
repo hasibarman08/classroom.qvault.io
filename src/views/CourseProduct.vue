@@ -26,15 +26,17 @@
 
     <div id="body">
       <div id="modules">
-        <span id="title">Modules</span>
+        <span id="title">Included Modules</span>
         <div>
           <div
             v-for="(mod, i) of course.Modules"
             :key="i"
             class="module"
           >
-            <span class="title">{{ i+1 }}. {{ mod.Title }}</span>
-            <span class="description"> {{ mod.Description }}</span>
+            <span class="title">{{ mod.Title }}</span>
+            <p class="description">
+              {{ mod.Description }}
+            </p>
           </div>
         </div>
       </div>
@@ -160,7 +162,7 @@ export default {
 #sub-title {
   text-align: center;
   color: $gray-mid;
-  font-size: 1.5em;
+  font-size: 1.2em;
   margin-bottom: 20px;
 }
 
@@ -169,10 +171,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center;
-  background-color: $gray-darker;
-  color: $gray-lightest;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
+  align-items: flex-start;
+  color: $gray-darker;
   padding: 40px 0 40px 0;
 
   #modules {
@@ -180,7 +180,7 @@ export default {
 
     #title {
       font-size: 2.5em;
-      color: $gold-lighter;
+      color: $gold-mid;
     }
 
     .module {
@@ -195,7 +195,7 @@ export default {
 
       .title {
         font-size: 1.5em;
-        color: $gold-lighter;
+        color: $gold-mid;
       }
 
       .description {

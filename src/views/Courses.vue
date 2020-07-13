@@ -158,7 +158,7 @@ export default {
   .card {
     flex: 1 1 calc(22% - 1em);
     margin: 20px;
-    max-width: 400px;
+    max-width: 350px;
     min-width: 200px;
 
     .body {
@@ -169,7 +169,7 @@ export default {
 
       .title {
         color: $gold-dark;
-        font-size: 2em;
+        font-size: 1.4em;
         margin: 0em;
       }
 
