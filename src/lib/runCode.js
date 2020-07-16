@@ -11,7 +11,6 @@ export async function runGoWasm(rawData) {
 }
 
 export async function runJavaScript(code) {
-  console.log(code);
   const newFunc = new Function(`
 let wholeCode = async function () {
     ${code}
@@ -20,7 +19,13 @@ return wholeCode();
 `);
   let oldLog = console.log;
   let stdOut = [];
-  console.log = (line) => { stdOut.push(line); };
+  console.log = (line) => {
+    try {
+      stdOut.push(JSON.parse(JSON.stringify(line))); 
+    } catch (err){
+      stdOut.push(line); 
+    }
+  };
   await newFunc();
   console.log = oldLog;
   return stdOut;
