@@ -137,8 +137,8 @@ export default {
     async onGoogleSuccess(googleUser){
       try {
         await createUserGoogle(
-          googleUser.Qt.Au, 
-          googleUser.wc.id_token,
+          googleUser.getBasicProfile().getEmail(), 
+          googleUser.getAuthResponse().id_token,
           this.subscribeNews
         );
         await loginGoogle(googleUser.Qt.Au, googleUser.wc.id_token);

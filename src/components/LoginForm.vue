@@ -64,7 +64,10 @@ export default {
   methods: {
     async onGoogleSuccess(googleUser){
       try {
-        await loginGoogle(googleUser.Qt.Au, googleUser.wc.id_token);
+        await loginGoogle(
+          googleUser.getBasicProfile().getEmail(),
+          googleUser.getAuthResponse().id_token
+        );
         this.$store.commit('setIsLoggedIn', isLoggedIn());
         this.$router.push({name: 'Courses'});
       } catch (err){
