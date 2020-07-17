@@ -33,14 +33,15 @@ export default {
 @import '@/styles/colors.scss';
 
 input {
-  border-radius: 0px;
-  border-width: 1px;
-  padding: 10px;
+  outline: 0;
+  border-width: 0 0 1px 0;
+  border-color: $gray-lighter;
+  background-color: transparent;
+  padding: 0 0 2px 0;
 
   &:focus{
     outline: none !important;
     border-color: $purple-mid;
-    border-width: 2px;
   }
 }
 </style>

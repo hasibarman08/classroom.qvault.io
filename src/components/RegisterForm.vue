@@ -1,84 +1,99 @@
 <template>
   <div id="register-form">
     <div
-      v-if="'register'"
-      class="col"
+      v-if="state === 'register'"
+      class="active-form"
     >
-      <h2>
-        Sign Up Free
-      </h2>
+      <form
+        class="active-form"
+        @submit.prevent="submitRegister"
+      >
+        <TextInput
+          v-model="email"
+          placeholder="Email"
+          type="email"
+          class="item input"
+        />
+        <div class="item">
+          <TextInput
+            v-model="firstName"
+            class="sub-item"
+            placeholder="First Name"
+            type="text"
+          />
+          <TextInput
+            v-model="lastName"
+            placeholder="Last Name"
+            type="text"
+            class="sub-item right"
+          />
+        </div>
+        <TextInput
+          v-model="password"
+          placeholder="Password"
+          type="password"
+          class="item"
+        />
+        <TextInput
+          v-model="passwordConfirm"
+          placeholder="Confirm Password"
+          type="password"
+          class="item"
+        />
+
+        <div class="item switch">
+          <ToggleSwitch
+            v-model="subscribeNews"
+          />
+          <span class="sub-item right">Get Newsletter</span>
+        </div>
+
+        <div class="item switch">
+          <ToggleSwitch
+            v-model="tosAccepted"
+          />
+          <span class="sub-item right">I've read and agree to the 
+            <a href="https://qvault.io/terms-of-service/">terms</a>
+          </span>
+        </div>
+
+        <BlockButton class="btn">
+          Sign Up Free
+        </BlockButton>
+      </form>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
+
       <GoogleButton
+        class="btn"
         :on-success="onGoogleSuccess"
         text="Sign up with Google"
       />
-      <div />
-      <div class="divider" />
     </div>
-    <form
-      v-if="state === 'register'"
-      class="col"
-      @submit.prevent="submitRegister"
-    >
-      <TextInput
-        v-model="email"
-        placeholder="email"
-        type="email"
-        class="item input"
-      />
-      <TextInput
-        v-model="firstName"
-        class="item"
-        placeholder="first name"
-        type="text"
-      />
-      <TextInput
-        v-model="lastName"
-        placeholder="last name"
-        type="text"
-        class="item"
-      />
-      <TextInput
-        v-model="password"
-        placeholder="password"
-        type="password"
-        class="item"
-      />
-      <TextInput
-        v-model="passwordConfirm"
-        placeholder="confirm password"
-        type="password"
-        class="item"
-      />
-      <div>
-        <input
-          v-model="subscribeNews"
-          type="checkbox"
-          class="item"
-        >
-        <span>send me programming content and news</span>
-      </div>
-      <BlockButton class="btn item">
-        Sign Up Free
-      </BlockButton>
-    </form>
 
-    <form
+    <div
       v-if="state === 'email-verification-code'"
-      class="col"
-      @submit.prevent="submitVerificationCode"
+      class="active-form"
     >
-      <span class="title item">Check Your Email</span>
-      <TextInput
-        v-model="validationCode"
-        placeholder="6 digit code"
-        type="text"
-        class="item"
-      />
-      <BlockButton class="btn item">
-        Submit
-      </BlockButton>
-      <span><a @click="resendVerification">Resend Code</a></span>
-    </form>
+      <form
+        class="active-form"
+        @submit.prevent="submitVerificationCode"
+      >
+        <span class="title item">Check Your Email</span>
+        <TextInput
+          v-model="validationCode"
+          placeholder="6 digit code"
+          type="text"
+          class="item"
+        />
+        <BlockButton class="btn">
+          Submit
+        </BlockButton>
+        <span><a @click="resendVerification">Resend Code</a></span>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -86,6 +101,7 @@
 import GoogleButton from '@/components/GoogleButton';
 import BlockButton from '@/components/BlockButton';
 import TextInput from '@/components/TextInput';
+import ToggleSwitch from '@/components/ToggleSwitch';
 
 import {
   login, 
@@ -101,7 +117,8 @@ export default {
   components: {
     GoogleButton,
     BlockButton,
-    TextInput
+    TextInput,
+    ToggleSwitch
   },
   data(){
     return {
@@ -112,6 +129,7 @@ export default {
       password: null,
       passwordConfirm: null,
       subscribeNews: true,
+      tosAccepted: true,
       validationCode: null
     };
   },
@@ -134,6 +152,13 @@ export default {
       }
     },
     async submitRegister(){
+      if (!this.tosAccepted){
+        this.$notify({
+          type: 'error',
+          text: 'You need to accept the terms of service'
+        });
+        return;
+      }
       if (this.registerPassword !== this.registerPasswordConfirm){
         this.$notify({
           type: 'error',
@@ -192,43 +217,54 @@ export default {
 <style scoped lang="scss">
 @import '@/styles/colors.scss';
 
-#register-form {
+.active-form {
   display: flex;
-  flex-direction: row;
-  flex-flow: row wrap;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  align-items: center;
 
   .divider {
-    border-bottom: 1px solid $gray-dark;
-    width: 100%;
-    margin-top: 25px;
-    margin-bottom: 15px;
-    display: none;
+    width: 60%; 
+    text-align: center; 
+    border-bottom: 1px solid $gray-light; 
+    line-height: 0.1em;
+    margin: 1em 0 2em 0;
+    color: $gray-light;
 
-    @media (max-width: 720px) {
-      display: block;
+    span {
+      background-color: $gray-lightest;
+      padding: 0 10px; 
+    }
+  } 
+
+  .item {
+    margin-bottom: 2em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    
+    &.switch{
+      align-items: center;
+      justify-content: center;
+      color: $gray-mid;
+      font-size: .75em;
+      line-height: .75em;
+    }
+
+    .sub-item {
+      flex: 1;
+    }
+
+    .right {
+      margin-left: 1em;
     }
   }
 
-  .col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100%;
-    align-items: center;
-
-    .item {
-      margin: 10px;
-    }
-
-    .input {
-      min-width: 150px;
-    }
-
-    .btn {
-      width: 50%;
-      min-width: 75px;
-    }
+  .btn {
+    margin-bottom: 2em;
+    width: 50%;
+    min-width: 250px;
   }
 }
 </style>

@@ -5,11 +5,12 @@
       id="forgot-form"
       @submit.prevent="submitForgotPasswordEmail"
     >
-      <span class="title">Recover Password</span>
+      <span class="title item">Recover Password</span>
       <TextInput
         v-model="email"
         placeholder="email"
         type="email"
+        class="item"
       />
       <BlockButton class="btn">
         Submit
@@ -111,20 +112,27 @@ export default {
 @import '@/styles/colors.scss';
 
 #forgot-form {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  width: 100%;
   align-items: center;
 
   .title {
-    font-size: 24px;
+    font-size: 1em;
+    color: $gray-darker;
+    text-align: center;
+  }
+
+  .item {
+    margin-bottom: 2em;
+    width: 100%;
   }
 
   .btn {
+    margin-bottom: 2em;
     width: 50%;
-    max-width: 150px;
-    min-width: 75px;
+    min-width: 250px;
   }
 }
 </style>

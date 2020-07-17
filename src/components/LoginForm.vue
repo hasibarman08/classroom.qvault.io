@@ -1,36 +1,37 @@
 <template>
-  <div id="login-form">
-    <div class="col">
-      <h2>
-        Sign In
-      </h2>
+  <div>
+    <div class="active-form">
+      <form
+        class="active-form"
+        @submit.prevent="submitLogin"
+      >
+        <TextInput
+          v-model="email"
+          placeholder="email"
+          type="email"
+          class="item"
+        />
+        <TextInput
+          v-model="password"
+          placeholder="password"
+          type="password"
+          class="item"
+        />
+        <BlockButton class="btn item">
+          Login
+        </BlockButton>
+      </form>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
+
       <GoogleButton
         :on-success="onGoogleSuccess"
         text="Sign in with Google"
+        class="btn"
       />
-      <div class="divider" />
     </div>
-    <form
-      class="col"
-      @submit.prevent="submitLogin"
-    >
-      <span class="title">Login to Your Account</span>
-      <TextInput
-        v-model="email"
-        placeholder="email"
-        type="email"
-        class="item"
-      />
-      <TextInput
-        v-model="password"
-        placeholder="password"
-        type="password"
-        class="item"
-      />
-      <BlockButton class="btn item">
-        Login
-      </BlockButton>
-    </form>
   </div>
 </template>
 
@@ -92,43 +93,36 @@ export default {
 <style scoped lang="scss">
 @import '@/styles/colors.scss';
 
-#login-form {
+.active-form {
   display: flex;
-  flex-flow: row wrap;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  align-items: center;
 
   .divider {
-    border-bottom: 1px solid $gray-dark;
-    width: 100%;
-    margin-top: 25px;
-    margin-bottom: 15px;
-    display: none;
+    width: 60%; 
+    text-align: center; 
+    border-bottom: 1px solid $gray-light; 
+    line-height: 0.1em;
+    margin: 1em 0 2em 0;
+    color: $gray-light;
 
-    @media (max-width: 720px) {
-      display: block;
+    span {
+      background-color: $gray-lightest;
+      padding: 0 10px; 
     }
+  } 
+
+  .item {
+    margin-bottom: 2em;
+    width: 100%;
   }
 
-  .title {
-    font-size: 24px;
-  }
-
-  .col {
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100%;
-    align-items: center;
-
-    .item {
-      margin: 10px;
-    }
-
-    .btn {
-      width: 50%;
-      min-width: 75px;
-    }
+  .btn {
+    margin-bottom: 2em;
+    width: 50%;
+    min-width: 250px;
   }
 }
 </style>
