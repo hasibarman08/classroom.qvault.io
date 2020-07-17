@@ -4,7 +4,10 @@
     :style="{ backgroundImage: 'url(' + require('@/img/login-bg.jpg') + ')' }"
   >
     <div class="blur">
-      <a href="https://qvault.io">
+      <a
+        id="logo-link"
+        href="https://qvault.io"
+      >
         <img
           id="logo"
           alt="Qvault logo"
@@ -24,7 +27,6 @@
 
           <div
             v-if="state === 'register'"
-            class="form"
           >
             <RegisterForm class="top" />
             <div class="bottom">
@@ -34,18 +36,16 @@
 
           <div
             v-if="state === 'login'"
-            class="form"
           >
             <LoginForm class="top" />
             <div class="bottom">
-              <span>Need an account?<a @click="state='register'">Sign Up Free</a></span>
+              <span>Need an account? <a @click="state='register'">Sign Up Free</a></span>
               <span><a @click="state='forgot-password'">Forgot Password?</a></span>
             </div>
           </div>
     
           <div
             v-if="state === 'forgot-password'"
-            class="form"
           >
             <ForgotPasswordForm class="top" />
             <div class="bottom">
@@ -124,16 +124,22 @@ export default {
     align-items: center;
     justify-content: center;
 
-    #logo {
-      width: 75px;
-      margin: 2em;
+    #logo-link {
+      #logo {
+        width: 75px;
+        margin: 2em;
+      }
     }
 
     .panel {
       background-color: $gray-lightest;
+      flex: 1;
       min-height: 300px;
-      width: 60vw;
-      min-width: 400px;
+
+      @media (min-width: 600px) {
+        width: 60vw;
+      }
+
       display: flex;
       flex-flow: row wrap;
       align-items: stretch;
@@ -141,12 +147,13 @@ export default {
       margin-bottom: 2em;
 
       #left {
-        flex: 1;
+        flex: 4;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
-        padding: 2em;
+        padding-top: 2em;
+        background-color: inherit;
 
         #title {
           color: $gray-dark;
@@ -163,7 +170,7 @@ export default {
 
       #right{
         padding: 2em;
-        flex: 1;
+        flex: 3;
         display: flex;
         flex-direction: column;
         align-items: center;
