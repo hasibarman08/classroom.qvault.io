@@ -9,12 +9,15 @@
           v-model="email"
           placeholder="email"
           type="email"
+          required
+          name="email"
           class="item"
         />
         <TextInput
           v-model="password"
           placeholder="password"
           type="password"
+          required
           class="item"
         />
         <BlockButton class="btn item">

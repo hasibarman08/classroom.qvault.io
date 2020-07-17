@@ -12,6 +12,8 @@
           v-model="email"
           placeholder="Email"
           type="email"
+          name="email"
+          required
           class="item input"
         />
         <div class="item">
@@ -19,12 +21,16 @@
             v-model="firstName"
             class="sub-item"
             placeholder="First Name"
+            name="fname"
+            required
             type="text"
           />
           <TextInput
             v-model="lastName"
             placeholder="Last Name"
             type="text"
+            name="lname"
+            required
             class="sub-item right"
           />
         </div>
@@ -33,12 +39,14 @@
           placeholder="Password"
           type="password"
           class="item"
+          required
         />
         <TextInput
           v-model="passwordConfirm"
           placeholder="Confirm Password"
           type="password"
           class="item"
+          required
         />
 
         <div class="item switch">
