@@ -5,6 +5,7 @@ import CourseProduct from '../views/CourseProduct.vue';
 import Profile from '../views/Profile.vue';
 import Exercise from '../views/Exercise.vue';
 import Store from '../views/Store.vue';
+import CouponCode from '../views/CouponCode.vue';
 import Certificates from '../views/Certificates.vue';
 import Dashboard from '../views/Dashboard.vue';
 import Certificate from '../views/Certificate.vue';
@@ -43,6 +44,11 @@ const routes = [
         path: 'store',
         name: 'Store',
         component: Store
+      },
+      {
+        path: 'coupon_code',
+        name: 'CouponCode',
+        component: CouponCode
       },
       {
         path: 'profile',

@@ -43,11 +43,14 @@ import MarkdownViewer from '@/components/MarkdownViewer';
 import BlockButton from '@/components/BlockButton';
 
 import { 
+  loadBalance
+} from '@/lib/cloudStore.js';
+
+import { 
   getNextExercise,
   submitInformationalExercise,
   submitCodeExercise,
-  submitMultipleChoiceExercise,
-  getLastGemTransaction
+  submitMultipleChoiceExercise
 } from '@/lib/cloudClient.js';
 
 export default {
@@ -102,17 +105,6 @@ export default {
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
-    async loadBalance(){
-      try {
-        const lastGemTransaction = await getLastGemTransaction();
-        this.$store.commit('setBalance', lastGemTransaction.Balance);
-      } catch (err) {
-        this.$notify({
-          type: 'error',
-          text: err
-        });
-      }
-    },
     async submitTypeInfo(){
       await submitInformationalExercise(
         this.courseUUID,
@@ -134,7 +126,7 @@ export default {
             type: 'success',
             text: `${credit.Message} 💎x${credit.GemCredit}`
           });
-          this.loadBalance();
+          loadBalance(this);
         } else{
           this.$notify({
             type: 'success',

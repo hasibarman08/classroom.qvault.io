@@ -4,15 +4,19 @@
       :is-loading="isLoading" 
     />
 
-    <div id="title">
-      <span>
-        Store
+    <div id="title-container">
+      <FontAwesomeIcon
+        icon="store"
+        class="icon"
+      />
+      <span @click="$router.push({name: 'CouponCode'})">
+        Coupon Code?
       </span>
     </div>
 
     <div id="sub-title">
       <span>
-        Gems are used to unlock courses and certifications
+        Gems unlock courses and certifications
       </span>
     </div>
 
@@ -38,6 +42,7 @@
 <script>
 import { loadStripe } from '@stripe/stripe-js';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import { publicKey } from '@/lib/stripeConsts';
 import LoadingOverlay from '@/components/LoadingOverlay';
@@ -51,7 +56,8 @@ import {
 export default {
   components: {
     ImageCard,
-    LoadingOverlay
+    LoadingOverlay,
+    FontAwesomeIcon
   },
   data() {
     return {
@@ -105,18 +111,33 @@ export default {
   text-align: center;
 }
 
-#title{
-  width: 100%;
+#title-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   margin: 20px;
-  position: relative;
-  color: $gray-darker;
-  font-size: 3em;
+
+  .icon {
+    font-size: 4em;
+    color: $purple-mid;
+  }
+
+  span {
+    color: $gold-mid;
+    cursor: pointer;
+
+    &:hover{
+      color: $purple-mid;
+      text-decoration: underline;
+    }
+  }
 }
 
 #sub-title {
   text-align: center;
   color: $gray-mid;
-  font-size: 2em;
+  font-size: 1.5em;
   margin-bottom: 20px;
 }
 
