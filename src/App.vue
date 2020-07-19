@@ -21,7 +21,7 @@ import {
   faStore,
   faTimes,
   faUndo,
-  faCubes
+  faBars
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faArrowRight);
@@ -34,7 +34,7 @@ library.add(faCheck);
 library.add(faStore);
 library.add(faTimes);
 library.add(faUndo);
-library.add(faCubes);
+library.add(faBars);
 
 export default {
   

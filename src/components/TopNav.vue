@@ -1,42 +1,96 @@
 <template>
-  <div id="nav">
-    <div class="item-group">
-      <a
-        v-if="showLogo"
-        href="https://qvault.io"
-        target="_blank"
-        class="item"
+  <div id="navs">
+    <div id="nav">
+      <div class="item-group">
+        <div class="item">
+          <img
+            v-if="showLogo"
+            alt="Qvault logo"
+            src="../img/qvault-icon-250.png"
+          >
+        </div>
+      </div>
+      <div
+        v-if="title"
+        class="item-group"
       >
-        <img
-          alt="Qvault logo"
-          src="../img/qvault-icon-250.png"
+        <div class="item">
+          <span>{{ title }}</span>
+        </div>
+      </div>
+      <div class="item-group desktop">
+        <a
+          href="/"
+          class="item link"
+          :class="{current: $router.currentRoute.fullPath.includes('dashboard')}"
         >
-      </a>
+          <span>Dashboard</span>
+        </a>   
+        <a
+          href="/playground/go"
+          class="item link"
+          :class="{current: $router.currentRoute.name === 'Playground' }"
+        >
+          <span>Playground</span>
+        </a>   
+        <a
+          href="https://qvault.io/contact"
+          target="_blank"
+          class="item link"
+        >
+          <span>Contact</span>
+        </a>   
+        <a
+          href="https://qvault.io/articles"
+          target="_blank"
+          class="item link"
+        >
+          <span>Blog</span>
+        </a>
+      </div>
+
+      <div class="mobile item-group icon">
+        <div
+          class="item"
+        >
+          <FontAwesomeIcon
+            icon="bars"
+            class="item"
+            @click="mobileMenuOpen = !mobileMenuOpen"
+          />
+        </div>
+      </div>
     </div>
-    <div class="item-group">
+
+    <div
+      v-if="mobileMenuOpen"
+      class="dropdown mobile"
+    >
       <a
-        href="https://classroom.qvault.io"
-        class="item"
+        href="/"
+        class="item link"
+        :class="{current: $router.currentRoute.fullPath.includes('dashboard')}"
       >
         <span>Dashboard</span>
       </a>   
       <a
         href="/playground/go"
-        class="item"
+        class="item link"
+        :class="{current: $router.currentRoute.name === 'Playground' }"
       >
         <span>Playground</span>
       </a>   
       <a
         href="https://qvault.io/contact"
         target="_blank"
-        class="item"
+        class="item link"
       >
         <span>Contact</span>
       </a>   
       <a
         href="https://qvault.io/articles"
         target="_blank"
-        class="item"
+        class="item link"
       >
         <span>Blog</span>
       </a>
@@ -45,12 +99,26 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 export default {
+  components: {
+    FontAwesomeIcon
+  },
   props: {
     showLogo: {
       default: true,
       type: Boolean
+    },
+    title: {
+      default: null,
+      type: String
     }
+  },
+  data(){
+    return {
+      mobileMenuOpen: false
+    };
   }
 };
 </script>
@@ -58,10 +126,14 @@ export default {
 <style scoped lang="scss">
 @import '@/styles/colors.scss';
 
-$bar-height: 60px;
+$mobile-size: 600px;
+
+#navs {
+  display: flex;
+  flex-direction: column;
+}
 
 #nav {
-  height: $bar-height;
   background-color: $gray-darkest;
   display: flex;
   flex-direction: row;
@@ -71,31 +143,57 @@ $bar-height: 60px;
   .item-group {
     display: flex;
     flex-direction: row;
+    align-items: stretch;
     justify-content: flex-end;
+  }
+}
 
-    .item {
-      color: $white;
-      cursor: pointer;
-      height: 100%;
-      padding-left: 20px;
-      padding-right: 20px;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
+.dropdown {
+  
+}
 
-      img {
-        vertical-align: middle;
-        width: 40px;
-      }
+.mobile {
+  display: none !important;
+  @media screen and (max-width: $mobile-size) {
+    display: block !important;
+  }
+}
 
-      &.current {
-        color: $gold-mid;
-      }
+.desktop {
+  @media screen and (max-width: $mobile-size) {
+    display: none !important;
+  }
+}
 
-      &:hover{
-        background-color: $gray-darker;
-      }
+.icon {
+  font-size: 1.5em;
+}
+
+.item {
+  color: $white;
+  padding: 15px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: $gray-darkest;
+
+  &.link {
+    cursor: pointer;
+
+    &:hover{
+      background-color: $gray-darker;
     }
+
+    &.current {
+      color: $gold-mid;
+    }
+  }
+
+  img {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
   }
 }
 </style>

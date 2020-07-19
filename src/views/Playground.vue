@@ -1,44 +1,6 @@
 <template>
   <div id="container">
-    <div id="header">
-      <div>
-        <BlockButton
-          id="btn"
-          :click="() => {
-            if (this.$store.getters.getIsLoggedIn){
-              this.$router.push({name: 'Courses'});
-            } else {
-              this.$router.push({name: 'Login'});
-            }
-          }"
-        >
-          <FontAwesomeIcon
-            icon="undo"
-          />
-          To Courses
-        </BlockButton>
-      </div>
-
-      <div id="title-container">
-        <span id="title">
-          <FontAwesomeIcon
-            icon="cubes"
-          />
-          Qvault Playground
-        </span>
-        <span id="sub-title">
-          {{ subTitle }}
-        </span>
-      </div>
-      <div>
-        <a
-          href="https://qvault.io/2020/07/01/running-go-in-the-browser-with-web-assembly-wasm/"
-          target="_blank"
-        >
-          About
-        </a>
-      </div>
-    </div>
+    <TopNav :title="`${displayLang} Playground`" />
     <CodeEditor
       id="editor"
       ref="codeEditor"
@@ -51,15 +13,12 @@
 
 <script>
 import CodeEditor from '@/components/CodeEditor';
-import BlockButton from '@/components/BlockButton';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
+import TopNav from '@/components/TopNav';
 
 export default {
   components: {
-    CodeEditor,
-    BlockButton,
-    FontAwesomeIcon
+    TopNav,
+    CodeEditor
   },
   data(){
     return {
@@ -67,12 +26,12 @@ export default {
     };
   },
   computed: {
-    subTitle(){
+    displayLang(){
       if (this.lang === 'go'){
-        return 'Run Go in your browser with web assembly';
+        return 'Go WASM';
       }
       if (this.lang === 'js'){
-        return 'Run JavaScript in your browser';
+        return 'JavaScript';
       }
       return 'unknown';
     }
@@ -124,44 +83,5 @@ func main(){
     max-height: 100%;
     overflow: auto;
   }
-
-  #header {
-    padding: 10px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: center;
-
-    div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
-      align-items: center;
-      min-width: 250px;
-    }
-
-    #title-container{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-    
-      #title{
-        font-size: 2.5em;
-        color: $gray-lightest;
-      }
-
-      #sub-title{
-        font-size: 1em;
-        color: $gray-lighter;
-      }
-    }
-
-    #btn {
-      font-size: 1.5em;
-    }
-  }
 }
-
 </style>
