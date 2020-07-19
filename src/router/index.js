@@ -6,9 +6,7 @@ import Profile from '../views/Profile.vue';
 import Exercise from '../views/Exercise.vue';
 import Store from '../views/Store.vue';
 import CouponCode from '../views/CouponCode.vue';
-import Certificates from '../views/Certificates.vue';
 import Dashboard from '../views/Dashboard.vue';
-import Certificate from '../views/Certificate.vue';
 import Login from '../views/Login.vue';
 import Playground from '../views/Playground.vue';
 
@@ -54,18 +52,8 @@ const routes = [
         path: 'profile',
         name: 'Profile',
         component: Profile
-      },
-      {
-        path: 'certificates',
-        name: 'Certificates',
-        component: Certificates
       }
     ]
-  },
-  {
-    path: '/certificate/:userUUID/:courseUUID',
-    name: 'Certificate',
-    component: Certificate
   },
   {
     path: '/playground/:lang',

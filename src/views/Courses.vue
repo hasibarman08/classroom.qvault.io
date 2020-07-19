@@ -11,7 +11,7 @@
 
     <div id="sub-title">
       <span>
-        Learn to code, earn gems by completing exercises and unlock certifications
+        Learn to code, earn gems by completing exercises and unlocking achievements
       </span>
     </div>
 

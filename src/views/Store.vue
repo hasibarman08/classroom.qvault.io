@@ -16,7 +16,7 @@
 
     <div id="sub-title">
       <span>
-        Gems unlock courses and certifications
+        Gems unlock new course content
       </span>
     </div>
 

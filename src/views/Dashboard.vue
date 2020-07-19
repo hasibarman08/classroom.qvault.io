@@ -37,10 +37,10 @@
         />
 
         <MenuItemHorizontal
-          icon="certificate"
-          :click="() => {$router.push({name: 'Certificates'}) }"
-          text="Certificates"
-          :current="$router.currentRoute.name === 'Certificates'"
+          icon="user-tie"
+          :click="() => {$router.push({name: 'Profile'}) }"
+          text="Profile"
+          :current="$router.currentRoute.name === 'Profile'"
         />
 
         <MenuItemHorizontal
@@ -68,17 +68,6 @@
               <GemDisplay :cost="$store.getters.getBalance" />
             </div>
 
-            <div
-              class="nav-item"
-              :class="{current: $router.currentRoute.name === 'Profile'}"
-              @click="() => {$router.push({name: 'Profile'})}"
-            >
-              <FontAwesomeIcon
-                icon="user-tie"
-                class="icon"
-              />
-            </div>
-
             <a
               href="https://qvault.io"
               target="_blank"
@@ -96,8 +85,6 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import GemDisplay from '@/components/GemDisplay';
 import {
@@ -115,7 +102,6 @@ import {
 
 export default {
   components: {
-    FontAwesomeIcon,
     MenuItemHorizontal,
     GemDisplay
   },

@@ -178,7 +178,7 @@ export default {
         if (exercise.CourseDone){
           this.$notify({
             type: 'success',
-            text: 'You\'ve completed this course! Congragulations! Grab a certificate to show off your accomplishment'
+            text: 'You\'ve completed this course! Congragulations! Start another one and take your career to the next level'
           });
           if (exercise.Message && exercise.GemCredit){
             this.$notify({
