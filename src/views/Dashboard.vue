@@ -7,7 +7,10 @@
             alt="Qvault logo"
             src="../img/qvault-icon-250.png"
           >
-          <GemDisplay :cost="$store.getters.getBalance" />
+        </div>
+
+        <div class="divider">
+          <div class="divider" />
         </div>
 
         <MenuItemHorizontal
@@ -53,6 +56,14 @@
           :click="logout"
           text="Logout"
         />
+
+        <div class="divider">
+          <div class="divider" />
+        </div>
+
+        <div class="balance-box">
+          <GemDisplay :cost="$store.getters.getBalance" />
+        </div>
       </div>
 
       <div id="content">
@@ -184,9 +195,16 @@ $bar-height: 60px;
     }
   }
 
-  .balance {
-    padding: 10px;
-  }
+  .divider {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+
+    div {
+      width: 80%; 
+      border-bottom: 1px solid $gray-light;
+    }
+  } 
 }
 
 #content {
