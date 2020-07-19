@@ -2,15 +2,16 @@
   <div id="dashboard">
     <div id="dashboard-container">
       <div id="sidebar">
-        <div class="logo-item">
+        <div class="logo-box">
           <img
             alt="Qvault logo"
-            src="../img/qvault-icon.png"
+            src="../img/qvault-icon-250.png"
           >
-          <span> Qvault Classroom </span>
+          <GemDisplay :cost="$store.getters.getBalance" />
         </div>
 
         <MenuItemHorizontal
+          class="item"
           icon="store"
           :click="() => {$router.push({name: 'Store'})}"
           text="Store"
@@ -18,6 +19,7 @@
         />
 
         <MenuItemHorizontal
+          class="item"
           icon="scroll"
           :click="() => {$router.push({name: 'Courses'}) }"
           text="Courses"
@@ -27,6 +29,7 @@
         <MenuItemHorizontal
           v-for="(course, i) of activeCourses"
           :key="i"
+          class="item"
           icon="puzzle-piece"
           :text="course.Title"
           :sub-items="modulesToSubItems(course.Modules)"
@@ -37,6 +40,7 @@
         />
 
         <MenuItemHorizontal
+          class="item"
           icon="user-tie"
           :click="() => {$router.push({name: 'Profile'}) }"
           text="Profile"
@@ -44,13 +48,7 @@
         />
 
         <MenuItemHorizontal
-          icon="cubes"
-          :click="() => {$router.push({name: 'Playground', params: {lang: 'go'}}) }"
-          text="Playground"
-          :current="$router.currentRoute.name === 'Playground'"
-        />
-
-        <MenuItemHorizontal
+          class="item"
           icon="sign-out-alt"
           :click="logout"
           text="Logout"
@@ -59,24 +57,7 @@
 
       <div id="content">
         <div>
-          <div id="nav">
-            <div
-              id="balance"
-              class="nav-item left"
-              @click="() => {$router.push({name: 'Store'})}"
-            >
-              <GemDisplay :cost="$store.getters.getBalance" />
-            </div>
-
-            <a
-              href="https://qvault.io"
-              target="_blank"
-            >
-              <div class="nav-item">
-                <span>Blog</span>
-              </div>
-            </a>
-          </div>
+          <TopNav :show-logo="false" />
           <router-view />
         </div>
       </div>
@@ -87,6 +68,7 @@
 <script>
 import MenuItemHorizontal from '@/components/MenuItemHorizontal';
 import GemDisplay from '@/components/GemDisplay';
+import TopNav from '@/components/TopNav';
 import {
   getRewards
 } from '@/lib/cloudClient.js';
@@ -103,7 +85,8 @@ import {
 export default {
   components: {
     MenuItemHorizontal,
-    GemDisplay
+    GemDisplay,
+    TopNav
   },
   computed: {
     activeCourses(){
@@ -177,24 +160,32 @@ $bar-height: 60px;
   background-color: $gray-darkest;
   color: $gray-lightest;
 
-  .logo-item {
-    text-align: center;
-    line-height: $bar-height;
-    height: $bar-height;
-    color: $gray-lightest;
-    text-decoration: none;
-    border: solid $gray-darker;
-    border-width: 0 1px 1px 0;
-    margin-bottom: 20px;
+  .logo-box {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
     img {
-      vertical-align: middle;
-      width: 35px;
+      width: 80px;
+      margin: 10px;
     }
+  }
 
-    span {
-      margin-left: 10px;
+  .item {
+    &:hover{
+      background-color: $gray-darker;
+      cursor: pointer;
+
+      span {
+        margin-left: 25px;
+      }
     }
+  }
+
+  .balance {
+    padding: 10px;
   }
 }
 
@@ -205,47 +196,5 @@ $bar-height: 60px;
 	overflow: auto;
   flex: 1;
   background-color: $gray-lightest;
-
-  #nav {
-    height: $bar-height;
-    background-color: $gray-darkest;
-
-    #balance {
-      color: $purple-lighter;
-      font-size: 2em;
-    }
-
-    a {
-      color: $white;
-      text-decoration: none;
-    }
-
-    .nav-item {
-      color: $white;
-      cursor: pointer;
-      float: right;
-      height: 100%;
-      padding-left: 20px;
-      padding-right: 20px;
-      display: flex;
-      align-items: center;
-
-      &.current {
-        color: $gold-mid;
-      }
-
-      &.left {
-        float: left;
-      }
-
-      &:hover{
-        background-color: $gray-darker;
-      }
-
-      .icon {
-        font-size: 22px;
-      }
-    }
-  }
 }
 </style>

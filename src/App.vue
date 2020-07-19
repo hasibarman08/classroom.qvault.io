@@ -19,7 +19,6 @@ import {
   faPlay,
   faCheck,
   faStore,
-  faCertificate,
   faTimes,
   faUndo,
   faCubes
@@ -33,7 +32,6 @@ library.add(faSignOutAlt);
 library.add(faPlay);
 library.add(faCheck);
 library.add(faStore);
-library.add(faCertificate);
 library.add(faTimes);
 library.add(faUndo);
 library.add(faCubes);

@@ -104,15 +104,6 @@ export default {
     color: $gold-light;
   }
 
-  &:hover{
-    background-color: $gray-darker;
-    cursor: pointer;
-
-    span {
-    margin-left: 25px;
-    }
-  }
-
   span {
       margin-left: 15px;
       transition: 0.4s;

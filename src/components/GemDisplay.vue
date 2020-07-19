@@ -26,7 +26,6 @@ export default {
 
 #gem-display {
   color: $purple-lighter;
-  margin: 10px;
   font-size: 24px;
   display: flex;
   justify-content: center;

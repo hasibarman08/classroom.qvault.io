@@ -156,7 +156,7 @@ export default {
             type: 'success',
             text: `${credit.Message} 💎x${credit.GemCredit}`
           });
-          this.loadBalance();
+          loadBalance(this);
         } else{
           this.$notify({
             type: 'success',
