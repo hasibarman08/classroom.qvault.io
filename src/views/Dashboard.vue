@@ -67,9 +67,11 @@
       </div>
 
       <div id="content">
-        <div>
+        <div class="inner-content">
           <TopNav :show-logo="false" />
-          <router-view />
+          <div class="panel">
+            <router-view class="router-view" />
+          </div>
         </div>
       </div>
     </div>
@@ -213,6 +215,19 @@ $bar-height: 60px;
 	height: 100vh;
 	overflow: auto;
   flex: 1;
-  background-color: $gray-lightest;
+  background-color: $gray-mid;
+
+  .inner-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .panel{
+      margin: 1em;
+      background-color: $gray-lightest;
+      height: 100%;
+      overflow: auto;
+    }
+  }
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div id="container">
     <MarkdownViewer
-      id="mdviewer"
       class="side"
       :source="markdownSource"
     />
@@ -217,22 +216,14 @@ export default {
 
 #container {
   display: flex;
-  padding: 20px;
-  background-color: $gray-mid;
+  height: 100%;
 }
 
 .side {
-  // VH - header bar - 2x container padding
-  height: calc(100vh - 60px - 2*20px);
+  height: 100%;
   overflow: auto;
   flex: 1;
   background-color: $white;
-  display: inline-block;
-}
-
-#mdviewer {
-  border: solid $gray-lighter;
-  border-width: 0 2px 0 0;
 }
 
 #info-container {
