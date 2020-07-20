@@ -58,10 +58,7 @@ export default {
   data(){
     return {
       email: null,
-      password: null,
-      googleButtonParams: {
-        client_id: '44792168937-1rpf8k8v1uv7eqoc8u2bg8qaenkfj41n.apps.googleusercontent.com'
-      }
+      password: null
     };
   },
   methods: {
