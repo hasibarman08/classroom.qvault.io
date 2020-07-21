@@ -114,7 +114,15 @@ export default {
 
         this.err = false;
         this.isLoading = false;
-        await this.runCallback(this.output.join(''));
+        let finalOut = '';
+        for (const line of this.output){
+          if (Array.isArray(line) || typeof line === 'object'){
+            finalOut += JSON.stringify(line);
+          } else{
+            finalOut+=line;
+          }
+        }
+        await this.runCallback(finalOut);
       } catch(err) {
         this.isLoading = false;
         this.output = [ err ];

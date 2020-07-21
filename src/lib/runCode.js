@@ -21,7 +21,7 @@ return wholeCode();
   let stdOut = [];
   console.log = (line) => {
     try {
-      stdOut.push(JSON.stringify(line)); 
+      stdOut.push(JSON.parse(JSON.stringify(line))); 
     } catch (err){
       stdOut.push(line); 
     }
