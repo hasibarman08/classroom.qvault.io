@@ -4,7 +4,7 @@
       <div class="item-group">
         <div class="item">
           <img
-            v-if="showLogo"
+            :style="{visibility: showLogo ? 'visible' : 'hidden'}"
             alt="Qvault logo"
             src="../img/qvault-icon-250.png"
           >
@@ -19,27 +19,39 @@
         </div>
       </div>
       <div class="item-group desktop">
-        <a
-          href="/"
+        <router-link
+          v-if="$store.getters.getIsLoggedIn"
+          to="/"
           class="item link"
           :class="{current: $router.currentRoute.fullPath.includes('dashboard')}"
         >
           <span>Dashboard</span>
-        </a>   
-        <a
-          href="/playground/go"
+        </router-link>
+        <router-link
+          v-else
+          to="/"
+          class="item link"
+          :class="{current: $router.currentRoute.name === 'Login'}"
+        >
+          <span>Login</span>
+        </router-link>
+
+        <router-link
+          to="/playground/go"
           class="item link"
           :class="{current: $router.currentRoute.name === 'Playground' }"
         >
           <span>Playground</span>
-        </a>   
+        </router-link>  
+
         <a
           href="https://qvault.io/contact"
           target="_blank"
           class="item link"
         >
           <span>Contact</span>
-        </a>   
+        </a>
+
         <a
           href="https://qvault.io/articles"
           target="_blank"
@@ -146,10 +158,6 @@ $mobile-size: 600px;
     align-items: stretch;
     justify-content: flex-end;
   }
-}
-
-.dropdown {
-  
 }
 
 .mobile {

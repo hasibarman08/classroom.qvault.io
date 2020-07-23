@@ -4,24 +4,16 @@
     :style="{ backgroundImage: 'url(' + require('@/img/login-bg.jpg') + ')' }"
   >
     <div class="blur">
-      <a
-        id="logo-link"
-        href="https://qvault.io"
-      >
-        <img
-          id="logo"
-          alt="Qvault logo"
-          src="../img/qvault-icon-250.png"
-        >
-      </a>
-          
+      <div class="nav-container">
+        <TopNav />
+      </div>
       <div class="panel">
         <div id="left">
           <span id="title">Welcome to Qvault</span>
 
           <div id="sub-title-container">
             <span>
-              Learn to program. Earn content by doing well.
+              Interactive coding courses. Earn content by doing well.
             </span>
           </div>
 
@@ -82,12 +74,14 @@ import {
 import LoginForm from '@/components/LoginForm';
 import RegisterForm from '@/components/RegisterForm';
 import ForgotPasswordForm from '@/components/ForgotPasswordForm';
+import TopNav from '@/components/TopNav';
 
 export default {
   components: {
     LoginForm,
     ForgotPasswordForm,
-    RegisterForm
+    RegisterForm,
+    TopNav
   },
   data() {
     return {
@@ -114,7 +108,7 @@ export default {
   height: 100vh;
 
   .blur {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(16px);
     height: 100%;
     width: 100%;
@@ -124,11 +118,8 @@ export default {
     align-items: center;
     justify-content: center;
 
-    #logo-link {
-      #logo {
-        width: 75px;
-        margin: 2em;
-      }
+    .nav-container {
+      width: 100%;
     }
 
     .panel {
@@ -138,6 +129,7 @@ export default {
 
       @media (min-width: 600px) {
         width: 60vw;
+        margin-top: 2em;
       }
 
       display: flex;
