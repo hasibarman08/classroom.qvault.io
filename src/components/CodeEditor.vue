@@ -104,12 +104,24 @@ export default {
         this.isLoading = true;
 
         if (this.progLang === 'go'){
-          const wasm = await compileCode(this.code);
-          this.output = await runGoWasm(wasm);
+          try {
+            const wasm = await compileCode(this.code);
+            this.output = await runGoWasm(wasm);
+          } catch (err){
+            // we need to capture failure attempts
+            await this.runCallback(err);
+            throw err;
+          }
         } else if (this.progLang === 'js'){
           // make it feel like something is running
           await this.sleep(250);
-          this.output = await runJavaScript(this.code);
+          try {
+            this.output = await runJavaScript(this.code);
+          } catch (err){
+            // we need to capture failure attempts
+            await this.runCallback(JSON.stringify(err));
+            throw err;
+          }
         }
 
         this.err = false;
