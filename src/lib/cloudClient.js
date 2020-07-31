@@ -115,6 +115,18 @@ export async function getUser() {
   return handled;
 }
 
+export async function getUserPublic(uuid) {
+  const resp = await fetch(`${domain}/v1/users/${uuid}`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
 export async function updateUserPassword(email, oldPassword, newPassword){
   const resp = await fetch(`${domain}/v1/users/password`, {
     method: 'PUT',
@@ -271,6 +283,18 @@ export async function startProductCheckout(productID){
 
 export async function getCourses(){
   const resp = await fetchWithAuth(`${domain}/v1/courses`, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  const handled = await handleJSONResponse(resp);
+  return handled;
+}
+
+export async function getCoursesPublic(user_uuid){
+  const resp = await fetch(`${domain}/v1/courses/${user_uuid}`, {
     method: 'GET',
     mode: 'cors',
     headers: {

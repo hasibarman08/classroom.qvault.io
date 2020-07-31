@@ -6,6 +6,16 @@
       </span>
     </div>
 
+    <img
+      :alt="firstName"
+      :src="profileImageURL"
+    >
+
+    <a
+      href="https://en.gravatar.com/emails/"
+      target="_blank"
+    >Change Gravatar</a>
+
     <div id="email">
       <span>
         {{ email }} 
@@ -56,7 +66,8 @@ export default {
       newPassword: null,
       firstName: this.$store.getters.getUser.FirstName,
       lastName: this.$store.getters.getUser.LastName,
-      email: this.$store.getters.getUser.Email
+      email: this.$store.getters.getUser.Email,
+      profileImageURL: this.$store.getters.getUser.ProfileImageURL
     };
   },
   methods: {

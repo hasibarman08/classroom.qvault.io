@@ -9,6 +9,7 @@ import CouponCode from '../views/CouponCode.vue';
 import Dashboard from '../views/Dashboard.vue';
 import Login from '../views/Login.vue';
 import Playground from '../views/Playground.vue';
+import Portfolio from '../views/Portfolio.vue';
 
 Vue.use(VueRouter);
 
@@ -59,6 +60,11 @@ const routes = [
     path: '/playground/:lang',
     name: 'Playground',
     component: Playground
+  },
+  {
+    path: '/portfolio/:userUUID',
+    name: 'Portfolio',
+    component: Portfolio
   }
 ];
 

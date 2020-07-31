@@ -52,6 +52,14 @@
 
         <MenuItemHorizontal
           class="item"
+          icon="trophy"
+          :click="() => {$router.push({name: 'Portfolio', params: {userUUID: $store.getters.getUser.UUID}}) }"
+          text="Portfolio"
+          :current="$router.currentRoute.name === 'Portfolio'"
+        />
+
+        <MenuItemHorizontal
+          class="item"
           icon="sign-out-alt"
           :click="logout"
           text="Logout"
