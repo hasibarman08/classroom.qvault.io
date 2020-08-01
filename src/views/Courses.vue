@@ -23,10 +23,18 @@
         class="card"
         :click="() => {clickOnCourse(course.UUID, course.GemCost, course.IsPurchased) }"
       >
-        <div class="body">
+        <div
+          :ref="`cardbody${i}`"
+          class="body"
+        >
           <p class="title">
             {{ course.Title }}
           </p>
+
+          <DifficultyBar 
+            :difficulty="course.Difficulty"
+          />
+
           <p class="description">
             {{ course.Description }}
           </p>
@@ -65,6 +73,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import ImageCard from '@/components/ImageCard';
 import ConfirmOverlay from '@/components/ConfirmOverlay';
 import GemDisplay from '@/components/GemDisplay';
+import DifficultyBar from '@/components/DifficultyBar';
 import { 
   getCourses,
   purchaseCourse,
@@ -76,7 +85,8 @@ export default {
     FontAwesomeIcon,
     ImageCard,
     ConfirmOverlay,
-    GemDisplay
+    GemDisplay,
+    DifficultyBar
   },
   methods: {
     async loadCourses() {
@@ -166,7 +176,7 @@ export default {
 
       .title {
         color: $gold-dark;
-        font-size: 1.4em;
+        font-size: 1.5em;
         margin: 0em;
       }
 

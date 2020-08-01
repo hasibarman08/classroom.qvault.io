@@ -20,7 +20,7 @@
           :key="i"
           :img-src="course.ImageURL"
           class="card"
-          :click="() => {linkClick('https://qvault.io')}"
+          :click="() => {linkClick(course.LandingPage)}"
         >
           <div class="body">
             <p class="title">
