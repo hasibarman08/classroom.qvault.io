@@ -1,37 +1,64 @@
 <template>
-  <div id="container">
-    <MarkdownViewer
-      class="side"
-      :source="markdownSource"
-    />
+  <div class="container">
     <div
-      v-if="type === 'type_info'"
-      id="info-container"
-      class="side"
+      v-if="CourseDone"
+      class="full"
     >
-      <p> 👈 Read First 👈🏿 </p>
+      <img
+        src="https://qvault.io/wp-content/uploads/2020/08/gatsby_toast.gif"
+      >
+      <p> Congragulations! You've completed this course</p>
       <BlockButton
         class="btn"
-        :click="submitTypeInfo"
+        :click="() => {this.$router.push({ name: 'Courses' })}"
       >
-        Continue
+        Next Course
+      </BlockButton>
+      <BlockButton
+        class="btn"
+        :click="() => {$router.push({name: 'Portfolio', params: {userUUID: $store.getters.getUser.UUID}}) }"
+      >
+        View Portfolio
       </BlockButton>
     </div>
-    <CodeEditor
-      v-else-if="type === 'type_code'"
-      ref="codeEditor"
-      class="side"
-      :run-callback="submitTypeCode"
-      :reset-callback="getNextExercise"
-      :prog-lang="progLang"
-    />
-    <MultipleChoice
-      v-else-if="type === 'type_choice'"
-      class="side"
-      :callback="submitTypeChoice"
-      :answers="answers"
-      :question="currentQuestion"
-    />
+
+    <div
+      v-else
+      class="container"
+    >
+      <MarkdownViewer
+        class="side"
+        :source="markdownSource"
+      />
+      <div
+        v-if="type === 'type_info'"
+        id="info-container"
+        class="side"
+      >
+        <p> 👈 Read First 👈🏿 </p>
+        <BlockButton
+          class="btn"
+          :click="submitTypeInfo"
+        >
+          Continue
+        </BlockButton>
+      </div>
+      <CodeEditor
+        v-else-if="type === 'type_code'"
+        ref="codeEditor"
+        class="side"
+        :run-callback="submitTypeCode"
+        :reset-callback="getNextExercise"
+        :prog-lang="progLang"
+      />
+      <MultipleChoice
+        v-else-if="type === 'type_choice'"
+        class="side"
+        :callback="submitTypeChoice"
+        :answers="answers"
+        :question="currentQuestion"
+      />
+    </div>
   </div>
 </template>
 
@@ -68,7 +95,8 @@ export default {
       exerciseUUID: null,
       questions: null,
       currentQuestionIndex: 0,
-      progLang: 'go'
+      progLang: 'go',
+      CourseDone: false
     };
   },
   computed: {
@@ -175,10 +203,7 @@ export default {
       try {
         const exercise = await getNextExercise(this.courseUUID);
         if (exercise.CourseDone){
-          this.$notify({
-            type: 'success',
-            text: 'You\'ve completed this course! Congragulations! Start another one and take your career to the next level'
-          });
+          this.CourseDone = true;
           if (exercise.Message && exercise.GemCredit){
             this.$notify({
               type: 'success',
@@ -214,9 +239,26 @@ export default {
 <style scoped lang="scss">
 @import '@/styles/colors.scss';
 
-#container {
+.container {
   display: flex;
   height: 100%;
+}
+
+.full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+
+  p {
+    font-size: 2em;
+  }
+
+  .btn {
+    font-size: 1.5em;
+    margin: 1em;
+  }
 }
 
 .side {
