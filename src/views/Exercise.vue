@@ -17,6 +17,7 @@
       <BlockButton
         class="btn"
         :click="() => {$router.push({name: 'Portfolio', params: {userUUID: $store.getters.getUser.UUID}}) }"
+        color="gray"
       >
         View Portfolio
       </BlockButton>
