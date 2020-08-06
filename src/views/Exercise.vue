@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="root">
     <div
       v-if="CourseDone"
       class="full"
@@ -240,6 +240,10 @@ export default {
 <style scoped lang="scss">
 @import '@/styles/colors.scss';
 
+.root {
+  height: 100%;
+}
+
 .container {
   display: flex;
   height: 100%;
@@ -251,6 +255,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  padding-top: 20px;
 
   p {
     font-size: 2em;
