@@ -22,8 +22,7 @@ import {
   faTimes,
   faUndo,
   faBars,
-  faTrophy,
-  faDumbbell
+  faTrophy
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faArrowRight);
@@ -38,7 +37,6 @@ library.add(faTimes);
 library.add(faUndo);
 library.add(faBars);
 library.add(faTrophy);
-library.add(faDumbbell);
 
 export default {
   

@@ -27,21 +27,22 @@
           :ref="`cardbody${i}`"
           class="body"
         >
-          <p class="title">
+          <p class="title item">
             {{ course.Title }}
           </p>
 
           <DifficultyBar 
             :difficulty="course.Difficulty"
+            class="item"
           />
 
-          <p class="description">
+          <p class="description item">
             {{ course.Description }}
           </p>
 
           <div
             v-if="course.IsComplete"
-            class="completed"
+            class="completed item"
           >
             <FontAwesomeIcon
               icon="check"
@@ -50,7 +51,7 @@
           </div>
           <div
             v-else-if="course.IsPurchased"
-            class="purchased"
+            class="purchased item"
           >
             <FontAwesomeIcon
               icon="check"
@@ -174,6 +175,10 @@ export default {
       flex-direction: column;
       justify-content: center;
 
+      .item{
+        margin: .5em;
+      }
+
       .title {
         color: $gold-dark;
         font-size: 1.5em;
@@ -183,14 +188,12 @@ export default {
       .description {
         color: $white;
         font-weight: 400;
-        margin: 1em;
         line-height: 1.3em;
         font-size: 1em;
       }
 
       .completed {
         color: $green-light;
-        margin: 10px;
 
         span {
           margin-left: 10px;
@@ -199,7 +202,6 @@ export default {
 
       .purchased {
         color: $gold-lighter;
-        margin: 10px;
 
         span {
           margin-left: 10px;

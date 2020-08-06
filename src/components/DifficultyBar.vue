@@ -1,30 +1,20 @@
 <template>
   <div class="container">
-    <FontAwesomeIcon
-      icon="dumbbell"
-      class="icon"
-    />
+    <span :style="{color: color}">Difficulty Level</span>
     <ScaleBar
       :circles-total="6" 
       :circles-progress="difficulty + 1"
       :fill-color="color"
     />
-    <FontAwesomeIcon
-      icon="dumbbell"
-      class="icon"
-    />
   </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
 import ScaleBar from '@/components/ScaleBar';
 
 export default {
   components: {
-    ScaleBar,
-    FontAwesomeIcon
+    ScaleBar
   },
   props: {
     difficulty: {
@@ -60,7 +50,7 @@ export default {
 
 .container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
 
   .icon {
@@ -69,8 +59,7 @@ export default {
   }
 
   span {
-    color: $gray-lighter;
-    margin-right: .5em;
+    font-size: .75em;
   }
 }
 </style>
