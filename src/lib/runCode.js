@@ -30,4 +30,3 @@ return wholeCode();
   console.log = oldLog;
   return stdOut;
 }
-
