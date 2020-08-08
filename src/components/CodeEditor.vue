@@ -6,10 +6,12 @@
       />
       <div id="editor-container">
         <PrismEditor
-          id="editor"
           v-model="code"
+          class="my-editor"
           :language="progLang"
-          :line-numbers="true"
+          line-numbers
+          :tab-size="tabSize"
+          :highlight="highlighter"
         />
       </div>
       <div id="console-output">
@@ -47,13 +49,15 @@
 </template>
 
 <script>
-import 'prismjs';
-import 'prismjs/themes/prism.css';
-import 'prismjs/components/prism-go.min.js';
+import { PrismEditor } from 'vue-prism-editor';
+import 'vue-prism-editor/dist/prismeditor.min.css';
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-clike.min';
+import 'prismjs/components/prism-javascript.min';
+import 'prismjs/components/prism-go.min';
+import 'prismjs/themes/prism-tomorrow.css';
 
-import 'vue-prism-editor/dist/VuePrismEditor.css';
 
-import PrismEditor from 'vue-prism-editor';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import BlockButton from '@/components/BlockButton';
@@ -92,7 +96,18 @@ export default {
       isLoading: false
     };
   },
+  computed: {
+    tabSize(){
+      if (this.progLang === 'go'){
+        return 4; // because its a tab
+      }
+      return 2;
+    }
+  },
   methods: {
+    highlighter(code) {
+      return highlight(code, languages.js); //returns html
+    },
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
@@ -156,6 +171,25 @@ export default {
 <style lang="scss">
 @import '@/styles/colors.scss';
 
+.my-editor {
+  font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 5px;
+
+  .prism-editor__textarea:focus {
+    outline: none;
+  }
+
+  .prism-editor__code {
+    background-color: var(--background-color) !important;
+  }
+
+  .prism-editor__line-numbers {
+    background-color: var(--background-color) !important;
+  }
+}
+
 #code-editor-root {
   height: 100%;
   display: flex;
@@ -165,16 +199,6 @@ export default {
   #editor-container {
     flex: 4;
     overflow: auto;
-
-    #editor {
-      .prism-editor__code {
-        background-color: var(--background-color) !important;
-      }
-
-      .prism-editor__line-numbers {
-        background-color: var(--background-color) !important;
-      }
-    }
   }
 
   #console-output {
