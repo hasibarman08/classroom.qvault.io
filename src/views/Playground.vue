@@ -75,8 +75,8 @@ func main(){
 // on our servers then
 // executes on your machine
 // read about it on our blog:
-// https://qvault.io/2020/07/01/running-go-in-the-browser-with-web-assembly-wasm/
-    `);
+// https://qvault.io/2020/07/01/running-go-in-the-browser-with-web-assembly-wasm/`
+        );
         return;
       }
       if (this.lang === 'js'){

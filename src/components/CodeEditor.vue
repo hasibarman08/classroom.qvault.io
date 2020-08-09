@@ -175,6 +175,10 @@ export default {
 <style lang="scss">
 @import '@/styles/colors.scss';
 
+.prism-editor-wrapper {
+  height: auto;
+}
+
 .my-editor {
   font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
   font-size: 14px;
@@ -183,14 +187,6 @@ export default {
 
   .prism-editor__textarea:focus {
     outline: none;
-  }
-
-  .prism-editor__code {
-    background-color: var(--background-color) !important;
-  }
-
-  .prism-editor__line-numbers {
-    background-color: var(--background-color) !important;
   }
 }
 
