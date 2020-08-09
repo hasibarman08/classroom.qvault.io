@@ -68,7 +68,7 @@ export default {
 import "fmt"
 
 func main(){
-    fmt.Println("hello world")
+\tfmt.Println("hello world")
 }
 
 // code is compiled to WASM

@@ -11,6 +11,7 @@
           :language="progLang"
           line-numbers
           :tab-size="tabSize"
+          :insert-spaces="insertSpaces"
           :highlight="highlighter"
         />
       </div>
@@ -99,9 +100,12 @@ export default {
   computed: {
     tabSize(){
       if (this.progLang === 'go'){
-        return 4; // because its a tab
+        return 1; // because its a tab
       }
       return 2;
+    },
+    insertSpaces(){
+      return this.progLang !== 'go';
     }
   },
   methods: {
