@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <div
-      v-if="CourseDone"
+      v-if="courseDone"
       class="full"
     >
       <img
@@ -97,7 +97,7 @@ export default {
       questions: null,
       currentQuestionIndex: 0,
       progLang: 'go',
-      CourseDone: false
+      courseDone: false
     };
   },
   computed: {
@@ -119,6 +119,7 @@ export default {
   },
   async beforeRouteUpdate (to, from, next) {
     this.courseUUID = to.params.courseUUID;
+    this.courseDone = false;
     await this.getNextExercise();
     next();
   },
@@ -204,7 +205,7 @@ export default {
       try {
         const exercise = await getNextExercise(this.courseUUID);
         if (exercise.CourseDone){
-          this.CourseDone = true;
+          this.courseDone = true;
           if (exercise.Message && exercise.GemCredit){
             this.$notify({
               type: 'success',

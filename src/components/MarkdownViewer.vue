@@ -15,8 +15,8 @@
 <script>
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
-import 'prismjs/components/prism-go.min.js';
-import 'prismjs/components/prism-bash.min.js';
+import 'prismjs/components/prism-go.js';
+import 'prismjs/components/prism-bash.js';
 
 import VueMarkdown from 'vue-markdown';
 
