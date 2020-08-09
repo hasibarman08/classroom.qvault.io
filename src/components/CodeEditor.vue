@@ -175,8 +175,10 @@ export default {
 <style lang="scss">
 @import '@/styles/colors.scss';
 
+// this fixes but in vue-prism-editor 1.0.1, should remove later
 .prism-editor-wrapper {
   height: auto;
+  width: auto;
 }
 
 .my-editor {
